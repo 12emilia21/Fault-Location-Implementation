@@ -1,0 +1,5 @@
+--abi=eabi
+--float_support=fpu32
+--tmu_support=tmu0
+
+-I"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include"

@@ -1,0 +1,12 @@
+"./Controller.obj"
+"./syscfg/board.obj"
+"./syscfg/c2000ware_libraries.obj"
+"./control_functions.obj"
+"./ls_algorithm.obj"
+"./transient_det.obj"
+"./device/device.obj"
+"./device/f28004x_codestartbranch.obj"
+"../28004x_generic_flash_lnk.cmd"
+"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib"
+-lc2000ware_libraries.cmd.genlibs
+-llibc.a

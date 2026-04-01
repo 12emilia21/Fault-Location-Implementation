@@ -1,0 +1,348 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F28004x" --package "F28004x_100PZ" --part "F28004x_100PZ" --context "system" --product "C2000WARE@4.03.00.00"
+ * @versions {"tool":"1.15.0+2826"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc              = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1             = adc.addInstance();
+const adc2             = adc.addInstance();
+const adc3             = adc.addInstance();
+const asysctl          = scripting.addModule("/driverlib/asysctl.js");
+const dma              = scripting.addModule("/driverlib/dma.js", {}, false);
+const dma1             = dma.addInstance();
+const dma2             = dma.addInstance();
+const dma3             = dma.addInstance();
+const dma4             = dma.addInstance();
+const dma5             = dma.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js");
+const epwm1            = epwm.addInstance();
+const epwm2            = epwm.addInstance();
+const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1            = gpio.addInstance();
+const gpio2            = gpio.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const memcfg           = scripting.addModule("/driverlib/memcfg.js");
+const FPUfastRTS       = scripting.addModule("/libraries/math/FPUfastRTS/FPUfastRTS.js", {}, false);
+const FPUfastRTS1      = FPUfastRTS.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.soc0UseCalculatedSampleTime    = true;
+adc1.soc0UseSampleTimeCalculator    = true;
+adc1.soc1UseSampleTimeCalculator    = true;
+adc1.soc1UseCalculatedSampleTime    = true;
+adc1.soc2Trigger                    = "ADC_TRIGGER_EPWM1_SOCA";
+adc1.soc3Trigger                    = "ADC_TRIGGER_EPWM1_SOCA";
+adc1.soc6Trigger                    = "ADC_TRIGGER_EPWM1_SOCB";
+adc1.soc5Trigger                    = "ADC_TRIGGER_EPWM1_SOCB";
+adc1.soc7Trigger                    = "ADC_TRIGGER_EPWM1_SOCB";
+adc1.soc8Trigger                    = "ADC_TRIGGER_EPWM1_SOCB";
+adc1.soc9Trigger                    = "ADC_TRIGGER_EPWM1_SOCB";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0","ADC_SOC_NUMBER1"];
+adc1.soc0Name                       = "Iin1";
+adc1.soc1Name                       = "Iin2";
+adc1.interruptCycleOffset           = 10;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.interrupt2SOCSource            = "ADC_SOC_NUMBER1";
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.soc1Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.interrupt1SOCSource            = "ADC_SOC_NUMBER1";
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+
+adc2.$name                          = "myADC1";
+adc2.adcBase                        = "ADCC_BASE";
+adc2.soc0UseSampleTimeCalculator    = true;
+adc2.soc0UseCalculatedSampleTime    = true;
+adc2.soc1UseSampleTimeCalculator    = true;
+adc2.soc1UseCalculatedSampleTime    = true;
+adc2.soc2Channel                    = "ADC_CH_ADCIN5";
+adc2.soc2UseSampleTimeCalculator    = true;
+adc2.soc2UseCalculatedSampleTime    = true;
+adc2.soc3Channel                    = "ADC_CH_ADCIN5";
+adc2.soc3UseSampleTimeCalculator    = true;
+adc2.soc3UseCalculatedSampleTime    = true;
+adc2.soc2Name                       = "Vin1";
+adc2.soc3Name                       = "Vin2";
+adc2.enabledSOCs                    = ["ADC_SOC_NUMBER0","ADC_SOC_NUMBER1","ADC_SOC_NUMBER2","ADC_SOC_NUMBER3","ADC_SOC_NUMBER4","ADC_SOC_NUMBER5"];
+adc2.soc4Name                       = "Il1";
+adc2.soc4UseSampleTimeCalculator    = true;
+adc2.soc4UseCalculatedSampleTime    = true;
+adc2.soc5Name                       = "Il2";
+adc2.soc5UseSampleTimeCalculator    = true;
+adc2.soc5UseCalculatedSampleTime    = true;
+adc2.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc2.enableInterrupt1               = true;
+adc2.soc0Name                       = "Vo1";
+adc2.soc1Name                       = "Vo2";
+adc2.enableInterrupt3               = true;
+adc2.enableInterrupt1ContinuousMode = true;
+adc2.socHighPriorityMode            = "ADC_PRI_THRU_SOC5_HIPRI";
+adc2.soc0Channel                    = "ADC_CH_ADCIN14";
+adc2.soc1Channel                    = "ADC_CH_ADCIN14";
+adc2.soc4Channel                    = "ADC_CH_ADCIN3";
+adc2.soc5Channel                    = "ADC_CH_ADCIN3";
+adc2.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.soc1Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.soc2Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.soc3Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.soc4Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.soc5Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc2.interrupt1SOCSource            = "ADC_SOC_NUMBER5";
+adc2.enabledInts                    = ["ADC_INT_NUMBER1","ADC_INT_NUMBER2"];
+adc2.enableInterrupt2               = true;
+adc2.enableInterrupt2ContinuousMode = true;
+adc2.interrupt2SOCSource            = "ADC_SOC_NUMBER1";
+
+adc3.$name                          = "myADC2";
+adc3.adcBase                        = "ADCB_BASE";
+adc3.enabledSOCs                    = ["ADC_SOC_NUMBER0","ADC_SOC_NUMBER1"];
+adc3.soc0UseSampleTimeCalculator    = true;
+adc3.soc0UseCalculatedSampleTime    = true;
+adc3.soc1Channel                    = "ADC_CH_ADCIN6";
+adc3.soc1UseSampleTimeCalculator    = true;
+adc3.soc1UseCalculatedSampleTime    = true;
+adc3.soc0Name                       = "Io1";
+adc3.soc1Name                       = "Io2";
+adc3.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc3.enableInterrupt1               = true;
+adc3.enableInterrupt1ContinuousMode = true;
+adc3.interrupt2SOCSource            = "ADC_SOC_NUMBER1";
+adc3.soc0Channel                    = "ADC_CH_ADCIN6";
+adc3.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc3.soc1Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc3.interrupt1SOCSource            = "ADC_SOC_NUMBER1";
+adc3.enabledInts                    = ["ADC_INT_NUMBER1","ADC_INT_NUMBER2"];
+adc3.enableInterrupt2ContinuousMode = true;
+adc3.enableInterrupt2               = true;
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+dma1.$name                  = "myDMA0";
+dma1.enableTriggers         = true;
+dma1.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
+dma1.startChannel           = true;
+dma1.srcAddressInputMode    = "VARIABLE";
+dma1.destAddressInputMode   = "VARIABLE";
+dma1.triggerSource          = "DMA_TRIGGER_ADCC1";
+dma1.srcAddressVariable     = "ADCC0_Result_base";
+dma1.destAddressVariable    = "ADCC0_results_add";
+dma1.registerInterrupts     = true;
+dma1.enableInterrupts       = true;
+dma1.interruptMode          = "DMA_INT_AT_END";
+dma1.useInterrupts          = true;
+dma1.srcBurstStep           = 1;
+dma1.destBurstStep          = 1;
+dma1.burstSize              = 6;
+dma1.srcTransferStep        = -5;
+dma1.destTransferStep       = -5;
+dma1.dmaInt.enableInterrupt = true;
+
+dma2.$name                = "myDMA1";
+dma2.enableTriggers       = true;
+dma2.triggerSource        = "DMA_TRIGGER_ADCA1";
+dma2.continuousModeConfig = "DMA_CFG_CONTINUOUS_ENABLE";
+dma2.srcAddressInputMode  = "VARIABLE";
+dma2.srcAddressVariable   = "ADCA0_Result_base";
+dma2.destAddressInputMode = "VARIABLE";
+dma2.destAddressVariable  = "ADCA0_results_add";
+dma2.destTransferStep     = -1;
+dma2.startChannel         = true;
+dma2.burstSize            = 2;
+dma2.dmaBase              = "DMA_CH2_BASE";
+dma2.srcBurstStep         = 1;
+dma2.destBurstStep        = 1;
+dma2.srcTransferStep      = -1;
+
+dma3.$name                = "myDMA2";
+dma3.triggerSource        = "DMA_TRIGGER_ADCB1";
+dma3.enableTriggers       = true;
+dma3.continuousModeConfig = "DMA_CFG_CONTINUOUS_ENABLE";
+dma3.srcAddressInputMode  = "VARIABLE";
+dma3.srcAddressVariable   = "ADCB0_Result_base";
+dma3.destAddressInputMode = "VARIABLE";
+dma3.destAddressVariable  = "ADCB0_results_add";
+dma3.destTransferStep     = -1;
+dma3.registerInterrupts   = true;
+dma3.enableInterrupts     = true;
+dma3.startChannel         = true;
+dma3.burstSize            = 2;
+dma3.dmaBase              = "DMA_CH3_BASE";
+dma3.srcBurstStep         = 1;
+dma3.destBurstStep        = 1;
+dma3.srcTransferStep      = -1;
+
+dma4.$name                  = "myDMA3";
+dma4.dmaBase                = "DMA_CH4_BASE";
+dma4.useInterrupts          = true;
+dma4.registerInterrupts     = true;
+dma4.enableInterrupts       = true;
+dma4.interruptMode          = "DMA_INT_AT_END";
+dma4.srcAddressInputMode    = "VARIABLE";
+dma4.srcBurstStep           = 1;
+dma4.triggerSource          = "DMA_TRIGGER_ADCC2";
+dma4.srcAddressVariable     = "VO_data_source";
+dma4.destAddressInputMode   = "VARIABLE";
+dma4.destAddressVariable    = "VO_data_dest";
+dma4.enableTriggers         = true;
+dma4.startChannel           = true;
+dma4.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
+dma4.burstSize              = 2;
+dma4.destBurstStep          = 1;
+dma4.srcWrapSize            = 65536;
+dma4.destWrapStep           = -128;
+dma4.destWrapSize           = 128;
+dma4.srcTransferStep        = -1;
+dma4.transferSize           = 127;
+dma4.dmaInt.enableInterrupt = true;
+
+dma5.$name                  = "myDMA4";
+dma5.dmaBase                = "DMA_CH5_BASE";
+dma5.enableTriggers         = true;
+dma5.useInterrupts          = true;
+dma5.registerInterrupts     = true;
+dma5.enableInterrupts       = true;
+dma5.interruptMode          = "DMA_INT_AT_END";
+dma5.srcAddressInputMode    = "VARIABLE";
+dma5.srcAddressVariable     = "IO_data_source";
+dma5.srcBurstStep           = 1;
+dma5.destAddressInputMode   = "VARIABLE";
+dma5.destAddressVariable    = "IO_data_dest";
+dma5.startChannel           = true;
+dma5.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
+dma5.destBurstStep          = 1;
+dma5.srcTransferStep        = -1;
+dma5.triggerSource          = "DMA_TRIGGER_ADCB2";
+dma5.burstSize              = 2;
+dma5.destWrapSize           = 128;
+dma5.destWrapStep           = -128;
+dma5.transferSize           = 127;
+dma5.dmaInt.enableInterrupt = true;
+
+epwm.enableInfo    = true;
+epwm.enableWarning = true;
+
+epwm1.generateCodeTemplate                                       = true;
+epwm1.$name                                                      = "ControlPWM";
+epwm1.epwmCounterCompare_enableShadowLoadModeCMPB                = false;
+epwm1.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmActionQualifier_t1Source                               = "EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN";
+epwm1.epwmActionQualifier_t2Source                               = "EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN";
+epwm1.epwmActionQualifier_continousSwForceReloadModeGld          = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable                  = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar          = "1";
+epwm1.epwmCounterCompare_enableShadowLoadModeCMPA                = false;
+epwm1.useInterfacePins                                           = ["EPWM#_A"];
+epwm1.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmTimebase_periodGld                                     = true;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.hrpwm_enable                                               = true;
+epwm1.hrpwm_autoConv                                             = true;
+epwm1.hrpwm_enableCalculator                                     = true;
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEnable                  = true;
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar          = "1";
+epwm1.epwmEventTrigger_enableInterrupt                           = true;
+epwm1.epwmEventTrigger_registerInterrupts                        = true;
+epwm1.epwmEventTrigger_interruptEventCount                       = "1";
+epwm1.epwmEventTrigger_interruptEventCountInitForce              = true;
+epwm1.epwmDeadband_delayRED                                      = 20;
+epwm1.epwmDeadband_delayFED                                      = 20;
+epwm1.epwmActionQualifier_continousSwForceReloadMode             = "EPWM_AQ_SW_IMMEDIATE_LOAD";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource                  = "EPWM_SOC_TBCTR_PERIOD";
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerSource                  = "EPWM_SOC_TBCTR_ZERO";
+epwm1.epwmEventTrigger_interruptSource                           = "EPWM_INT_TBCTR_U_CMPB";
+epwm1.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_MODE_UP_AFTER_SYNC";
+epwm1.hrpwm_syncSource                                           = "HRPWM_PWMSYNC_SOURCE_ZERO";
+epwm1.epwmTimebase_syncOutPulseMode                              = "EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T1_COUNT_UP        = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmDeadband_enableRED                                     = true;
+epwm1.epwmDeadband_enableFED                                     = true;
+epwm1.epwmTimebase_period                                        = 5000;
+epwm1.epwmCounterCompare_cmpA                                    = 2500;
+epwm1.epwmCounterCompare_cmpB                                    = 4999;
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "ball.79";
+epwm1.epwm.epwm_bPin.$assign                                     = "ball.78";
+epwm1.epwmInt.enableInterrupt                                    = true;
+
+epwm2.$name                                                      = "ControlPWM_2fsw";
+epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
+epwm2.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm2.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_MODE_UP_AFTER_SYNC";
+epwm2.hrpwm_syncSource                                           = "HRPWM_PWMSYNC_SOURCE_ZERO";
+epwm2.epwmActionQualifier_continousSwForceReloadModeGld          = true;
+epwm2.epwmActionQualifier_t1Source                               = "EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN";
+epwm2.epwmActionQualifier_t2Source                               = "EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN";
+epwm2.epwmActionQualifier_continousSwForceReloadMode             = "EPWM_AQ_SW_IMMEDIATE_LOAD";
+epwm2.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable                  = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource                  = "EPWM_SOC_TBCTR_ZERO";
+epwm2.hrpwm_enable                                               = true;
+epwm2.hrpwm_autoConv                                             = true;
+epwm2.hrpwm_enableCalculator                                     = true;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T1_COUNT_UP        = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmTimebase_periodGld                                     = true;
+epwm2.epwmCounterCompare_enableShadowLoadModeCMPA                = false;
+epwm2.epwmCounterCompare_enableShadowLoadModeCMPB                = false;
+epwm2.epwmTimebase_syncOutPulseMode                              = "EPWM_SYNC_OUT_PULSE_ON_EPWMxSYNCIN";
+epwm2.epwmDeadband_delayRED                                      = 10;
+epwm2.epwmDeadband_delayFED                                      = 10;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar          = "1";
+epwm2.epwmDeadband_enableFED                                     = true;
+epwm2.epwmDeadband_enableRED                                     = true;
+epwm2.epwmTimebase_period                                        = 2500;
+epwm2.epwmCounterCompare_cmpA                                    = 1250;
+epwm2.epwmCounterCompare_cmpB                                    = 2499;
+epwm2.epwm.$assign                                               = "EPWM2";
+epwm2.epwm.epwm_aPin.$assign                                     = "ball.77";
+epwm2.epwm.epwm_bPin.$assign                                     = "ball.76";
+
+gpio1.$name             = "debug_pin";
+gpio1.writeInitialValue = true;
+gpio1.direction         = "GPIO_DIR_MODE_OUT";
+gpio1.initialValue      = 1;
+gpio1.gpioPin.$assign   = "ball.53";
+
+gpio2.direction                 = "GPIO_DIR_MODE_OUT";
+gpio2.useInterrupt              = true;
+gpio2.$name                     = "transient_det_pin";
+gpio2.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
+gpio2.xint.enableInt            = true;
+gpio2.xint.registerInterrupts   = true;
+gpio2.xint.xInt.enableInterrupt = true;
+
+inputxbar_input1.$name         = "myINPUTXBARINPUT0";
+gpio2.xint.inputxbar           = inputxbar_input1;
+inputxbar_input1.inputxbarGpio = "GPIO28";
+
+memcfg.init_MEMCFG_SECT_MSGCPUTOCLA1 = true;
+memcfg.init_MEMCFG_SECT_MSGCLA1TOCPU = true;
+
+FPUfastRTS1.$name = "myFFR0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio2.gpioPin.$suggestSolution = "ball.1";
