@@ -106,6 +106,12 @@ Controller.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include
 Controller.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_limits.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28x_FPU_FastRTS.h
 Controller.obj: ../control_functions.h
+Controller.obj: ../ls_algorithm.h
+Controller.obj: ../defines.h
+Controller.obj: ../control_functions.h
+Controller.obj: ../transient_det.h
+Controller.obj: ../defines.h
+Controller.obj: ../control_functions.h
 
 ../Controller.c:
 
@@ -316,6 +322,18 @@ C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/_defs.h:
 C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_limits.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28x_FPU_FastRTS.h:
+
+../control_functions.h:
+
+../ls_algorithm.h:
+
+../defines.h:
+
+../control_functions.h:
+
+../transient_det.h:
+
+../defines.h:
 
 ../control_functions.h:
 

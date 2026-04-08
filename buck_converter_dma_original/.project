@@ -41,6 +41,10 @@
 			<value>$%7BCOM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR%7D</value>
 		</variable>
 		<variable>
+			<name>CLA_MATH_LIB</name>
+			<value>file:/C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include</value>
+		</variable>
+		<variable>
 			<name>CLB_SIM_COMPILER</name>
 			<value>file:/C:/TDM-GCC-64/bin</value>
 		</variable>

@@ -13,6 +13,8 @@ const adc1             = adc.addInstance();
 const adc2             = adc.addInstance();
 const adc3             = adc.addInstance();
 const asysctl          = scripting.addModule("/driverlib/asysctl.js");
+const cla              = scripting.addModule("/driverlib/cla.js", {}, false);
+const cla1             = cla.addInstance();
 const dma              = scripting.addModule("/driverlib/dma.js", {}, false);
 const dma1             = dma.addInstance();
 const dma2             = dma.addInstance();
@@ -25,8 +27,12 @@ const epwm2            = epwm.addInstance();
 const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
 const gpio1            = gpio.addInstance();
 const gpio2            = gpio.addInstance();
+const gpio3            = gpio.addInstance();
+const gpio4            = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
+const inputxbar_input2 = inputxbar_input.addInstance();
+const inputxbar_input3 = inputxbar_input.addInstance();
 const memcfg           = scripting.addModule("/driverlib/memcfg.js");
 const FPUfastRTS       = scripting.addModule("/libraries/math/FPUfastRTS/FPUfastRTS.js", {}, false);
 const FPUfastRTS1      = FPUfastRTS.addInstance();
@@ -128,6 +134,22 @@ adc3.enableInterrupt2               = true;
 asysctl.analogReference        = "INTERNAL";
 asysctl.analogReferenceVoltage = "1P65";
 
+cla1.$name              = "myCLA0";
+cla1.enable_CLA_TASK_4  = false;
+cla1.enable_CLA_TASK_5  = false;
+cla1.enable_CLA_TASK_6  = false;
+cla1.enable_CLA_TASK_7  = false;
+cla1.enable_CLA_TASK_8  = false;
+cla1.cpuint_CLA_TASK_2  = false;
+cla1.cpuint_CLA_TASK_3  = false;
+cla1.cpuint_CLA_TASK_4  = false;
+cla1.cpuint_CLA_TASK_8  = false;
+cla1.cpuint_CLA_TASK_7  = false;
+cla1.cpuint_CLA_TASK_6  = false;
+cla1.cpuint_CLA_TASK_5  = false;
+cla1.enable_CLA_TASK_3  = false;
+cla1.trigger_CLA_TASK_1 = "CLA_TRIGGER_XINT2";
+
 dma1.$name                  = "myDMA0";
 dma1.enableTriggers         = true;
 dma1.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
@@ -186,7 +208,6 @@ dma4.$name                  = "myDMA3";
 dma4.dmaBase                = "DMA_CH4_BASE";
 dma4.useInterrupts          = true;
 dma4.registerInterrupts     = true;
-dma4.enableInterrupts       = true;
 dma4.interruptMode          = "DMA_INT_AT_END";
 dma4.srcAddressInputMode    = "VARIABLE";
 dma4.srcBurstStep           = 1;
@@ -195,7 +216,6 @@ dma4.srcAddressVariable     = "VO_data_source";
 dma4.destAddressInputMode   = "VARIABLE";
 dma4.destAddressVariable    = "VO_data_dest";
 dma4.enableTriggers         = true;
-dma4.startChannel           = true;
 dma4.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
 dma4.burstSize              = 2;
 dma4.destBurstStep          = 1;
@@ -211,14 +231,12 @@ dma5.dmaBase                = "DMA_CH5_BASE";
 dma5.enableTriggers         = true;
 dma5.useInterrupts          = true;
 dma5.registerInterrupts     = true;
-dma5.enableInterrupts       = true;
 dma5.interruptMode          = "DMA_INT_AT_END";
 dma5.srcAddressInputMode    = "VARIABLE";
 dma5.srcAddressVariable     = "IO_data_source";
 dma5.srcBurstStep           = 1;
 dma5.destAddressInputMode   = "VARIABLE";
 dma5.destAddressVariable    = "IO_data_dest";
-dma5.startChannel           = true;
 dma5.continuousModeConfig   = "DMA_CFG_CONTINUOUS_ENABLE";
 dma5.destBurstStep          = 1;
 dma5.srcTransferStep        = -1;
@@ -326,23 +344,43 @@ gpio1.gpioPin.$assign   = "ball.53";
 gpio2.direction                 = "GPIO_DIR_MODE_OUT";
 gpio2.useInterrupt              = true;
 gpio2.$name                     = "transient_det_pin";
+gpio2.writeInitialValue         = true;
+gpio2.gpioPin.$assign           = "ball.51";
 gpio2.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
 gpio2.xint.enableInt            = true;
 gpio2.xint.registerInterrupts   = true;
 gpio2.xint.xInt.enableInterrupt = true;
 
+gpio3.direction                 = "GPIO_DIR_MODE_OUT";
+gpio3.useInterrupt              = true;
+gpio3.$name                     = "trigger_ls";
+gpio3.writeInitialValue         = true;
+gpio3.gpioPin.$assign           = "ball.54";
+gpio3.xint.xintNum              = "GPIO_INT_XINT2";
+gpio3.xint.enableInt            = true;
+gpio3.xint.registerInterrupts   = true;
+gpio3.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
+gpio3.xint.xInt.enableInterrupt = true;
+
+gpio4.$name             = "CLA_test";
+gpio4.direction         = "GPIO_DIR_MODE_OUT";
+gpio4.controllerCore    = "GPIO_CORE_CPU1_CLA1";
+gpio4.writeInitialValue = true;
+gpio4.gpioPin.$assign   = "ball.55";
+
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio2.xint.inputxbar           = inputxbar_input1;
-inputxbar_input1.inputxbarGpio = "GPIO28";
+inputxbar_input1.inputxbarGpio = "GPIO12";
 
-memcfg.init_MEMCFG_SECT_MSGCPUTOCLA1 = true;
-memcfg.init_MEMCFG_SECT_MSGCLA1TOCPU = true;
+inputxbar_input2.$name         = "myINPUTXBARINPUT1";
+gpio3.xint.inputxbar           = inputxbar_input2;
+inputxbar_input2.inputxbarGpio = "GPIO16";
+
+inputxbar_input3.$name          = "myINPUTXBARINPUT2";
+inputxbar_input3.inputxbarInput = "XBAR_INPUT13";
+inputxbar_input3.inputxbarGpio  = "GPIO17";
+
+memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
+memcfg.config_MEMCFG_SECT_LS3 = "CLA_data";
 
 FPUfastRTS1.$name = "myFFR0";
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-gpio2.gpioPin.$suggestSolution = "ball.1";

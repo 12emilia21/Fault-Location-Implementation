@@ -94,9 +94,17 @@ extern "C"
 //
 #define debug_pin_GPIO_PIN_CONFIG GPIO_33_GPIO33
 //
-// GPIO28 - GPIO Settings
+// GPIO12 - GPIO Settings
 //
-#define transient_det_pin_GPIO_PIN_CONFIG GPIO_28_GPIO28
+#define transient_det_pin_GPIO_PIN_CONFIG GPIO_12_GPIO12
+//
+// GPIO16 - GPIO Settings
+//
+#define trigger_ls_GPIO_PIN_CONFIG GPIO_16_GPIO16
+//
+// GPIO17 - GPIO Settings
+//
+#define CLA_test_GPIO_PIN_CONFIG GPIO_17_GPIO17
 
 //*****************************************************************************
 //
@@ -171,6 +179,23 @@ void myADC2_init();
 // ASYSCTL Configurations
 //
 //*****************************************************************************
+
+//*****************************************************************************
+//
+// CLA Configurations
+//
+//*****************************************************************************
+#define myCLA0_BASE CLA1_BASE
+
+//
+// The following are symbols defined in the CLA assembly code
+// Including them in the shared header file makes them global
+// and the main CPU can make use of them.
+//
+__attribute__((interrupt)) void Cla1Task1();
+__attribute__((interrupt)) void Cla1Task2();
+void myCLA0_init();
+
 
 //*****************************************************************************
 //
@@ -249,23 +274,38 @@ void ePWMConfigurationTemplate(uint32_t base);
 //*****************************************************************************
 #define debug_pin 33
 void debug_pin_init();
-#define transient_det_pin 28
+#define transient_det_pin 12
 void transient_det_pin_init();
+#define trigger_ls 16
+void trigger_ls_init();
+#define CLA_test 17
+void CLA_test_init();
 
 //*****************************************************************************
 //
 // INPUTXBAR Configurations
 //
 //*****************************************************************************
-#define myINPUTXBARINPUT0_SOURCE 28
+#define myINPUTXBARINPUT0_SOURCE 12
 #define myINPUTXBARINPUT0_INPUT XBAR_INPUT4
 void myINPUTXBARINPUT0_init();
+#define myINPUTXBARINPUT1_SOURCE 16
+#define myINPUTXBARINPUT1_INPUT XBAR_INPUT5
+void myINPUTXBARINPUT1_init();
+#define myINPUTXBARINPUT2_SOURCE 17
+#define myINPUTXBARINPUT2_INPUT XBAR_INPUT13
+void myINPUTXBARINPUT2_init();
 
 //*****************************************************************************
 //
 // INTERRUPT Configurations
 //
 //*****************************************************************************
+
+// Interrupt Settings for INT_myCLA01
+#define INT_myCLA01 INT_CLA1_1
+#define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
+extern __interrupt void cla1Isr1(void);
 
 // Interrupt Settings for INT_myDMA0
 #define INT_myDMA0 INT_DMA_CH1
@@ -292,6 +332,11 @@ extern __interrupt void INT_ControlPWM_ISR(void);
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
 
+// Interrupt Settings for INT_trigger_ls_XINT
+#define INT_trigger_ls_XINT INT_XINT2
+#define INT_trigger_ls_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
+extern __interrupt void INT_trigger_ls_XINT_ISR(void);
+
 //*****************************************************************************
 //
 // MEMCFG Configurations
@@ -312,6 +357,9 @@ extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
+#define trigger_ls_XINT GPIO_INT_XINT2
+#define trigger_ls_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
+void trigger_ls_XINT_init();
 
 //*****************************************************************************
 //
@@ -321,6 +369,7 @@ void transient_det_pin_XINT_init();
 void	Board_init();
 void	ADC_init();
 void	ASYSCTL_init();
+void	CLA_init();
 void	DMA_init();
 void	EPWM_init();
 void	GPIO_init();

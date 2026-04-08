@@ -51,6 +51,7 @@ void Board_init()
 	INPUTXBAR_init();
 	SYNC_init();
 	ASYSCTL_init();
+	CLA_init();
 	MEMCFG_init();
 	ADC_init();
 	DMA_init();
@@ -97,8 +98,12 @@ void PinMux_init()
 
 	// GPIO33 -> debug_pin Pinmux
 	GPIO_setPinConfig(GPIO_33_GPIO33);
-	// GPIO28 -> transient_det_pin Pinmux
-	GPIO_setPinConfig(GPIO_28_GPIO28);
+	// GPIO12 -> transient_det_pin Pinmux
+	GPIO_setPinConfig(GPIO_12_GPIO12);
+	// GPIO16 -> trigger_ls Pinmux
+	GPIO_setPinConfig(GPIO_16_GPIO16);
+	// GPIO17 -> CLA_test Pinmux
+	GPIO_setPinConfig(GPIO_17_GPIO17);
 
 }
 
@@ -419,6 +424,65 @@ void ASYSCTL_init(){
 }
 //*****************************************************************************
 //
+// CLA Configurations
+//
+//*****************************************************************************
+
+void myCLA0_init(){
+	//
+    // Configure all CLA task vectors
+    // On Type-1 and Type-2 CLAs the MVECT registers accept full 16-bit task addresses as
+    // opposed to offsets used on older Type-0 CLAs
+    //
+#pragma diag_suppress=770
+    //
+    // CLA Task 1
+    //
+    CLA_mapTaskVector(myCLA0_BASE, CLA_MVECT_1, (uint16_t)&Cla1Task1);
+    CLA_setTriggerSource(CLA_TASK_1, CLA_TRIGGER_XINT2);
+    //
+    // CLA Task 2
+    //
+    CLA_mapTaskVector(myCLA0_BASE, CLA_MVECT_2, (uint16_t)&Cla1Task2);
+    CLA_setTriggerSource(CLA_TASK_2, CLA_TRIGGER_SOFTWARE);
+#pragma diag_warning=770
+	//
+    // Enable the IACK instruction to start a task on CLA in software
+    // for all  8 CLA tasks. Also, globally enable all 8 tasks (or a
+    // subset of tasks) by writing to their respective bits in the
+    // MIER register
+    //
+	CLA_enableIACK(myCLA0_BASE);
+    CLA_enableTasks(myCLA0_BASE, CLA_TASKFLAG_1 | CLA_TASKFLAG_2 );
+}
+
+
+void CLA_init()
+{
+#ifdef _FLASH
+#ifndef CMDTOOL // Linker command tool is not used
+
+    extern uint32_t Cla1ProgRunStart, Cla1ProgLoadStart, Cla1ProgLoadSize;
+    extern uint32_t Cla1ConstRunStart, Cla1ConstLoadStart, Cla1ConstLoadSize;
+
+    //
+    // Copy the program and constants from FLASH to RAM before configuring
+    // the CLA
+    //
+    memcpy((uint32_t *)&Cla1ProgRunStart, (uint32_t *)&Cla1ProgLoadStart,
+           (uint32_t)&Cla1ProgLoadSize);
+    memcpy((uint32_t *)&Cla1ConstRunStart, (uint32_t *)&Cla1ConstLoadStart,
+        (uint32_t)&Cla1ConstLoadSize );
+
+
+#endif //CMDTOOL
+#endif //_FLASH
+
+	myCLA0_init();
+}
+
+//*****************************************************************************
+//
 // DMA Configurations
 //
 //*****************************************************************************
@@ -472,10 +536,10 @@ void myDMA3_init(){
     DMA_configWrap(myDMA3_BASE, 65536U, 0, 128U, -128);
     DMA_configMode(myDMA3_BASE, DMA_TRIGGER_ADCC2, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_setInterruptMode(myDMA3_BASE, DMA_INT_AT_END);
-    DMA_enableInterrupt(myDMA3_BASE);
+    DMA_disableInterrupt(myDMA3_BASE);
     DMA_disableOverrunInterrupt(myDMA3_BASE);
     DMA_enableTrigger(myDMA3_BASE);
-    DMA_startChannel(myDMA3_BASE);
+    DMA_stopChannel(myDMA3_BASE);
 }
 void myDMA4_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
@@ -485,10 +549,10 @@ void myDMA4_init(){
     DMA_configWrap(myDMA4_BASE, 65535U, 0, 128U, -128);
     DMA_configMode(myDMA4_BASE, DMA_TRIGGER_ADCB2, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_setInterruptMode(myDMA4_BASE, DMA_INT_AT_END);
-    DMA_enableInterrupt(myDMA4_BASE);
+    DMA_disableInterrupt(myDMA4_BASE);
     DMA_disableOverrunInterrupt(myDMA4_BASE);
     DMA_enableTrigger(myDMA4_BASE);
-    DMA_startChannel(myDMA4_BASE);
+    DMA_stopChannel(myDMA4_BASE);
 }
 
 //*****************************************************************************
@@ -650,6 +714,8 @@ void ePWMConfigurationTemplate(uint32_t base){
 void GPIO_init(){
 	debug_pin_init();
 	transient_det_pin_init();
+	trigger_ls_init();
+	CLA_test_init();
 }
 
 void debug_pin_init(){
@@ -660,10 +726,25 @@ void debug_pin_init(){
 	GPIO_setControllerCore(debug_pin, GPIO_CORE_CPU1);
 }
 void transient_det_pin_init(){
+	GPIO_writePin(transient_det_pin, 0);
 	GPIO_setPadConfig(transient_det_pin, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(transient_det_pin, GPIO_QUAL_SYNC);
 	GPIO_setDirectionMode(transient_det_pin, GPIO_DIR_MODE_OUT);
 	GPIO_setControllerCore(transient_det_pin, GPIO_CORE_CPU1);
+}
+void trigger_ls_init(){
+	GPIO_writePin(trigger_ls, 0);
+	GPIO_setPadConfig(trigger_ls, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(trigger_ls, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(trigger_ls, GPIO_DIR_MODE_OUT);
+	GPIO_setControllerCore(trigger_ls, GPIO_CORE_CPU1);
+}
+void CLA_test_init(){
+	GPIO_writePin(CLA_test, 0);
+	GPIO_setPadConfig(CLA_test, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(CLA_test, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(CLA_test, GPIO_DIR_MODE_OUT);
+	GPIO_setControllerCore(CLA_test, GPIO_CORE_CPU1_CLA1);
 }
 
 //*****************************************************************************
@@ -673,10 +754,18 @@ void transient_det_pin_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
+	myINPUTXBARINPUT1_init();
+	myINPUTXBARINPUT2_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
+}
+void myINPUTXBARINPUT1_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
+}
+void myINPUTXBARINPUT2_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
 }
 
 //*****************************************************************************
@@ -685,6 +774,10 @@ void myINPUTXBARINPUT0_init(){
 //
 //*****************************************************************************
 void INTERRUPT_init(){
+	
+	// Interrupt Setings for INT_myCLA01
+	Interrupt_register(INT_myCLA01, &cla1Isr1);
+	Interrupt_enable(INT_myCLA01);
 	
 	// Interrupt Setings for INT_myDMA0
 	Interrupt_register(INT_myDMA0, &INT_myDMA0_ISR);
@@ -705,6 +798,10 @@ void INTERRUPT_init(){
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
+	
+	// Interrupt Setings for INT_trigger_ls_XINT
+	Interrupt_register(INT_trigger_ls_XINT, &INT_trigger_ls_XINT_ISR);
+	Interrupt_enable(INT_trigger_ls_XINT);
 }
 //*****************************************************************************
 //
@@ -715,17 +812,15 @@ void MEMCFG_init(){
 	//
 	// Initialize RAMs
 	//
-	MemCfg_initSections(MEMCFG_SECT_MSGCPUTOCLA1);
-	MemCfg_initSections(MEMCFG_SECT_MSGCLA1TOCPU);
-	while(!MemCfg_getInitStatus(MEMCFG_SECT_MSGCPUTOCLA1));
-	while(!MemCfg_getInitStatus(MEMCFG_SECT_MSGCLA1TOCPU));
 	//
 	// Configure LSRAMs
 	//
-	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS0, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
+	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS0, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
+	MemCfg_setCLAMemType(MEMCFG_SECT_LS0, MEMCFG_CLA_MEM_PROGRAM);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS1, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS2, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
-	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS3, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
+	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS3, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
+	MemCfg_setCLAMemType(MEMCFG_SECT_LS3, MEMCFG_CLA_MEM_DATA);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS4, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS5, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS6, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
@@ -791,11 +886,17 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
+	trigger_ls_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
 	GPIO_setInterruptType(transient_det_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
+}
+void trigger_ls_XINT_init(){
+	GPIO_setInterruptType(trigger_ls_XINT, GPIO_INT_TYPE_RISING_EDGE);
+	GPIO_setInterruptPin(trigger_ls, trigger_ls_XINT);
+	GPIO_enableInterrupt(trigger_ls_XINT);
 }
 

@@ -1,10 +1,14 @@
-#include "ls_algorithm.h"
+#include "driverlib.h"
+#include "board.h"
+#include "cla_shared.h"
+#include "CLAmath.h"
+//#include "F28x_Project.h"
 
-
-
-// LS algorithm with QR decomposition
-void ls_alg(void){ 
-    int16_t   N_samples  = (BUFF_SAMPLES + 1);
+// LS algorithm with QR decomposition 
+__attribute__((interrupt)) void Cla1Task2(void)
+{
+    //int16_t   N_samples  = (BUFF_SAMPLES + 1);
+    int16_t   N_samples  = (10 + 1);
     float32_t n1_partial = 0.0;
     float32_t n2_partial = 0.0;
     int16_t   piv0 = 0;
@@ -15,6 +19,7 @@ void ls_alg(void){
 
     // Derivatives
     for(i=0; i<N_samples; i++){
+    //for(i=0; i<10; i++){
         if(i == 0)
             dio_samples[i] = (io_samples[1] - io_samples[0]) / TSMPL;
         else if(i == N_samples-1)
@@ -25,6 +30,8 @@ void ls_alg(void){
         n1_partial += io_samples[i]*io_samples[i];
         n2_partial += dio_samples[i]*dio_samples[i];
     }
+
+
 
     // Pivoting
     
@@ -44,10 +51,7 @@ void ls_alg(void){
         col1 = (float32_t*)dio_samples;
     }
     
-   
-
     // Householder 1 
-    ESTOP0;
     float32_t alpha = 0.0f;
     float32_t v_h[N_samples];
     float32_t vv=0.0f;
@@ -66,8 +70,7 @@ void ls_alg(void){
         }
     }
 
-    ESTOP0;
-    alpha = sqrtf(alpha);
+    alpha = CLAsqrt_inline(alpha);
 
     if(col0[0] > 0)
         alpha = -alpha;
@@ -91,7 +94,7 @@ void ls_alg(void){
     float32_t v2[N_samples];
     float32_t v2v2=0.0f;
     float32_t dot2=0.0f;
-    ESTOP0;
+
     for(i=0;i<N_samples;i++) {
 
         if(i>0)
@@ -104,7 +107,7 @@ void ls_alg(void){
         }
     }
 
-    alpha2 = sqrtf(alpha2);
+    alpha2 = CLAsqrt_inline(alpha2);
 
     if(col1[1] > 0)
         alpha2 = -alpha2;
@@ -120,7 +123,6 @@ void ls_alg(void){
         vo_samples[i+1] -= beta2*v2[i]*dot2;
 
     // Back-substitution
-    ESTOP0;
     float32_t R11 = alpha;
     float32_t R12 = col1[0];
     float32_t R22 = alpha2;
@@ -135,14 +137,18 @@ void ls_alg(void){
 
     R_out = sol[0];
     L_out = sol[1];
-    return;
-   
-}
 
-// Calculate accuracy of the estimation 
-void accuracy(void){
     R_err = fabsf((R_out-R_real)/R_real)*100.0f;
-    L_err = fabsf((L_out-L_real)/L_real)*100.0f;      
-    return;       
+    L_err = fabsf((L_out-L_real)/L_real)*100.0f;
+    
 }
 
+// Estimation accuracy 
+__attribute__((interrupt)) void Cla1Task1(void)
+{
+    R_out = vo_samples[2];
+    L_out = io_samples[2];
+    R_err = 5;
+    L_err = 8; 
+    GPIO_togglePin(CLA_test);
+}

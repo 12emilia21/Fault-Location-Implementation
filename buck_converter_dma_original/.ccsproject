@@ -7,7 +7,7 @@
 	<deviceEndianness value="little"/>
 	<codegenToolVersion value="22.6.0.LTS"/>
 	<isElfFormat value="true"/>
-	<connection value="common/targetdb/connections/TIXDS100v2_Connection.xml"/>
+	<connection value="common/targetdb/connections/TIXDS110_Connection.xml"/>
 	<rts value="libc.a"/>
 	<createSlaveProjects value=""/>
 	<templateProperties value="id=empty_driverlib_project.projectspec.empty_driverlib_project"/>
@@ -15,6 +15,6 @@
 	<filesToOpen value=""/>
 	<isTargetManual value="true"/>
 	<sourceLookupPath value=""/>
-	<activeTargetConfiguration value="targetConfigs/TMS320F280049C_LaunchPad.ccxml"/>
-	<isTargetConfigurationManual value="true"/>
+	<activeTargetConfiguration value="targetConfigs/TMS320F280049C.ccxml"/>
+	<isTargetConfigurationManual value="false"/>
 </projectOptions>
