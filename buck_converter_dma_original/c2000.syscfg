@@ -148,7 +148,7 @@ cla1.cpuint_CLA_TASK_7  = false;
 cla1.cpuint_CLA_TASK_6  = false;
 cla1.cpuint_CLA_TASK_5  = false;
 cla1.enable_CLA_TASK_3  = false;
-cla1.trigger_CLA_TASK_1 = "CLA_TRIGGER_XINT2";
+cla1.trigger_CLA_TASK_1 = "CLA_TRIGGER_XINT1";
 
 dma1.$name                  = "myDMA0";
 dma1.enableTriggers         = true;
@@ -382,5 +382,6 @@ inputxbar_input3.inputxbarGpio  = "GPIO17";
 
 memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
 memcfg.config_MEMCFG_SECT_LS3 = "CLA_data";
+memcfg.config_MEMCFG_SECT_LS2 = "CLA_data";
 
 FPUfastRTS1.$name = "myFFR0";

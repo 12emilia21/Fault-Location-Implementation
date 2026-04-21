@@ -77,7 +77,13 @@ SECTIONS
    codestart        : > BEGIN,     PAGE = 0
    .TI.ramfunc      : > RAMM0      PAGE = 0
    .text            : >> RAMLS3 | RAMLS4 | RAMLS7 | RAMM0,   PAGE = 0
-   .cinit           : > RAMM0,     PAGE = 0
+   .cinit           : > RAMM0,     PAGE = 0 
+   
+   .text  : >> FLASH_BANK0_SEC0 | FLASH_BANK0_SEC1, PAGE = 0
+   .cinit : >  FLASH_BANK0_SEC2, PAGE = 0
+
+   //.const : > FLASH_BANK0_SEC1, PAGE = 0
+
    .switch          : > RAMM0,     PAGE = 0
    .reset           : > RESET,     PAGE = 0, TYPE = DSECT /* not used, */
 
@@ -105,7 +111,7 @@ SECTIONS
    dclfuncs         : > RAMLS5,     PAGE = 1
 
    // CLA Sections
-   Cla1Prog         : > RAMLS0,           PAGE = 0
+   Cla1Prog         : > RAMLS0 ,           PAGE = 0
    .scratchpad      : > RAMLS1,           PAGE = 1
    .bss_cla         : > RAMLS1,           PAGE = 1
    .const_cla       : > RAMLS1,           PAGE = 1

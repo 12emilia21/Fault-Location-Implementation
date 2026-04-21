@@ -148,7 +148,7 @@
                         </toolChain>
                     </folderInfo>
                     <sourceEntries>
-                        <entry excluding="28004x_cla_ram_lnk.cmd|28004x_generic_ram_lnk_original.cmd|28004x_generic_flash_lnk.cmd|ls_algorithm.c|280049C_FLASH_lnk.cmd|280049C_RAM_lnk.cmd|targetConfigs/TMS320F280049C_LaunchPad.ccxml" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        <entry excluding="cla_tasks_con_punteros.cla|cla_tasks_orig_no_func.cla|28004x_cla_ram_lnk.cmd|28004x_generic_ram_lnk_original.cmd|28004x_generic_flash_lnk.cmd|ls_algorithm.c|280049C_FLASH_lnk.cmd|280049C_RAM_lnk.cmd|targetConfigs/TMS320F280049C_LaunchPad.ccxml" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                     </sourceEntries>
                 </configuration>
             </storageModule>

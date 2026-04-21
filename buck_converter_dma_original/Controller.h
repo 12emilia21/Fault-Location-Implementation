@@ -46,23 +46,23 @@ PI_Controller Il_controller;
 
 #define ADC_CODES           ((uint16_t)(4096))
 
-#define IIN_MAX ((float32_t)12.5)
+#define IIN_MAX ((float32_t)6.75)
 #define IIN_SCALE IIN_MAX/ADC_CODES
 #define IIN_OFST 0
 
-#define IOUT_MAX ((float32_t)12.5)
+#define IOUT_MAX ((float32_t)6.75)
 #define IOUT_SCALE IOUT_MAX/ADC_CODES
 #define IOUT_OFST 0
 
-#define IL_MAX ((float32_t)12.5)
+#define IL_MAX ((float32_t)6.75)        // 50% above rated (9A)
 #define IL_SCALE IL_MAX/ADC_CODES
 #define IL_OFST 0
 
-#define VIN_MAX ((float32_t)50)
+#define VIN_MAX ((float32_t)33)         // 10% above rated (60V)
 #define VIN_SCALE VIN_MAX/ADC_CODES
 #define VIN_OFST 0
 
-#define VOUT_MAX ((float32_t)50)
+#define VOUT_MAX ((float32_t)33)        
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
 #define VOUT_OFST 0
 
@@ -75,6 +75,7 @@ void average_samples(void);
 void duty_cycle_calculation(void);
 void initializeDMA(void);
 void configureDMAChannels(void);
+void samples_to_cla(void);
 
 __interrupt void INT_myDMA0_ISR(void);
 

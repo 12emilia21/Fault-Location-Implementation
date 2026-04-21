@@ -25,21 +25,30 @@
 #pragma DATA_SECTION(beta2, "Cla1DataRam"); 
 #pragma DATA_SECTION(v2v2, "Cla1DataRam");
 #pragma DATA_SECTION(dot2, "Cla1DataRam");
+//#pragma DATA_SECTION(R11, "Cla1DataRam");
+//#pragma DATA_SECTION(R12, "Cla1DataRam");
+//#pragma DATA_SECTION(R22, "Cla1DataRam");
+//#pragma DATA_SECTION(x2, "Cla1DataRam");
+//#pragma DATA_SECTION(x1, "Cla1DataRam");
 #pragma DATA_SECTION(sol, "Cla1DataRam");
+
+#pragma DATA_SECTION(i_mtrx, "Cla1DataRam");
 
 volatile uint16_t i;
 
 float vo_smpl_cla[BUFF_SAMPLES]; 
 float io_smpl_cla[BUFF_SAMPLES]; 
 float dio_smpl_cla[BUFF_SAMPLES];
+float i_mtrx[2][BUFF_SAMPLES]; 
 float v_h[BUFF_SAMPLES]; 
 float v2[BUFF_SAMPLES];
 
 float n1_partial;
 float n2_partial;
-
 uint16_t piv0;
 uint16_t piv1;
+//int piv0;
+//int piv1;
 float *col0;
 float *col1;
 
@@ -54,18 +63,29 @@ volatile float beta2;
 volatile float v2v2;
 volatile float dot2;
 
+
+
+//float R11;
+//float R12;
+//float R22;
+//float x2;
+//float x1;
 float sol[2];
 
 
 void derivatives (void){
     if(s_count == 0){
+        //i_mtrx[1][0] = (i_mtrx[0][1] - i_mtrx[0][0]) / TSMPL;
         dio_smpl_cla[0] = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
     }
     else {
+        //i_mtrx[1][2*s_count-1] = (i_mtrx[0][2*s_count]   - i_mtrx[0][2*s_count-2]) / (2.0f*TSMPL);
+        //i_mtrx[1][2*s_count]   = (i_mtrx[0][2*s_count+1] - i_mtrx[0][2*s_count-1]) / (2.0f*TSMPL);
         dio_smpl_cla[2*s_count-1] = (io_smpl_cla[2*s_count]   - io_smpl_cla[2*s_count-2]) / (2.0f*TSMPL);
         dio_smpl_cla[2*s_count]   = (io_smpl_cla[2*s_count+1] - io_smpl_cla[2*s_count-1]) / (2.0f*TSMPL);
         
         if(s_count == N_COMPUTE-1){
+            //i_mtrx[1][2*s_count+1] = (i_mtrx[0][2*s_count+1] - i_mtrx[0][2*s_count]) / TSMPL;
             dio_smpl_cla[2*s_count+1] = (io_smpl_cla[2*s_count+1] - io_smpl_cla[2*s_count]) / TSMPL;
         }
     }
@@ -76,10 +96,31 @@ void partial_norms (void){
     if (s_count == 0) {
         n1_partial = 0.0;
         n2_partial = 0.0;
+        alpha      = 0.0;
+        vv         = 0.0;
+        dot        = 0.0;
+        dot1       = 0.0;
+        alpha2     = 0.0;
+        v2v2       = 0.0;
+        dot2       = 0.0;
+        //R11        = 0.0;
+        //R12        = 0.0;
+        //R22        = 0.0;
+        //x2         = 0.0;
+        //x1         = 0.0;
+        piv0       = 0;
+        piv1       = 1;
+        sol[0]     = 0.0;
+        sol[1]     = 0.0;
     }
 
-    n1_partial += (io_smpl_cla[2*s_count]*io_smpl_cla[2*s_count])   + (io_smpl_cla[2*s_count+1]*io_smpl_cla[2*s_count+1]);
+    n1_partial += (io_smpl_cla[2*s_count]*io_smpl_cla[2*s_count]) + (io_smpl_cla[2*s_count+1]*io_smpl_cla[2*s_count+1]);
     n2_partial += (dio_smpl_cla[2*s_count]*dio_smpl_cla[2*s_count]) + (dio_smpl_cla[2*s_count+1]*dio_smpl_cla[2*s_count+1]);
+    
+    //n1_partial += (i_mtrx[0][2*s_count]*i_mtrx[0][2*s_count]) + (i_mtrx[0][2*s_count+1]*i_mtrx[0][2*s_count+1]);
+    //n2_partial += (i_mtrx[1][2*s_count]*i_mtrx[1][2*s_count]) + (i_mtrx[1][2*s_count+1]*i_mtrx[1][2*s_count+1]);
+    //alpha2 += (i_mtrx[1][i]*i_mtrx[1][i]); 
+    
     return;
 }
 
@@ -87,12 +128,14 @@ void pivot (void){
     if(n2_partial > n1_partial){
         piv0  = 1;
         piv1  = 0;
+        //alpha = n2_partial;
         col0 = (float*)dio_smpl_cla;
         col1 = (float*) io_smpl_cla;
     }
     else {
         piv0 = 0;
         piv1 = 1;
+        //alpha = n1_partial;
         col0 = (float*) io_smpl_cla;
         col1 = (float*)dio_smpl_cla;
     }
@@ -102,19 +145,13 @@ void pivot (void){
 
 // Utilizo temporalmente el acceso directo considerndo que n2_partial siempre es mayor que n1_partial
 void hh1 (void){
-
-    alpha = 0.0;
-    beta  = 0.0; 
-    vv    = 0.0;
-    dot   = 0.0;
-    dot1  = 0.0;
-
     for(i=0;(uint32_t)i<(uint32_t)BUFF_SAMPLES;i++) {
-        alpha += dio_smpl_cla[i]*dio_smpl_cla[i];
-        v_h[i] = dio_smpl_cla[i]; 
+        alpha += col0[i]*col0[i];
+        v_h[i] = col0[i]; // Originalment col0[i]. Termina copiando el mismo valor que tenia en la ubicacion de la matriz?
 
         if(i>0){
-            vv   += v_h[i]*v_h[i];     
+            vv   += v_h[i]*v_h[i]; // esto es = a alpha pero sin el primer indice? que termina siendo el mismo valor que el de la norma?
+            //dot  += v_h[i]*col1[i];
             dot  += v_h[i]*io_smpl_cla[i];
             dot1 += v_h[i]*vo_smpl_cla[i]; 
         }
@@ -122,38 +159,34 @@ void hh1 (void){
     
     alpha = CLAsqrt_inline(alpha);
 
-    if(dio_smpl_cla[0] > 0)
+    if(col0[0] > 0)
         alpha = -alpha;
 
     v_h[0] -= alpha;
 
     vv   += v_h[0]*v_h[0];
-    dot  += v_h[0]*io_smpl_cla[0];
+    dot  += v_h[0]*col1[0];
     dot1 += v_h[0]*vo_smpl_cla[0];
     beta = CLAdiv_inline(2.0f,vv);
 
     for(i=0;(uint32_t)i<(uint32_t)BUFF_SAMPLES;i++) {        
-        io_smpl_cla[i] -= beta * v_h[i] * dot;
-        vo_smpl_cla[i] -= beta * v_h[i] * dot1;   
+        col1[i] -= beta * v_h[i] * dot;
+        vo_smpl_cla[i]  -= beta * v_h[i] * dot1;   
+        R_out = dot;
     }
 
     return;
 }
 
 void hh2 (void) {
-
-    alpha2 = 0.0;
-    beta2  = 0.0; 
-    v2v2   = 0.0;
-    dot2   = 0.0;
-
     for(i=0;(uint32_t)i<(uint32_t)BUFF_SAMPLES;i++) {
         if(i>0) {
-            alpha2 += (io_smpl_cla[i]*io_smpl_cla[i]); 
+            alpha2 += (col1[i]*col1[i]); 
+            //alpha2 += (i_mtrx[piv1][i]*i_mtrx[piv1][i]); // esto sera mas conveniente utilizar el n_partial y restarle la primera muestra?
         }  
             
         if(i < (BUFF_SAMPLES-1)){
-            v2[i] = io_smpl_cla[i+1];
+            v2[i] = col1[i+1];
             v2v2 += v2[i]*v2[i];
             dot2 += v2[i]*vo_smpl_cla[i+1];
         }
@@ -161,7 +194,7 @@ void hh2 (void) {
 
     alpha2 = CLAsqrt_inline(alpha2);
 
-    if(io_smpl_cla[1] > 0)
+    if(col1[1] > 0)
         alpha2 = -alpha2;
 
     v2[0] -= alpha2;
@@ -177,29 +210,23 @@ void hh2 (void) {
     return;
 }
 
-
+/*
 void back_subs (void){
-    R_err = 0.0;
-    L_err = 0.0; 
-    R_out = 0.0;
-    L_out = 0.0;
-
-    sol[0]     = 0.0;
-    sol[1]     = 0.0;
-
     sol[piv1] = CLAdiv_inline(vo_smpl_cla[1],alpha2);
-    sol[piv0] = CLAdiv_inline((vo_smpl_cla[0] - io_smpl_cla[0]*sol[piv1]),alpha); 
+    sol[piv0] = CLAdiv_inline((vo_smpl_cla[0] - i_mtrx[piv1][0]*sol[piv1]),alpha); 
+    //[piv1] = vo_smpl_cla[1] / R22;
+    //sol[piv0] = (vo_smpl_cla[0] - R12*sol[piv1]) / R11;
 
     R_out = sol[0];
     L_out = sol[1];
 
-    R_err = fabsf((R_out-5.8667)/5.8667)*100.0f;
-    L_err = fabsf((L_out-0.00012698)/0.00012698)*100.0f;
-    //R_err = R_out-REAL_R_FAULT;
-    //L_err = fabsf(CLAdiv_inline((L_out-REAL_L_FAULT),REAL_L_FAULT))*100.0f;
+    //R_err = fabsf((R_out-R_real)/R_real)*100.0f;
+    //L_err = fabsf((L_out-L_real)/L_real)*100.0f;
 
     return;
 }
+*/
+
 
 __attribute__((interrupt)) void Cla1Task2(void)
 { 
@@ -212,14 +239,18 @@ __attribute__((interrupt)) void Cla1Task1(void)
         vo_smpl_cla[2*s_count+1] = vo_sample_test[1]; 
         io_smpl_cla[2*s_count]   = io_sample_test[0]; 
         io_smpl_cla[2*s_count+1] = io_sample_test[1]; 
+        //i_mtrx[0][2*s_count]     = io_sample_test[0]; 
+        //i_mtrx[0][2*s_count+1]   = io_sample_test[1]; 
+        //i_mtrx[1][2*s_count]     = 0; 
+        //i_mtrx[1][2*s_count+1]   = 0; 
         derivatives();
         partial_norms();    
         
          if (s_count==(N_COMPUTE-1)){
             pivot();
             hh1();
-            hh2();
-            back_subs();
+            //hh2();
+            //back_subs();
         }
         GPIO_togglePin(CLA_test);
     }

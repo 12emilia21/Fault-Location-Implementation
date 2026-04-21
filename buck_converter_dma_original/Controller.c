@@ -65,12 +65,10 @@ volatile uint16_t data_ready     = 0;
 volatile uint16_t ls_alg_trigger = 0; 
 
 // CLA shared declarations 
-float32_t R_out=0.0f; 
-float32_t L_out=0.0f; 
-float32_t R_err=0.0f; 
-float32_t L_err=0.0f;
-float32_t R_real=5.12f; 
-float32_t L_real=0.0001219f;
+volatile float32_t R_out=0.0f; 
+volatile float32_t L_out=0.0f; 
+float32_t R_err  = 0.0f; 
+float32_t L_err  = 0.0f;
 
 #pragma DATA_SECTION(R_out,    "Cla1ToCpuMsgRAM");
 #pragma DATA_SECTION(L_out,    "Cla1ToCpuMsgRAM");
@@ -93,12 +91,19 @@ const void * VO_data_source = (const void *) myADC1_RESULT_BASE;
 const void * IO_data_dest   = (const void *) io_samples;
 const void * IO_data_source = (const void *) myADC2_RESULT_BASE;
 
-// Test CLA 
-uint16_t  vo_sample_test;
-uint16_t  io_sample_test;
+// Send data CLA
+float32_t  vo_sample_test[num_samples];
+float32_t  io_sample_test[num_samples];
 
-//#pragma DATA_SECTION(vo_sample_test,    "CpuToCla1MsgRAM");
-//#pragma DATA_SECTION(io_sample_test,    "CpuToCla1MsgRAM");
+#pragma DATA_SECTION(vo_sample_test,    "CpuToCla1MsgRAM");
+#pragma DATA_SECTION(io_sample_test,    "CpuToCla1MsgRAM");
+
+// Count data sent to process CLA
+uint16_t s_count     = 0; 
+bool     less_smpls  = 0;
+
+#pragma DATA_SECTION(s_count,   "CpuToCla1MsgRAM");
+#pragma DATA_SECTION(less_smpls,    "CpuToCla1MsgRAM");
 
 void main(void)
 {
@@ -157,9 +162,25 @@ void INT_ControlPWM_ISR(void){
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_INTERRUPT_ACK_GROUP);
     average_samples();
+    samples_to_cla();
     duty_cycle_calculation();
-    transient_det_res = transient_detector(Vo_avg, Il_avg); 
+    transient_det_res = transient_detector(Vo_avg, Il_avg);
+    if (transient_det_res == 0) {
+        s_count=0;
+        /*if (s_count == (BUFF_SAMPLES/2)) s_count=0;
+        else{
+            less_smpls = 1;
+            transient_det_res = 1;
+        }*/
+    }
     GPIO_writePin(transient_det_pin, transient_det_res);
+    /*if (transient_det_res==1 && col_finished==0){
+        samples_to_cla();
+        GPIO_writePin(transient_det_pin, transient_det_res);
+    }
+    else if (transient_det_res==0 && col_finished==1) {
+         col_finished=0;
+    }*/
     EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A,d*PWM_TICKS_PERIOD);
     GPIO_writePin(debug_pin,0);
 }
@@ -170,6 +191,14 @@ void average_samples(void){
     Il_avg = (ADCC_results[4]*IL_SCALE + IL_OFST +ADCC_results[5]*IL_SCALE + IL_OFST);
     Vin_avg = (ADCC_results[2]*VIN_SCALE + VIN_OFST +ADCC_results[3]*VIN_SCALE + VIN_OFST);
     Vo_avg = (ADCC_results[0]*VOUT_SCALE + VOUT_OFST +ADCC_results[1]*VOUT_SCALE + VOUT_OFST);
+    return;
+}
+
+void samples_to_cla(void){
+    vo_sample_test[0] = ADCC_results[0]*VOUT_SCALE*2 + VOUT_OFST;
+    vo_sample_test[1] = ADCC_results[1]*VOUT_SCALE*2 + VOUT_OFST;
+    io_sample_test[0] = ADCB_results[0]*IOUT_SCALE*2 + IOUT_OFST;
+    io_sample_test[1] = ADCB_results[1]*IOUT_SCALE*2 + IOUT_OFST;
     return;
 }
 
@@ -188,9 +217,9 @@ void INT_myDMA3_ISR(void){
     data_ready+=1; 
     if (data_ready==2) {
        data_ready = 0;  
-       vo_sample_test = vo_samples[2];
-       io_sample_test = io_samples[2];
-       GPIO_writePin(trigger_ls, 1);
+       //vo_sample_test = vo_samples[2];
+       //io_sample_test = io_samples[2];
+       //GPIO_writePin(trigger_ls, 1);
     }    
 }
 
@@ -201,17 +230,23 @@ void INT_myDMA4_ISR(void){
     data_ready+=1; 
     if (data_ready==2) {
        data_ready = 0;  
-       vo_sample_test = vo_samples[2];
-       io_sample_test = io_samples[2];
-       GPIO_writePin(trigger_ls, 1);
+       //vo_sample_test = vo_samples[2];
+       //io_sample_test = io_samples[2];
+       //GPIO_writePin(trigger_ls, 1);
     }    
 }
 
 void INT_transient_det_pin_XINT_ISR(void){
+    // Original code using DMA 
+    /*
     DMA_enableInterrupt(myDMA3_BASE);
     DMA_startChannel(myDMA3_BASE);
     DMA_enableInterrupt(myDMA4_BASE);
     DMA_startChannel(myDMA4_BASE);
+    */
+    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/2-1))){
+        GPIO_writePin(transient_det_pin, 0);
+    } 
     Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
 }
 
@@ -240,10 +275,17 @@ void duty_cycle_calculation(void){
 
 __interrupt void cla1Isr1(void)
 {
-    ESTOP0; 
-    //GPIO_togglePin(trigger_ls);
+    //ESTOP0; 
+    //if(s_count<BUFF_SAMPLES/2){
+    /*   
+    if (less_smpls == 1) {
+        s_count    = BUFF_SAMPLES/2;
+        less_smpls = 0;
+    }
+    else */
+    s_count+=1;
+    
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
-    //Interrupt_clearACKGroup(INT_trigger_ls_XINT_INTERRUPT_ACK_GROUP);
 }
 
 
