@@ -15,6 +15,8 @@ const adc3             = adc.addInstance();
 const asysctl          = scripting.addModule("/driverlib/asysctl.js");
 const cla              = scripting.addModule("/driverlib/cla.js", {}, false);
 const cla1             = cla.addInstance();
+const cputimer         = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1        = cputimer.addInstance();
 const dma              = scripting.addModule("/driverlib/dma.js", {}, false);
 const dma1             = dma.addInstance();
 const dma2             = dma.addInstance();
@@ -149,6 +151,11 @@ cla1.cpuint_CLA_TASK_6  = false;
 cla1.cpuint_CLA_TASK_5  = false;
 cla1.enable_CLA_TASK_3  = false;
 cla1.trigger_CLA_TASK_1 = "CLA_TRIGGER_XINT1";
+
+cputimer1.$name          = "alg_timer";
+cputimer1.emulationMode  = "CPUTIMER_EMULATIONMODE_RUNFREE";
+cputimer1.timerPeriod    = 65535;
+cputimer1.timerPrescaler = 4;
 
 dma1.$name                  = "myDMA0";
 dma1.enableTriggers         = true;
@@ -338,7 +345,6 @@ epwm2.epwm.epwm_bPin.$assign                                     = "ball.76";
 gpio1.$name             = "debug_pin";
 gpio1.writeInitialValue = true;
 gpio1.direction         = "GPIO_DIR_MODE_OUT";
-gpio1.initialValue      = 1;
 gpio1.gpioPin.$assign   = "ball.53";
 
 gpio2.direction                 = "GPIO_DIR_MODE_OUT";

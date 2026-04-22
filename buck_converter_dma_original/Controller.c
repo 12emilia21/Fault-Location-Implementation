@@ -105,6 +105,10 @@ bool     less_smpls  = 0;
 #pragma DATA_SECTION(s_count,   "CpuToCla1MsgRAM");
 #pragma DATA_SECTION(less_smpls,    "CpuToCla1MsgRAM");
 
+uint32_t  get_clk    = 0; 
+uint32_t  get_ls_clk = 0; 
+uint32_t  alg_time   = 0.0f; 
+
 void main(void)
 {
 
@@ -147,8 +151,9 @@ void main(void)
     init_PI(&Vo_controller,kpv,kiv);
     init_PI(&Il_controller,kpi,kii);
 
-    // Initialize transient detection
-    //init_detector(); 
+    // Check clocks 
+    get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);// == DEVICE_SYSCLK_FREQ);
+    get_ls_clk = SysCtl_getLowSpeedClock(DEVICE_OSCSRC_FREQ);// == DEVICE_SYSCLK_FREQ);
 
     EINT;
     ERTM;
@@ -158,7 +163,7 @@ void main(void)
 }
 
 void INT_ControlPWM_ISR(void){
-    GPIO_writePin(debug_pin,1);
+    //GPIO_writePin(debug_pin,1);
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_INTERRUPT_ACK_GROUP);
     average_samples();
@@ -167,22 +172,10 @@ void INT_ControlPWM_ISR(void){
     transient_det_res = transient_detector(Vo_avg, Il_avg);
     if (transient_det_res == 0) {
         s_count=0;
-        /*if (s_count == (BUFF_SAMPLES/2)) s_count=0;
-        else{
-            less_smpls = 1;
-            transient_det_res = 1;
-        }*/
     }
     GPIO_writePin(transient_det_pin, transient_det_res);
-    /*if (transient_det_res==1 && col_finished==0){
-        samples_to_cla();
-        GPIO_writePin(transient_det_pin, transient_det_res);
-    }
-    else if (transient_det_res==0 && col_finished==1) {
-         col_finished=0;
-    }*/
     EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A,d*PWM_TICKS_PERIOD);
-    GPIO_writePin(debug_pin,0);
+    //GPIO_writePin(debug_pin,0);
 }
 
 void average_samples(void){
@@ -244,6 +237,10 @@ void INT_transient_det_pin_XINT_ISR(void){
     DMA_enableInterrupt(myDMA4_BASE);
     DMA_startChannel(myDMA4_BASE);
     */
+    if (s_count == 0) {
+        CPUTimer_startTimer(alg_timer_BASE);
+        GPIO_writePin(debug_pin,1);
+    }
     if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/2-1))){
         GPIO_writePin(transient_det_pin, 0);
     } 
@@ -284,6 +281,15 @@ __interrupt void cla1Isr1(void)
     }
     else */
     s_count+=1;
+    if (s_count == BUFF_SAMPLES/2) {
+        CPUTimer_stopTimer(alg_timer_BASE);
+        alg_time = CPUTimer_getTimerCount(alg_timer_BASE);
+        GPIO_writePin(debug_pin,0);
+        //R_err = fabsf((R_out-5.8667f)/5.8667f)*100.0f;
+        //L_err = fabsf((L_out-0.00012698f)/0.00012698f)*100.0f;
+        //R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
+        //L_err = fabsf((L_out-REAL_L_FAULT)/REAL_L_FAULT)*100.0f;
+    }
     
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
 }

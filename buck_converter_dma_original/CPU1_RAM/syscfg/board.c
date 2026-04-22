@@ -54,6 +54,7 @@ void Board_init()
 	CLA_init();
 	MEMCFG_init();
 	ADC_init();
+	CPUTIMER_init();
 	DMA_init();
 	EPWM_init();
 	GPIO_init();
@@ -483,6 +484,25 @@ void CLA_init()
 
 //*****************************************************************************
 //
+// CPUTIMER Configurations
+//
+//*****************************************************************************
+void CPUTIMER_init(){
+	alg_timer_init();
+}
+
+void alg_timer_init(){
+	CPUTimer_setEmulationMode(alg_timer_BASE, CPUTIMER_EMULATIONMODE_RUNFREE);
+	CPUTimer_setPreScaler(alg_timer_BASE, 4U);
+	CPUTimer_setPeriod(alg_timer_BASE, 65535U);
+	CPUTimer_disableInterrupt(alg_timer_BASE);
+	CPUTimer_stopTimer(alg_timer_BASE);
+
+	CPUTimer_reloadTimerCounter(alg_timer_BASE);
+}
+
+//*****************************************************************************
+//
 // DMA Configurations
 //
 //*****************************************************************************
@@ -719,7 +739,7 @@ void GPIO_init(){
 }
 
 void debug_pin_init(){
-	GPIO_writePin(debug_pin, 1);
+	GPIO_writePin(debug_pin, 0);
 	GPIO_setPadConfig(debug_pin, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(debug_pin, GPIO_QUAL_SYNC);
 	GPIO_setDirectionMode(debug_pin, GPIO_DIR_MODE_OUT);

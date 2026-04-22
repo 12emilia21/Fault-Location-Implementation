@@ -199,6 +199,14 @@ void myCLA0_init();
 
 //*****************************************************************************
 //
+// CPUTIMER Configurations
+//
+//*****************************************************************************
+#define alg_timer_BASE CPUTIMER0_BASE
+void alg_timer_init();
+
+//*****************************************************************************
+//
 // DMA Configurations
 //
 //*****************************************************************************
@@ -370,6 +378,7 @@ void	Board_init();
 void	ADC_init();
 void	ASYSCTL_init();
 void	CLA_init();
+void	CPUTIMER_init();
 void	DMA_init();
 void	EPWM_init();
 void	GPIO_init();
