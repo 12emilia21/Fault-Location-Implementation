@@ -1,40 +1,24 @@
 /*
     File: defines.h 
 
-    File with definitions needed throughout the implementation.
-    General Inlcudes, used by many .c files.  
+    Defines used in CPU and CLA
 */
 
-// Includes
-#include "driverlib.h"
-#include "device.h"
-#include "board.h"
-#include "c2000ware_libraries.h"
-#include "control_functions.h"
-
 // Circuit characteristics 
-#define RATED_VO        ((float32_t)48)
-#define RATED_IO        ((float32_t)20.83)
+
 #define R_FAULT         ((float32_t)0.01)
 #define L_LINE          ((float32_t)5.4857e-5f)
 #define R_LINE          ((float32_t)0.2304)
-#define FAULT_LOC       ((float32_t)1)            //Value between 0 and 1
-#define REAL_R_FAULT    ((float)5.8667)
-#define REAL_L_FAULT    ((float)0.00012698) 
-//#define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
-//#define TSMPL           ((float32_t)5e-6)         //fsw = 50e3, oversample = 4
+#define FAULT_LOC       ((float32_t)1)                  // Value between 0 and 1
+#define REAL_R_FAULT    ((float32_t)5.8667)             // No fault 
+#define REAL_L_FAULT    ((float32_t)0.00012698) 
 
+// LS algorithm 
 
-// Transient detection  
-#define N_AVG        ((uint16_t)16)                //(BUFF_SAMPLES/16) sampling at 100kHz.  Orig: (BUFF_SAMPLES/8) Samples required: half resonance period of the tank (sampling at 200kHz)
-#define VO_VAR_VAL   ((float32_t)(0.02*RATED_VO))
-#define IO_VAR_VAL   ((float32_t)(0.025*RATED_IO))
-
-// LS algorithm implementation 
-//#define BUFF_SAMPLES     ((uint16_t)128) // (original 258 pero para que sea efectiva la implementacion) Samples required: 4 resonance periods of the tank (sampling at 200kHz)
-#define BUFF_SAMPLES     ((uint16_t)36)               // scaled down for 10kHz
-#define N_COMPUTE        ((uint16_t)BUFF_SAMPLES + 1) // to compute LS algorithm 
-
+#define BUFF_SAMPLES    ((uint16_t)36)   
+#define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
+#define N_SAMPLES       ((uint16_t)2)   
+#define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
 
 
 

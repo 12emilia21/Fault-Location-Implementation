@@ -1,0 +1,57 @@
+[
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg/board.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg/c2000ware_libraries.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/Controller.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/cla_tasks.cla"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/cla_tasks_con_punteros.cla"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/cla_tasks_orig_no_func.cla"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/control_functions.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\"",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/f28004x_codestartbranch.asm"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/ls_algorithm.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM",
+      "command"   : "clang++ -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -DDEBUG -D_LAUNCHXL_F280049C -I\"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_LAUNCHXL_RAM/syscfg\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/transient_det.c"
+   }
+]

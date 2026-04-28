@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "buck_converter_dma_original",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "buck_converter_dma_original",
+                "resourceId": "/buck_converter_dma_original"
+            }
+        }
+    ]
+}

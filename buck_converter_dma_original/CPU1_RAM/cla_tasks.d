@@ -93,6 +93,7 @@ cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driv
 cla_tasks.obj: syscfg/board.h
 cla_tasks.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h
 cla_tasks.obj: ../cla_shared.h
+cla_tasks.obj: ../defines.h
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include/CLAmath.h
 
 ../cla_tasks.cla:
@@ -280,6 +281,8 @@ syscfg/board.h:
 C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h:
 
 ../cla_shared.h:
+
+../defines.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include/CLAmath.h:
 

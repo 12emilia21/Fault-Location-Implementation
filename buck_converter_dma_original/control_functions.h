@@ -13,6 +13,7 @@
 
 #define PWM_TICKS_PERIOD     ((uint16_t) 5000)
 #define PWM2_TICKS_PERIOD    ((uint16_t) 2500)
+#define PWM4_TICKS_PERIOD    ((uint16_t) 1250)
 
 typedef struct {
   float32_t kp;

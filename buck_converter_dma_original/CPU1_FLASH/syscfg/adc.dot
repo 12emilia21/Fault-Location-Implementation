@@ -170,32 +170,33 @@ digraph {
           
         adca_ADC_TRIGGER_EPWM1_SOCA[label="ADCA"  fontsize="40" fillcolor="white" color="white" pos="24.000,-24.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCA_soc0[label="soc0 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="30.000,-24.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCA_soc2[label="soc2 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="30.000,-24.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCA_soc2[label="soc2 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="36.000,-24.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCA_soc3[label="soc3 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="36.000,-24.000!"]
+        ADC_TRIGGER_EPWM1_SOCB[label="ePWM1, ADCSOCB" fillcolor="yellow"  fontsize="40" color="white" pos="24.000,-27.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCA_soc3[label="soc3 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="42.000,-24.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB[label="ADCA"  fontsize="40" fillcolor="white" color="white" pos="24.000,-33.000!"]
           
-        adcb_ADC_TRIGGER_EPWM1_SOCA[label="ADCB"  fontsize="40" fillcolor="white" color="white" pos="24.000,-27.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB_soc5[label="soc5 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="30.000,-33.000!"]
           
-        adcb_ADC_TRIGGER_EPWM1_SOCA_soc0[label="soc0 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#A0A0FF" width="6.000" pos="30.000,-27.000!"]
-        ADC_TRIGGER_EPWM1_SOCB[label="ePWM1, ADCSOCB" fillcolor="yellow"  fontsize="40" color="white" pos="24.000,-30.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB_soc6[label="soc6 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="36.000,-33.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB[label="ADCA"  fontsize="40" fillcolor="white" color="white" pos="24.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB_soc7[label="soc7 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="42.000,-33.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc1[label="soc1 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="30.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB_soc8[label="soc8 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="48.000,-33.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc5[label="soc5 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="36.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM1_SOCB_soc9[label="soc9 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="54.000,-33.000!"]
+        ADC_TRIGGER_EPWM2_SOCA[label="ePWM2, ADCSOCA" fillcolor="yellow"  fontsize="40" color="white" pos="24.000,-36.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc6[label="soc6 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="42.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM2_SOCA[label="ADCA"  fontsize="40" fillcolor="white" color="white" pos="24.000,-42.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc7[label="soc7 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="48.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM2_SOCA_soc0[label="soc0 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="30.000,-42.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc8[label="soc8 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="54.000,-36.000!"]
+        adca_ADC_TRIGGER_EPWM2_SOCA_soc1[label="soc1 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="36.000,-42.000!"]
           
-        adca_ADC_TRIGGER_EPWM1_SOCB_soc9[label="soc9 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#FFA0A0" width="6.000" pos="60.000,-36.000!"]
+        adcb_ADC_TRIGGER_EPWM2_SOCA[label="ADCB"  fontsize="40" fillcolor="white" color="white" pos="24.000,-45.000!"]
           
-        adcb_ADC_TRIGGER_EPWM1_SOCB[label="ADCB"  fontsize="40" fillcolor="white" color="white" pos="24.000,-39.000!"]
+        adcb_ADC_TRIGGER_EPWM2_SOCA_soc0[label="soc0 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#A0A0FF" width="6.000" pos="30.000,-45.000!"]
           
-        adcb_ADC_TRIGGER_EPWM1_SOCB_soc1[label="soc1 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#A0A0FF" width="6.000" pos="30.000,-39.000!"]
+        adcb_ADC_TRIGGER_EPWM2_SOCA_soc1[label="soc1 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 11)" fillcolor="#A0A0FF" width="6.000" pos="36.000,-45.000!"]
 }

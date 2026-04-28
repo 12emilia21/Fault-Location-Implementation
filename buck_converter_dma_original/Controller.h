@@ -13,6 +13,8 @@
 #include "board.h"
 #include "c2000ware_libraries.h"
 #include "control_functions.h"
+#include "transient_det.h"
+#include "defines.h"
 
 // Sample controller data
 uint16_t ADCC_results[6];
@@ -29,42 +31,64 @@ const void * ADCA0_Result_base = (const void *) myADC0_RESULT_BASE;
 const void * ADCB0_results_add = (const void *) ADCB_results;
 const void * ADCB0_Result_base = (const void *) myADC2_RESULT_BASE;
 
-float32_t d = 0;
-float32_t fixed_d = 0.5;
-bool fixed_duty_cycle = 1;
-float32_t Iin_avg = 0;
-float32_t Io_avg = 0;
-float32_t Il_avg = 0;
-float32_t Vo_avg = 0;
-float32_t Vin_avg = 0;
-float32_t Vo_error = 0;
-float32_t Il_error = 0;
-float32_t Vo_ref = 10;
-uint16_t avg = 0;
+float32_t d                = 0;
+float32_t fixed_d          = 0.5;
+bool      fixed_duty_cycle = 1;
+float32_t Iin_avg          = 0;
+float32_t Io_avg           = 0;
+float32_t Il_avg           = 0;
+float32_t Vo_avg           = 0;
+float32_t Vin_avg          = 0;
+float32_t Vo_error         = 0;
+float32_t Il_error         = 0;
+float32_t Vo_ref           = 10;
+
 PI_Controller Vo_controller;
 PI_Controller Il_controller;
 
 #define ADC_CODES           ((uint16_t)(4096))
 
-#define IIN_MAX ((float32_t)6.75)
+// Regular operation
+//#define IIN_MAX ((float32_t)6.75)
+//#define IIN_SCALE IIN_MAX/ADC_CODES
+//#define IIN_OFST 0
+//
+//#define IOUT_MAX ((float32_t)6.75)
+//#define IOUT_SCALE IOUT_MAX/ADC_CODES
+//#define IOUT_OFST 0
+//
+//#define IL_MAX ((float32_t)6.75)        // 50% above rated (9A) - 6.75
+//#define IL_SCALE IL_MAX/ADC_CODES
+//#define IL_OFST 0
+//
+//#define VIN_MAX ((float32_t)33)         // 10% above rated (60V) - 33
+//#define VIN_SCALE VIN_MAX/ADC_CODES
+//#define VIN_OFST 0
+//
+//#define VOUT_MAX ((float32_t)33)        
+//#define VOUT_SCALE VOUT_MAX/ADC_CODES
+//#define VOUT_OFST 0
+
+// Fit to measure complete transient
+#define IIN_MAX ((float32_t)35)
 #define IIN_SCALE IIN_MAX/ADC_CODES
-#define IIN_OFST 0
+#define IIN_OFST 7
 
-#define IOUT_MAX ((float32_t)6.75)
+#define IOUT_MAX ((float32_t)35)
 #define IOUT_SCALE IOUT_MAX/ADC_CODES
-#define IOUT_OFST 0
+#define IOUT_OFST 7
 
-#define IL_MAX ((float32_t)6.75)        // 50% above rated (9A)
+#define IL_MAX ((float32_t)35)        // 50% above rated (9A) - 6.75
 #define IL_SCALE IL_MAX/ADC_CODES
-#define IL_OFST 0
+#define IL_OFST 7
 
-#define VIN_MAX ((float32_t)33)         // 10% above rated (60V)
+#define VIN_MAX ((float32_t)60)         // 10% above rated (60V) - 33
 #define VIN_SCALE VIN_MAX/ADC_CODES
 #define VIN_OFST 0
 
-#define VOUT_MAX ((float32_t)33)        
+#define VOUT_MAX ((float32_t)80)        
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
-#define VOUT_OFST 0
+#define VOUT_OFST 26
 
 #define num_samples  ((uint16_t)2)
 
@@ -77,6 +101,5 @@ void initializeDMA(void);
 void configureDMAChannels(void);
 void samples_to_cla(void);
 
-__interrupt void INT_myDMA0_ISR(void);
 
 

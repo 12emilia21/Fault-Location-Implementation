@@ -89,6 +89,22 @@ extern "C"
 #define GPIO_PIN_EPWM2_B 3
 #define ControlPWM_2fsw_EPWMB_GPIO 3
 #define ControlPWM_2fsw_EPWMB_PIN_CONFIG GPIO_3_EPWM2_B
+
+//
+// EPWM3 -> ControlPWM_4fsw Pinmux
+//
+//
+// EPWM3_A - GPIO Settings
+//
+#define GPIO_PIN_EPWM3_A 4
+#define ControlPWM_4fsw_EPWMA_GPIO 4
+#define ControlPWM_4fsw_EPWMA_PIN_CONFIG GPIO_4_EPWM3_A
+//
+// EPWM3_B - GPIO Settings
+//
+#define GPIO_PIN_EPWM3_B 5
+#define ControlPWM_4fsw_EPWMB_GPIO 5
+#define ControlPWM_4fsw_EPWMB_PIN_CONFIG GPIO_5_EPWM3_B
 //
 // GPIO33 - GPIO Settings
 //
@@ -97,14 +113,6 @@ extern "C"
 // GPIO12 - GPIO Settings
 //
 #define transient_det_pin_GPIO_PIN_CONFIG GPIO_12_GPIO12
-//
-// GPIO16 - GPIO Settings
-//
-#define trigger_ls_GPIO_PIN_CONFIG GPIO_16_GPIO16
-//
-// GPIO17 - GPIO Settings
-//
-#define CLA_test_GPIO_PIN_CONFIG GPIO_17_GPIO17
 
 //*****************************************************************************
 //
@@ -193,17 +201,8 @@ void myADC2_init();
 // and the main CPU can make use of them.
 //
 __attribute__((interrupt)) void Cla1Task1();
-__attribute__((interrupt)) void Cla1Task2();
 void myCLA0_init();
 
-
-//*****************************************************************************
-//
-// CPUTIMER Configurations
-//
-//*****************************************************************************
-#define alg_timer_BASE CPUTIMER0_BASE
-void alg_timer_init();
 
 //*****************************************************************************
 //
@@ -228,18 +227,6 @@ extern const void *ADCB0_results_add;
 #define myDMA2_BURSTSIZE 2U
 #define myDMA2_TRANSFERSIZE 1U
 void myDMA2_init();
-extern const void *VO_data_source;
-extern const void *VO_data_dest;
-#define myDMA3_BASE DMA_CH4_BASE 
-#define myDMA3_BURSTSIZE 2U
-#define myDMA3_TRANSFERSIZE 127U
-void myDMA3_init();
-extern const void *IO_data_source;
-extern const void *IO_data_dest;
-#define myDMA4_BASE DMA_CH5_BASE 
-#define myDMA4_BURSTSIZE 2U
-#define myDMA4_TRANSFERSIZE 127U
-void myDMA4_init();
 
 //*****************************************************************************
 //
@@ -274,6 +261,19 @@ void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_2fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define ControlPWM_4fsw_BASE EPWM3_BASE
+#define ControlPWM_4fsw_TBPRD 1250
+#define ControlPWM_4fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define ControlPWM_4fsw_TBPHS 0
+#define ControlPWM_4fsw_CMPA 625
+#define ControlPWM_4fsw_CMPB 1249
+#define ControlPWM_4fsw_CMPC 0
+#define ControlPWM_4fsw_CMPD 0
+#define ControlPWM_4fsw_DBRED 10
+#define ControlPWM_4fsw_DBFED 10
+#define ControlPWM_4fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_4fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_4fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 
 //*****************************************************************************
 //
@@ -284,10 +284,6 @@ void ePWMConfigurationTemplate(uint32_t base);
 void debug_pin_init();
 #define transient_det_pin 12
 void transient_det_pin_init();
-#define trigger_ls 16
-void trigger_ls_init();
-#define CLA_test 17
-void CLA_test_init();
 
 //*****************************************************************************
 //
@@ -315,21 +311,6 @@ void myINPUTXBARINPUT2_init();
 #define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
 extern __interrupt void cla1Isr1(void);
 
-// Interrupt Settings for INT_myDMA0
-#define INT_myDMA0 INT_DMA_CH1
-#define INT_myDMA0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
-extern __interrupt void INT_myDMA0_ISR(void);
-
-// Interrupt Settings for INT_myDMA3
-#define INT_myDMA3 INT_DMA_CH4
-#define INT_myDMA3_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
-extern __interrupt void INT_myDMA3_ISR(void);
-
-// Interrupt Settings for INT_myDMA4
-#define INT_myDMA4 INT_DMA_CH5
-#define INT_myDMA4_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
-extern __interrupt void INT_myDMA4_ISR(void);
-
 // Interrupt Settings for INT_ControlPWM
 #define INT_ControlPWM INT_EPWM1
 #define INT_ControlPWM_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
@@ -339,11 +320,6 @@ extern __interrupt void INT_ControlPWM_ISR(void);
 #define INT_transient_det_pin_XINT INT_XINT1
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
-
-// Interrupt Settings for INT_trigger_ls_XINT
-#define INT_trigger_ls_XINT INT_XINT2
-#define INT_trigger_ls_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void INT_trigger_ls_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -365,9 +341,6 @@ extern __interrupt void INT_trigger_ls_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
-#define trigger_ls_XINT GPIO_INT_XINT2
-#define trigger_ls_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
-void trigger_ls_XINT_init();
 
 //*****************************************************************************
 //
@@ -378,7 +351,6 @@ void	Board_init();
 void	ADC_init();
 void	ASYSCTL_init();
 void	CLA_init();
-void	CPUTIMER_init();
 void	DMA_init();
 void	EPWM_init();
 void	GPIO_init();

@@ -13,12 +13,19 @@ ORDERED_OBJS += \
 "./Controller.obj" \
 "./syscfg/board.obj" \
 "./syscfg/c2000ware_libraries.obj" \
+"./cla_tasks.obj" \
+"./cla_tasks_con_punteros.obj" \
+"./cla_tasks_orig_no_func.obj" \
 "./control_functions.obj" \
 "./ls_algorithm.obj" \
 "./transient_det.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
+"../28004x_cla_flash_lnk.cmd" \
+"../28004x_cla_ram_lnk 1.cmd" \
+"../28004x_cla_ram_lnk.cmd" \
 "../28004x_generic_flash_lnk.cmd" \
+"../28004x_generic_ram_lnk_original.cmd" \
 "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \
@@ -147,8 +154,9 @@ buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Controller.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "control_functions.obj" "ls_algorithm.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "Controller.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "cla_tasks_con_punteros.obj" "cla_tasks_orig_no_func.obj" "control_functions.obj" "ls_algorithm.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
 	-$(RM) "Controller.d" "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "ls_algorithm.d" "transient_det.d" "device\device.d" 
+	-$(RM) "cla_tasks.d" "cla_tasks_con_punteros.d" "cla_tasks_orig_no_func.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'

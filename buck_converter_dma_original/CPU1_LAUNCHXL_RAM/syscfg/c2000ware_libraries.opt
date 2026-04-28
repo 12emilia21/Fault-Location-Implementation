@@ -1,4 +1,3 @@
---idiv_support=idiv0
 --abi=eabi
 --float_support=fpu32
 --tmu_support=tmu0

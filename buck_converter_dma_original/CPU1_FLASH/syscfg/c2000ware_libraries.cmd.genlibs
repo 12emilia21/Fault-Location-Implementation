@@ -18,5 +18,5 @@
  *                TI C/C++ toolchain
  */
 
--l"libraries/math/FPUfastRTS/c28/lib/rts2800_fpu32_fast_supplement.lib"
+-l"/libraries/math/FPUfastRTS/c28/lib/rts2800_fpu32_fast_supplement.lib"
 

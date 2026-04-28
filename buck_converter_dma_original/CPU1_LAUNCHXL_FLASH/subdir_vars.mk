@@ -6,10 +6,19 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CMD_SRCS += \
-../28004x_generic_flash_lnk.cmd 
+../28004x_cla_flash_lnk.cmd \
+../28004x_cla_ram_lnk\ 1.cmd \
+../28004x_cla_ram_lnk.cmd \
+../28004x_generic_flash_lnk.cmd \
+../28004x_generic_ram_lnk_original.cmd 
 
 SYSCFG_SRCS += \
 ../c2000.syscfg 
+
+CLA_SRCS += \
+../cla_tasks.cla \
+../cla_tasks_con_punteros.cla \
+../cla_tasks_orig_no_func.cla 
 
 LIB_SRCS += \
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
@@ -27,6 +36,11 @@ GEN_FILES += \
 ./syscfg/board.opt \
 ./syscfg/c2000ware_libraries.opt \
 ./syscfg/c2000ware_libraries.c 
+
+CLA_DEPS += \
+./cla_tasks.d \
+./cla_tasks_con_punteros.d \
+./cla_tasks_orig_no_func.d 
 
 GEN_MISC_DIRS += \
 ./syscfg 
@@ -47,6 +61,9 @@ OBJS += \
 ./Controller.obj \
 ./syscfg/board.obj \
 ./syscfg/c2000ware_libraries.obj \
+./cla_tasks.obj \
+./cla_tasks_con_punteros.obj \
+./cla_tasks_orig_no_func.obj \
 ./control_functions.obj \
 ./ls_algorithm.obj \
 ./transient_det.obj 
@@ -68,6 +85,9 @@ OBJS__QUOTED += \
 "Controller.obj" \
 "syscfg\board.obj" \
 "syscfg\c2000ware_libraries.obj" \
+"cla_tasks.obj" \
+"cla_tasks_con_punteros.obj" \
+"cla_tasks_orig_no_func.obj" \
 "control_functions.obj" \
 "ls_algorithm.obj" \
 "transient_det.obj" 
@@ -95,6 +115,11 @@ GEN_FILES__QUOTED += \
 "syscfg\board.opt" \
 "syscfg\c2000ware_libraries.opt" \
 "syscfg\c2000ware_libraries.c" 
+
+CLA_DEPS__QUOTED += \
+"cla_tasks.d" \
+"cla_tasks_con_punteros.d" \
+"cla_tasks_orig_no_func.d" 
 
 C_SRCS__QUOTED += \
 "../Controller.c" \

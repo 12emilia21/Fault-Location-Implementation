@@ -51,7 +51,7 @@ ORDERED_OBJS += \
 "./device/driverlib/sysctl.obj" \
 "./device/driverlib/version.obj" \
 "./device/driverlib/xbar.obj" \
-"../28004x_cla_ram_lnk 1.cmd" \
+"../28004x_cla_ram_lnk.cmd" \
 "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
 "../device/driverlib/ccs/Debug/driverlib.lib" \
 "../device/driverlib/ccs/Debug/driverlib_coff.lib" \
