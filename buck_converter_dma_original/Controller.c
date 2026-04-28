@@ -116,8 +116,8 @@ void main(void)
     init_detector();
 
     // Check clocks 
-    get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);// == DEVICE_SYSCLK_FREQ);
-    get_ls_clk = SysCtl_getLowSpeedClock(DEVICE_OSCSRC_FREQ);// == DEVICE_SYSCLK_FREQ);
+    get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
+    get_ls_clk = SysCtl_getLowSpeedClock(DEVICE_OSCSRC_FREQ);
 
     EINT;
     ERTM;
