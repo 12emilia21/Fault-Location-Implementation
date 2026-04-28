@@ -69,12 +69,10 @@ volatile float32_t L_out=0.0f;
 float32_t  vo_sample_test[num_samples];
 float32_t  io_sample_test[num_samples];
 uint16_t   s_count     = 0; 
-bool       less_smpls  = 0;
 
 #pragma DATA_SECTION(vo_sample_test,    "CpuToCla1MsgRAM");
 #pragma DATA_SECTION(io_sample_test,    "CpuToCla1MsgRAM");
 #pragma DATA_SECTION(s_count,           "CpuToCla1MsgRAM");
-#pragma DATA_SECTION(less_smpls,        "CpuToCla1MsgRAM");
 
 // Error calculation
 volatile float32_t R_err  = 0.0f; 

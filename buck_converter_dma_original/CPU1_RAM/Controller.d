@@ -2,7 +2,7 @@
 
 Controller.obj: ../Controller.c
 Controller.obj: ../Controller.h
-Controller.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h
+Controller.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 Controller.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -96,7 +96,7 @@ Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/spi
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-Controller.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h
+Controller.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
 Controller.obj: syscfg/board.h
 Controller.obj: syscfg/c2000ware_libraries.h
 Controller.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h
@@ -113,7 +113,7 @@ Controller.obj: ../defines.h
 
 ../Controller.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -301,7 +301,7 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
 
 syscfg/board.h:
 

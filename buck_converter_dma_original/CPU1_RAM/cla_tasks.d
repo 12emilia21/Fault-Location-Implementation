@@ -1,7 +1,7 @@
 # FIXED
 
 cla_tasks.obj: ../cla_tasks.cla
-cla_tasks.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h
+cla_tasks.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 cla_tasks.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -91,14 +91,14 @@ cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
 cla_tasks.obj: syscfg/board.h
-cla_tasks.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h
+cla_tasks.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
 cla_tasks.obj: ../cla_shared.h
 cla_tasks.obj: ../defines.h
 cla_tasks.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include/CLAmath.h
 
 ../cla_tasks.cla:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -278,7 +278,7 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_te
 
 syscfg/board.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
 
 ../cla_shared.h:
 

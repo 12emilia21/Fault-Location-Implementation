@@ -2,7 +2,7 @@
 
 control_functions.obj: ../control_functions.c
 control_functions.obj: ../control_functions.h
-control_functions.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h
+control_functions.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
 control_functions.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 control_functions.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 control_functions.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -97,13 +97,13 @@ control_functions.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driver
 control_functions.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 control_functions.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
 control_functions.obj: syscfg/board.h
-control_functions.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h
+control_functions.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
 
 ../control_functions.c:
 
 ../control_functions.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -293,5 +293,5 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_te
 
 syscfg/board.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_GIT_repo/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
 
