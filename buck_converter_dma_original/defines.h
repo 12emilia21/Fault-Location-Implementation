@@ -15,9 +15,9 @@
 
 // LS algorithm 
 
-#define BUFF_SAMPLES    ((uint16_t)36)   
+#define BUFF_SAMPLES    ((uint16_t)36*2)   
 #define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
-#define N_SAMPLES       ((uint16_t)2)   
+#define N_SAMPLES       ((uint16_t)4)   
 #define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
 
 

@@ -47,7 +47,7 @@
 //
 // Included Files
 //
-#include "Controller.h"
+#include "main.h"
 
 // Controller
 float32_t kpv =0.0102;
@@ -56,7 +56,8 @@ float32_t kpi =0.2486;
 float32_t kii = 0.0207;
 
 // Transient detection result
-bool transient_det_res; 
+bool     transient_det_res; 
+uint16_t k;
 
 // CLA to CPU
 volatile float32_t R_out=0.0f; 
@@ -136,23 +137,22 @@ void INT_ControlPWM_ISR(void){
     }
     GPIO_writePin(transient_det_pin, transient_det_res);
     set_duty_cycle(d);
-    //EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A,d*PWM_TICKS_PERIOD);
 }
 
 void average_samples(void){
     Iin_avg = 0.5f *((ADCA_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCA_results[1]*IIN_SCALE  - IIN_OFST ));
-    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[1]*IOUT_SCALE - IOUT_OFST));
-    Il_avg  = 0.5f *((ADCC_results[4]*IL_SCALE   - IL_OFST  ) + (ADCC_results[5]*IL_SCALE   - IL_OFST  ));
-    Vin_avg = 0.5f *((ADCC_results[2]*VIN_SCALE  - VIN_OFST ) + (ADCC_results[3]*VIN_SCALE  - VIN_OFST ));
-    Vo_avg  = 0.5f *((ADCC_results[0]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[1]*VOUT_SCALE - VOUT_OFST));
+    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE - IOUT_OFST));
+    Il_avg  = 0.5f *((ADCC_results[2]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE   - IL_OFST  ));
+    Vin_avg = 0.5f *((ADCC_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCC_results[1]*VIN_SCALE  - VIN_OFST ));
+    Vo_avg  = 0.5f *((VO_results[0]*VOUT_SCALE   - VOUT_OFST) + (VO_results[2]*VOUT_SCALE   - VOUT_OFST));
     return;
 }
 
 void samples_to_cla(void){
-    vo_sample_test[0] = ADCC_results[0]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[1] = ADCC_results[1]*VOUT_SCALE - VOUT_OFST;
-    io_sample_test[0] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
+    for (k=0; k<N_SAMPLES; k++){
+        vo_sample_test[k] =   VO_results[k]*VOUT_SCALE - VOUT_OFST;
+        io_sample_test[k] = ADCB_results[k]*IOUT_SCALE - IOUT_OFST;
+    }
     return;
 }
 
@@ -161,7 +161,7 @@ void INT_transient_det_pin_XINT_ISR(void){
         //CPUTimer_startTimer(alg_timer_BASE);
         GPIO_writePin(debug_pin,1);
     }
-    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/2-1))){
+    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
         GPIO_writePin(transient_det_pin, 0);
     } 
     Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
@@ -186,7 +186,7 @@ void duty_cycle_calculation(void){
 __interrupt void cla1Isr1(void)
 {
     s_count+=1;
-    if (s_count == BUFF_SAMPLES/2) {
+    if (s_count == BUFF_SAMPLES/N_SAMPLES) {
         //CPUTimer_stopTimer(alg_timer_BASE);
         //alg_time = CPUTimer_getTimerCount(alg_timer_BASE);
         GPIO_writePin(debug_pin,0);

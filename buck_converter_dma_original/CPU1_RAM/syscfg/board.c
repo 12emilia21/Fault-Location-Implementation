@@ -235,11 +235,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
 	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
+	//	  	Channel			: ADC_CH_ADCIN5
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN14, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -248,11 +248,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
 	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
+	//	  	Channel			: ADC_CH_ADCIN5
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN14, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -261,11 +261,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 2
 	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN5
+	//	  	Channel			: ADC_CH_ADCIN3
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 3 Configuration
@@ -274,11 +274,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 3
 	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN5
+	//	  	Channel			: ADC_CH_ADCIN3
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 4 Configuration
@@ -286,12 +286,12 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 4
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER4, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER4, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER4, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 5 Configuration
@@ -299,23 +299,59 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 5
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER5, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER5, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER5, ADC_INT_SOC_TRIGGER_NONE);
 	//
+	// Start of Conversion 6 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 6
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN14
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER6, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
+	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER6, ADC_INT_SOC_TRIGGER_NONE);
+	//
+	// Start of Conversion 7 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 7
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN14
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER7, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
+	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER7, ADC_INT_SOC_TRIGGER_NONE);
+	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 5
+	// 		SOC/EOC number	: 3
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER5);
+	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER3);
 	ADC_enableInterrupt(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC1_BASE, ADC_INT_NUMBER1);
+	//
+	// ADC Interrupt 2 Configuration
+	// 		SOC/EOC number	: 7
+	// 		Interrupt Source: enabled
+	//		Continuous Mode	: enabled
+	//
+	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER2, ADC_SOC_NUMBER7);
+	ADC_enableInterrupt(myADC1_BASE, ADC_INT_NUMBER2);
+	ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER2);
+	ADC_enableContinuousMode(myADC1_BASE, ADC_INT_NUMBER2);
 }
 void myADC2_init(){
 	//
@@ -356,12 +392,12 @@ void myADC2_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN6
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
 	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -369,20 +405,46 @@ void myADC2_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN6
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
 	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
+	// Start of Conversion 2 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 2
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN6
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
+	//
+	// Start of Conversion 3 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN6
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
+	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 1
+	// 		SOC/EOC number	: 3
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC2_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
+	ADC_setInterruptSource(myADC2_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER3);
 	ADC_enableInterrupt(myADC2_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC2_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC2_BASE, ADC_INT_NUMBER1);
@@ -473,13 +535,14 @@ void DMA_init(){
 	myDMA0_init();
 	myDMA1_init();
 	myDMA2_init();
+	myDMA3_init();
 }
 
 void myDMA0_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA0_BASE, ADCC0_results_add, ADCC0_Result_base);
-    DMA_configBurst(myDMA0_BASE, 6U, 1, 1);
-    DMA_configTransfer(myDMA0_BASE, 1U, -5, -5);
+    DMA_configBurst(myDMA0_BASE, 4U, 1, 1);
+    DMA_configTransfer(myDMA0_BASE, 1U, -3, -3);
     DMA_configWrap(myDMA0_BASE, 65535U, 0, 65535U, 0);
     DMA_configMode(myDMA0_BASE, DMA_TRIGGER_ADCC1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_enableTrigger(myDMA0_BASE);
@@ -498,12 +561,22 @@ void myDMA1_init(){
 void myDMA2_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA2_BASE, ADCB0_results_add, ADCB0_Result_base);
-    DMA_configBurst(myDMA2_BASE, 2U, 1, 1);
-    DMA_configTransfer(myDMA2_BASE, 1U, -1, -1);
+    DMA_configBurst(myDMA2_BASE, 4U, 1, 1);
+    DMA_configTransfer(myDMA2_BASE, 1U, -3, -3);
     DMA_configWrap(myDMA2_BASE, 65535U, 0, 65535U, 0);
     DMA_configMode(myDMA2_BASE, DMA_TRIGGER_ADCB1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_enableTrigger(myDMA2_BASE);
     DMA_startChannel(myDMA2_BASE);
+}
+void myDMA3_init(){
+    DMA_setEmulationMode(DMA_EMULATION_STOP);
+    DMA_configAddresses(myDMA3_BASE, VO_results_add, VO_Result_base);
+    DMA_configBurst(myDMA3_BASE, 4U, 1, 1);
+    DMA_configTransfer(myDMA3_BASE, 1U, -3, -3);
+    DMA_configWrap(myDMA3_BASE, 65535U, 0, 65535U, 0);
+    DMA_configMode(myDMA3_BASE, DMA_TRIGGER_ADCC2, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
+    DMA_enableTrigger(myDMA3_BASE);
+    DMA_startChannel(myDMA3_BASE);
 }
 
 //*****************************************************************************

@@ -39,7 +39,7 @@ bool transient_detector(float32_t vo_sim,float32_t io_sim)
     float32_t vo_avg;
     float32_t io_avg;
 
-    /* Remove old sample */
+    // Remove old sample
     float32_t old_vo = vo_buff[head];
     float32_t old_io = io_buff[head];
     float32_t old_tr = tr_buff[head];
@@ -48,28 +48,28 @@ bool transient_detector(float32_t vo_sim,float32_t io_sim)
     io_sum -= old_io;
     tr_sum -= old_tr;
 
-    /* Store new sample */
+    // Store new sample 
     vo_buff[head] = vo_sim;
     io_buff[head] = io_sim;
 
     vo_sum += vo_sim;
     io_sum += io_sim;
 
-    /* Update avg values */
+    // Update avg values
     vo_avg = vo_sum / N_AVG;
     io_avg = io_sum / N_AVG;
 
-    /* In or out of area */
+    // In or out of area
     c_est = ((vo_sim - vo_avg)*(vo_sim - vo_avg))/(VO_VAR_VAL*VO_VAR_VAL) +
             ((io_sim - io_avg)*(io_sim - io_avg))/(IO_VAR_VAL*IO_VAR_VAL);
 
     tr_det_est = (c_est > 1.0) ? 1.0 : 0.0;
 
-    /* Update transient buffer */
+    // Update transient buffer
     tr_buff[head] = tr_det_est;
     tr_sum += tr_det_est;
 
-    /* Define transient trigger */
+    // Define transient trigger
     tr_avg = tr_sum / N_AVG;
 
     if(tr_avg > 0.0)
@@ -77,7 +77,7 @@ bool transient_detector(float32_t vo_sim,float32_t io_sim)
     else
         tr_det_2 = 0.0;
 
-    /* Step circular buffer */
+    // Step circular buffer
     head++;
     if(head>=N_AVG)
         head=0;

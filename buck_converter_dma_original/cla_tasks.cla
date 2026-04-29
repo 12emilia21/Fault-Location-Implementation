@@ -56,6 +56,7 @@ volatile float dot2;
 
 float sol[2];
 
+
 void derivatives (void){
     //Derivadas centrales con 2 puntos 
 
@@ -94,19 +95,27 @@ void derivatives (void){
 
 /*
 void derivatives(void){
-    dio_smpl_cla[0] = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
-    dio_smpl_cla[1] = (io_smpl_cla[2] - io_smpl_cla[0]) / (2.0f*TSMPL);
+    dio_smpl_cla[0]              = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
+    dio_smpl_cla[BUFF_SAMPLES-1] = (io_smpl_cla[BUFF_SAMPLES-1] - io_smpl_cla[BUFF_SAMPLES-2]) / TSMPL;
 
-    for(i=2;(uint32_t)i<(uint32_t)(BUFF_SAMPLES-1);i++) {        
-        dio_smpl_cla[i] = (-io_smpl_cla[i+2]   + 8*io_smpl_cla[i+1] - 8*io_smpl_cla[i-1] + io_smpl_cla[i-2]) / (12.0f*TSMPL);
-        if(i == BUFF_SAMPLES-2){
-            dio_smpl_cla[i]   = (io_smpl_cla[i+1] - io_smpl_cla[i-1]) / (2.0f*TSMPL);
-            dio_smpl_cla[i+1] = (io_smpl_cla[i+1] - io_smpl_cla[i]) / TSMPL;
-        }
+    for(i=1;(uint32_t)i<(uint32_t)(BUFF_SAMPLES-1);i++) {
+        dio_smpl_cla[i] = (io_smpl_cla[i+1]   - io_smpl_cla[i-1]) / (2.0f*TSMPL);
     }
+    //dio_smpl_cla[0] = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
+    //dio_smpl_cla[1] = (io_smpl_cla[2] - io_smpl_cla[0]) / (2.0f*TSMPL);
+    //
+    //for(i=2;(uint32_t)i<(uint32_t)(BUFF_SAMPLES-1);i++) {        
+    //    dio_smpl_cla[i] = (-io_smpl_cla[i+2]   + 8*io_smpl_cla[i+1] - 8*io_smpl_cla[i-1] + io_smpl_cla[i-2]) / (12.0f*TSMPL);
+    //    if(i == BUFF_SAMPLES-2){
+    //        dio_smpl_cla[i]   = (io_smpl_cla[i+1] - io_smpl_cla[i-1]) / (2.0f*TSMPL);
+    //        dio_smpl_cla[i+1] = (io_smpl_cla[i+1] - io_smpl_cla[i]) / TSMPL;
+    //    }
+    //}
     return; 
 }
 */
+
+
 
 
 void partial_norms (void){
@@ -119,15 +128,15 @@ void partial_norms (void){
     n1_partial += (io_smpl_cla[2*s_count]*io_smpl_cla[2*s_count])   + (io_smpl_cla[2*s_count+1]*io_smpl_cla[2*s_count+1]);
     n2_partial += (dio_smpl_cla[2*s_count]*dio_smpl_cla[2*s_count]) + (dio_smpl_cla[2*s_count+1]*dio_smpl_cla[2*s_count+1]);
 
-    /*
-    n1_partial = 0.0;
-    n2_partial = 0.0;
-   
-    for(i=0;(uint32_t)i<(uint32_t)BUFF_SAMPLES;i++) {
-        n1_partial += (io_smpl_cla[i]*io_smpl_cla[i]);
-        n2_partial += (dio_smpl_cla[i]*dio_smpl_cla[i]);
-    }
-    */
+    
+    //n1_partial = 0.0;
+    //n2_partial = 0.0;
+   //
+    //for(i=0;(uint32_t)i<(uint32_t)BUFF_SAMPLES;i++) {
+    //    n1_partial += (io_smpl_cla[i]*io_smpl_cla[i]);
+    //    n2_partial += (dio_smpl_cla[i]*dio_smpl_cla[i]);
+    //}
+    
     return;
 }
 
@@ -247,8 +256,12 @@ __attribute__((interrupt)) void Cla1Task1(void)
     if (s_count<N_COMPUTE){
         vo_smpl_cla[2*s_count]   = vo_sample_test[0]; 
         vo_smpl_cla[2*s_count+1] = vo_sample_test[1]; 
+        vo_smpl_cla[2*s_count+2] = vo_sample_test[2]; 
+        vo_smpl_cla[2*s_count+3] = vo_sample_test[3]; 
         io_smpl_cla[2*s_count]   = io_sample_test[0]; 
         io_smpl_cla[2*s_count+1] = io_sample_test[1]; 
+        io_smpl_cla[2*s_count+2] = io_sample_test[2]; 
+        io_smpl_cla[2*s_count+3] = io_sample_test[3]; 
         
         derivatives();
         partial_norms();

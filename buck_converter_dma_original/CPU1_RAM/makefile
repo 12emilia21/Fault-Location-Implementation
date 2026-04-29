@@ -10,11 +10,11 @@ GEN_OPTS__FLAG := --cmd_file="syscfg/board.opt" --cmd_file="syscfg/c2000ware_lib
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./Controller.obj" \
 "./syscfg/board.obj" \
 "./syscfg/c2000ware_libraries.obj" \
 "./cla_tasks.obj" \
 "./control_functions.obj" \
+"./main.obj" \
 "./transient_det.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
@@ -147,8 +147,8 @@ buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Controller.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "control_functions.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "Controller.d" "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "transient_det.d" "device\device.d" 
+	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "control_functions.obj" "main.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "main.d" "transient_det.d" "device\device.d" 
 	-$(RM) "cla_tasks.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)

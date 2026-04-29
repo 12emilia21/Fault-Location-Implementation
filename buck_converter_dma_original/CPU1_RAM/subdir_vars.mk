@@ -18,10 +18,10 @@ LIB_SRCS += \
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \
-../Controller.c \
 ./syscfg/board.c \
 ./syscfg/c2000ware_libraries.c \
 ../control_functions.c \
+../main.c \
 ../transient_det.c 
 
 GEN_FILES += \
@@ -37,10 +37,10 @@ GEN_MISC_DIRS += \
 ./syscfg 
 
 C_DEPS += \
-./Controller.d \
 ./syscfg/board.d \
 ./syscfg/c2000ware_libraries.d \
 ./control_functions.d \
+./main.d \
 ./transient_det.d 
 
 GEN_OPTS += \
@@ -48,11 +48,11 @@ GEN_OPTS += \
 ./syscfg/c2000ware_libraries.opt 
 
 OBJS += \
-./Controller.obj \
 ./syscfg/board.obj \
 ./syscfg/c2000ware_libraries.obj \
 ./cla_tasks.obj \
 ./control_functions.obj \
+./main.obj \
 ./transient_det.obj 
 
 GEN_MISC_FILES += \
@@ -69,11 +69,11 @@ GEN_MISC_DIRS__QUOTED += \
 "syscfg" 
 
 OBJS__QUOTED += \
-"Controller.obj" \
 "syscfg\board.obj" \
 "syscfg\c2000ware_libraries.obj" \
 "cla_tasks.obj" \
 "control_functions.obj" \
+"main.obj" \
 "transient_det.obj" 
 
 GEN_MISC_FILES__QUOTED += \
@@ -87,10 +87,10 @@ GEN_MISC_FILES__QUOTED += \
 "syscfg\clocktree.h" 
 
 C_DEPS__QUOTED += \
-"Controller.d" \
 "syscfg\board.d" \
 "syscfg\c2000ware_libraries.d" \
 "control_functions.d" \
+"main.d" \
 "transient_det.d" 
 
 GEN_FILES__QUOTED += \
@@ -102,14 +102,14 @@ GEN_FILES__QUOTED += \
 CLA_DEPS__QUOTED += \
 "cla_tasks.d" 
 
+SYSCFG_SRCS__QUOTED += \
+"../c2000.syscfg" 
+
 C_SRCS__QUOTED += \
-"../Controller.c" \
 "./syscfg/board.c" \
 "./syscfg/c2000ware_libraries.c" \
 "../control_functions.c" \
+"../main.c" \
 "../transient_det.c" 
-
-SYSCFG_SRCS__QUOTED += \
-"../c2000.syscfg" 
 
 
