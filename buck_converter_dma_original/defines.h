@@ -19,10 +19,3 @@
 #define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
 #define N_SAMPLES       ((uint16_t)4)   
 #define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
-
-
-
-
-
-
-

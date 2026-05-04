@@ -87,6 +87,26 @@ uint32_t  get_clk    = 0;
 uint32_t  get_ls_clk = 0; 
 uint32_t  alg_time   = 0.0f; 
 
+// LPF 
+//float32_t num = 1; 
+//float32_t den[2] = {1.3882e-05, 1}; // tau_lpf from matlab simulation
+
+// Filtered results
+//float32_t filt_ADCA_results[2]; 
+//float32_t filt_ADCB_results[4]; 
+//float32_t filt_ADCC_results[8]; 
+//float32_t d_buffer [4]; 
+
+// LPF Array pointers 
+//float32_t *num_ptr            = (float32_t*) num; 
+//float32_t *den_ptr            = (float32_t*) den; 
+//float32_t *d_buffer_ptr       = (float32_t*) d_buffer; 
+//float32_t  *filt_ADCA_res_ptr = (float32_t*) filt_ADCA_results; 
+//float32_t  *filt_ADCB_res_ptr = (float32_t*) filt_ADCB_results; 
+//float32_t  *filt_ADCC_res_ptr = (float32_t*) filt_ADCC_results; 
+
+
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -103,6 +123,7 @@ void main(void)
 
     // PinMux and Peripheral Initialization
     Board_init();
+   // EPWM_setSyncInPulseSource(ControlPWM_fixed_fsw_BASE, EPWM_SYNC_IN_PULSE_SRC_EPWM1SYNCOUT);
 
     // C2000Ware Library initialization
     C2000Ware_libraries_init();
@@ -140,19 +161,26 @@ void INT_ControlPWM_ISR(void){
 }
 
 void average_samples(void){
-    Iin_avg = 0.5f *((ADCA_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCA_results[1]*IIN_SCALE  - IIN_OFST ));
-    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE - IOUT_OFST));
-    Il_avg  = 0.5f *((ADCC_results[2]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE   - IL_OFST  ));
-    Vin_avg = 0.5f *((ADCC_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCC_results[1]*VIN_SCALE  - VIN_OFST ));
-    Vo_avg  = 0.5f *((VO_results[0]*VOUT_SCALE   - VOUT_OFST) + (VO_results[2]*VOUT_SCALE   - VOUT_OFST));
+    Iin_avg = 0.5f *((ADCA_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCA_results[1]*IIN_SCALE   - IIN_OFST ));
+    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE  - IOUT_OFST));
+    Il_avg  = 0.5f *((ADCC_results[1]*IL_SCALE   - IL_OFST  ) + (ADCC_results[5]*IL_SCALE    - IL_OFST  ));
+    Vin_avg = 0.5f *((ADCC_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCC_results[4]*VIN_SCALE   - VIN_OFST ));
+    Vo_avg  = 0.5f *((ADCC_results[2]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[6]*VOUT_SCALE - VOUT_OFST));
     return;
 }
 
 void samples_to_cla(void){
-    for (k=0; k<N_SAMPLES; k++){
-        vo_sample_test[k] =   VO_results[k]*VOUT_SCALE - VOUT_OFST;
-        io_sample_test[k] = ADCB_results[k]*IOUT_SCALE - IOUT_OFST;
-    }
+    vo_sample_test[0] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[1] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[2] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[3] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
+    io_sample_test[0] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
+    //for (k=0; k<N_SAMPLES; k++){
+    //    
+    //}
     return;
 }
 

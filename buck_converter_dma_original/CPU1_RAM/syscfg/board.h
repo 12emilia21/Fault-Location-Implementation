@@ -75,36 +75,36 @@ extern "C"
 #define ControlPWM_EPWMB_PIN_CONFIG GPIO_1_EPWM1_B
 
 //
-// EPWM2 -> ControlPWM_2fsw Pinmux
+// EPWM2 -> ControlPWM_fixed_fsw Pinmux
 //
 //
 // EPWM2_A - GPIO Settings
 //
 #define GPIO_PIN_EPWM2_A 2
-#define ControlPWM_2fsw_EPWMA_GPIO 2
-#define ControlPWM_2fsw_EPWMA_PIN_CONFIG GPIO_2_EPWM2_A
+#define ControlPWM_fixed_fsw_EPWMA_GPIO 2
+#define ControlPWM_fixed_fsw_EPWMA_PIN_CONFIG GPIO_2_EPWM2_A
 //
 // EPWM2_B - GPIO Settings
 //
 #define GPIO_PIN_EPWM2_B 3
-#define ControlPWM_2fsw_EPWMB_GPIO 3
-#define ControlPWM_2fsw_EPWMB_PIN_CONFIG GPIO_3_EPWM2_B
+#define ControlPWM_fixed_fsw_EPWMB_GPIO 3
+#define ControlPWM_fixed_fsw_EPWMB_PIN_CONFIG GPIO_3_EPWM2_B
 
 //
-// EPWM3 -> ControlPWM_4fsw Pinmux
+// EPWM3 -> ControlPWM_2fsw Pinmux
 //
 //
 // EPWM3_A - GPIO Settings
 //
 #define GPIO_PIN_EPWM3_A 4
-#define ControlPWM_4fsw_EPWMA_GPIO 4
-#define ControlPWM_4fsw_EPWMA_PIN_CONFIG GPIO_4_EPWM3_A
+#define ControlPWM_2fsw_EPWMA_GPIO 4
+#define ControlPWM_2fsw_EPWMA_PIN_CONFIG GPIO_4_EPWM3_A
 //
 // EPWM3_B - GPIO Settings
 //
 #define GPIO_PIN_EPWM3_B 5
-#define ControlPWM_4fsw_EPWMB_GPIO 5
-#define ControlPWM_4fsw_EPWMB_PIN_CONFIG GPIO_5_EPWM3_B
+#define ControlPWM_2fsw_EPWMB_GPIO 5
+#define ControlPWM_2fsw_EPWMB_PIN_CONFIG GPIO_5_EPWM3_B
 //
 // GPIO33 - GPIO Settings
 //
@@ -129,52 +129,32 @@ extern "C"
 #define myADC0_Iin2 ADC_SOC_NUMBER1
 #define myADC0_FORCE_Iin2 ADC_FORCE_SOC1
 #define myADC0_SAMPLE_WINDOW_Iin2 55.1
-#define myADC0_TRIGGER_SOURCE_Iin2 ADC_TRIGGER_EPWM2_SOCA
+#define myADC0_TRIGGER_SOURCE_Iin2 ADC_TRIGGER_EPWM2_SOCB
 #define myADC0_CHANNEL_Iin2 ADC_CH_ADCIN0
 void myADC0_init();
 
 #define myADC1_BASE ADCC_BASE
 #define myADC1_RESULT_BASE ADCCRESULT_BASE
-#define myADC1_Vin1 ADC_SOC_NUMBER0
-#define myADC1_FORCE_Vin1 ADC_FORCE_SOC0
-#define myADC1_SAMPLE_WINDOW_Vin1 59.03
-#define myADC1_TRIGGER_SOURCE_Vin1 ADC_TRIGGER_EPWM2_SOCA
-#define myADC1_CHANNEL_Vin1 ADC_CH_ADCIN5
-#define myADC1_Vin2 ADC_SOC_NUMBER1
-#define myADC1_FORCE_Vin2 ADC_FORCE_SOC1
-#define myADC1_SAMPLE_WINDOW_Vin2 59.03
-#define myADC1_TRIGGER_SOURCE_Vin2 ADC_TRIGGER_EPWM2_SOCA
-#define myADC1_CHANNEL_Vin2 ADC_CH_ADCIN5
-#define myADC1_Il1 ADC_SOC_NUMBER2
-#define myADC1_FORCE_Il1 ADC_FORCE_SOC2
-#define myADC1_SAMPLE_WINDOW_Il1 59.11
-#define myADC1_TRIGGER_SOURCE_Il1 ADC_TRIGGER_EPWM2_SOCA
-#define myADC1_CHANNEL_Il1 ADC_CH_ADCIN3
-#define myADC1_Il2 ADC_SOC_NUMBER3
-#define myADC1_FORCE_Il2 ADC_FORCE_SOC3
-#define myADC1_SAMPLE_WINDOW_Il2 59.11
-#define myADC1_TRIGGER_SOURCE_Il2 ADC_TRIGGER_EPWM2_SOCA
-#define myADC1_CHANNEL_Il2 ADC_CH_ADCIN3
-#define myADC1_Vo1 ADC_SOC_NUMBER4
-#define myADC1_FORCE_Vo1 ADC_FORCE_SOC4
+#define myADC1_Vin ADC_SOC_NUMBER0
+#define myADC1_FORCE_Vin ADC_FORCE_SOC0
+#define myADC1_SAMPLE_WINDOW_Vin 59.03
+#define myADC1_TRIGGER_SOURCE_Vin ADC_TRIGGER_EPWM3_SOCA
+#define myADC1_CHANNEL_Vin ADC_CH_ADCIN5
+#define myADC1_Il ADC_SOC_NUMBER1
+#define myADC1_FORCE_Il ADC_FORCE_SOC1
+#define myADC1_SAMPLE_WINDOW_Il 59.11
+#define myADC1_TRIGGER_SOURCE_Il ADC_TRIGGER_EPWM3_SOCA
+#define myADC1_CHANNEL_Il ADC_CH_ADCIN3
+#define myADC1_Vo1 ADC_SOC_NUMBER2
+#define myADC1_FORCE_Vo1 ADC_FORCE_SOC2
 #define myADC1_SAMPLE_WINDOW_Vo1 59.94
 #define myADC1_TRIGGER_SOURCE_Vo1 ADC_TRIGGER_EPWM3_SOCA
 #define myADC1_CHANNEL_Vo1 ADC_CH_ADCIN14
-#define myADC1_Vo2 ADC_SOC_NUMBER5
-#define myADC1_FORCE_Vo2 ADC_FORCE_SOC5
+#define myADC1_Vo2 ADC_SOC_NUMBER3
+#define myADC1_FORCE_Vo2 ADC_FORCE_SOC3
 #define myADC1_SAMPLE_WINDOW_Vo2 59.94
-#define myADC1_TRIGGER_SOURCE_Vo2 ADC_TRIGGER_EPWM3_SOCA
+#define myADC1_TRIGGER_SOURCE_Vo2 ADC_TRIGGER_EPWM3_SOCB
 #define myADC1_CHANNEL_Vo2 ADC_CH_ADCIN14
-#define myADC1_Vo3 ADC_SOC_NUMBER6
-#define myADC1_FORCE_Vo3 ADC_FORCE_SOC6
-#define myADC1_SAMPLE_WINDOW_Vo3 59.94
-#define myADC1_TRIGGER_SOURCE_Vo3 ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Vo3 ADC_CH_ADCIN14
-#define myADC1_Vo4 ADC_SOC_NUMBER7
-#define myADC1_FORCE_Vo4 ADC_FORCE_SOC7
-#define myADC1_SAMPLE_WINDOW_Vo4 59.94
-#define myADC1_TRIGGER_SOURCE_Vo4 ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Vo4 ADC_CH_ADCIN14
 void myADC1_init();
 
 #define myADC2_BASE ADCB_BASE
@@ -187,18 +167,8 @@ void myADC1_init();
 #define myADC2_Io2 ADC_SOC_NUMBER1
 #define myADC2_FORCE_Io2 ADC_FORCE_SOC1
 #define myADC2_SAMPLE_WINDOW_Io2 56.73
-#define myADC2_TRIGGER_SOURCE_Io2 ADC_TRIGGER_EPWM3_SOCA
+#define myADC2_TRIGGER_SOURCE_Io2 ADC_TRIGGER_EPWM3_SOCB
 #define myADC2_CHANNEL_Io2 ADC_CH_ADCIN6
-#define myADC2_Io3 ADC_SOC_NUMBER2
-#define myADC2_FORCE_Io3 ADC_FORCE_SOC2
-#define myADC2_SAMPLE_WINDOW_Io3 56.73
-#define myADC2_TRIGGER_SOURCE_Io3 ADC_TRIGGER_EPWM3_SOCA
-#define myADC2_CHANNEL_Io3 ADC_CH_ADCIN6
-#define myADC2_Io4 ADC_SOC_NUMBER3
-#define myADC2_FORCE_Io4 ADC_FORCE_SOC3
-#define myADC2_SAMPLE_WINDOW_Io4 56.73
-#define myADC2_TRIGGER_SOURCE_Io4 ADC_TRIGGER_EPWM3_SOCA
-#define myADC2_CHANNEL_Io4 ADC_CH_ADCIN6
 void myADC2_init();
 
 
@@ -233,7 +203,7 @@ extern const void *ADCC0_Result_base;
 extern const void *ADCC0_results_add;
 #define myDMA0_BASE DMA_CH1_BASE 
 #define myDMA0_BURSTSIZE 4U
-#define myDMA0_TRANSFERSIZE 1U
+#define myDMA0_TRANSFERSIZE 2U
 void myDMA0_init();
 extern const void *ADCA0_Result_base;
 extern const void *ADCA0_results_add;
@@ -244,15 +214,9 @@ void myDMA1_init();
 extern const void *ADCB0_Result_base;
 extern const void *ADCB0_results_add;
 #define myDMA2_BASE DMA_CH3_BASE 
-#define myDMA2_BURSTSIZE 4U
-#define myDMA2_TRANSFERSIZE 1U
+#define myDMA2_BURSTSIZE 2U
+#define myDMA2_TRANSFERSIZE 2U
 void myDMA2_init();
-extern const void *VO_Result_base;
-extern const void *VO_results_add;
-#define myDMA3_BASE DMA_CH4_BASE 
-#define myDMA3_BURSTSIZE 4U
-#define myDMA3_TRANSFERSIZE 1U
-void myDMA3_init();
 
 //*****************************************************************************
 //
@@ -274,7 +238,20 @@ void myDMA3_init();
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
-#define ControlPWM_2fsw_BASE EPWM2_BASE
+#define ControlPWM_fixed_fsw_BASE EPWM2_BASE
+#define ControlPWM_fixed_fsw_TBPRD 5000
+#define ControlPWM_fixed_fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define ControlPWM_fixed_fsw_TBPHS 0
+#define ControlPWM_fixed_fsw_CMPA 2500
+#define ControlPWM_fixed_fsw_CMPB 4999
+#define ControlPWM_fixed_fsw_CMPC 0
+#define ControlPWM_fixed_fsw_CMPD 0
+#define ControlPWM_fixed_fsw_DBRED 20
+#define ControlPWM_fixed_fsw_DBFED 20
+#define ControlPWM_fixed_fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_fixed_fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_fixed_fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define ControlPWM_2fsw_BASE EPWM3_BASE
 #define ControlPWM_2fsw_TBPRD 2500
 #define ControlPWM_2fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_2fsw_TBPHS 0
@@ -287,19 +264,6 @@ void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_2fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
-#define ControlPWM_4fsw_BASE EPWM3_BASE
-#define ControlPWM_4fsw_TBPRD 1250
-#define ControlPWM_4fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define ControlPWM_4fsw_TBPHS 0
-#define ControlPWM_4fsw_CMPA 625
-#define ControlPWM_4fsw_CMPB 1249
-#define ControlPWM_4fsw_CMPC 0
-#define ControlPWM_4fsw_CMPD 0
-#define ControlPWM_4fsw_DBRED 10
-#define ControlPWM_4fsw_DBFED 10
-#define ControlPWM_4fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_4fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_4fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 
 //*****************************************************************************
 //

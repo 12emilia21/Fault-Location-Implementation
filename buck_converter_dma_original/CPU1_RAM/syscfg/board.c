@@ -86,7 +86,18 @@ void PinMux_init()
 	GPIO_setQualificationMode(ControlPWM_EPWMB_GPIO, GPIO_QUAL_SYNC);
 
 	//
-	// EPWM2 -> ControlPWM_2fsw Pinmux
+	// EPWM2 -> ControlPWM_fixed_fsw Pinmux
+	//
+	GPIO_setPinConfig(ControlPWM_fixed_fsw_EPWMA_PIN_CONFIG);
+	GPIO_setPadConfig(ControlPWM_fixed_fsw_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(ControlPWM_fixed_fsw_EPWMA_GPIO, GPIO_QUAL_SYNC);
+
+	GPIO_setPinConfig(ControlPWM_fixed_fsw_EPWMB_PIN_CONFIG);
+	GPIO_setPadConfig(ControlPWM_fixed_fsw_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(ControlPWM_fixed_fsw_EPWMB_GPIO, GPIO_QUAL_SYNC);
+
+	//
+	// EPWM3 -> ControlPWM_2fsw Pinmux
 	//
 	GPIO_setPinConfig(ControlPWM_2fsw_EPWMA_PIN_CONFIG);
 	GPIO_setPadConfig(ControlPWM_2fsw_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
@@ -95,17 +106,6 @@ void PinMux_init()
 	GPIO_setPinConfig(ControlPWM_2fsw_EPWMB_PIN_CONFIG);
 	GPIO_setPadConfig(ControlPWM_2fsw_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(ControlPWM_2fsw_EPWMB_GPIO, GPIO_QUAL_SYNC);
-
-	//
-	// EPWM3 -> ControlPWM_4fsw Pinmux
-	//
-	GPIO_setPinConfig(ControlPWM_4fsw_EPWMA_PIN_CONFIG);
-	GPIO_setPadConfig(ControlPWM_4fsw_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(ControlPWM_4fsw_EPWMA_GPIO, GPIO_QUAL_SYNC);
-
-	GPIO_setPinConfig(ControlPWM_4fsw_EPWMB_PIN_CONFIG);
-	GPIO_setPadConfig(ControlPWM_4fsw_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(ControlPWM_4fsw_EPWMB_GPIO, GPIO_QUAL_SYNC);
 
 	// GPIO33 -> debug_pin Pinmux
 	GPIO_setPinConfig(GPIO_33_GPIO33);
@@ -177,12 +177,12 @@ void myADC0_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCB
 	//	  	Channel			: ADC_CH_ADCIN0
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN0, 6U);
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCB, ADC_CH_ADCIN0, 6U);
 	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// ADC Interrupt 1 Configuration
@@ -234,12 +234,12 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN5
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN5, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -247,12 +247,12 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN5
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN3
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN5, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -260,12 +260,12 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 2
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 3 Configuration
@@ -273,65 +273,13 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 3
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
-	//	  	Channel			: ADC_CH_ADCIN3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCB
+	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN14, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 4 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 4
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER4, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER4, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 5 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 5
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER5, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER5, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 6 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 6
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER6, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER6, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 7 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 7
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER7, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER7, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// ADC Interrupt 1 Configuration
 	// 		SOC/EOC number	: 3
@@ -342,16 +290,6 @@ void myADC1_init(){
 	ADC_enableInterrupt(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC1_BASE, ADC_INT_NUMBER1);
-	//
-	// ADC Interrupt 2 Configuration
-	// 		SOC/EOC number	: 7
-	// 		Interrupt Source: enabled
-	//		Continuous Mode	: enabled
-	//
-	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER2, ADC_SOC_NUMBER7);
-	ADC_enableInterrupt(myADC1_BASE, ADC_INT_NUMBER2);
-	ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER2);
-	ADC_enableContinuousMode(myADC1_BASE, ADC_INT_NUMBER2);
 }
 void myADC2_init(){
 	//
@@ -405,46 +343,20 @@ void myADC2_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCB
 	//	  	Channel			: ADC_CH_ADCIN6
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN6, 6U);
 	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
-	// Start of Conversion 2 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 2
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN6
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
-	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 3 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 3
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN6
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
-	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
-	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 3
+	// 		SOC/EOC number	: 1
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC2_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER3);
+	ADC_setInterruptSource(myADC2_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
 	ADC_enableInterrupt(myADC2_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC2_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC2_BASE, ADC_INT_NUMBER1);
@@ -535,15 +447,14 @@ void DMA_init(){
 	myDMA0_init();
 	myDMA1_init();
 	myDMA2_init();
-	myDMA3_init();
 }
 
 void myDMA0_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA0_BASE, ADCC0_results_add, ADCC0_Result_base);
     DMA_configBurst(myDMA0_BASE, 4U, 1, 1);
-    DMA_configTransfer(myDMA0_BASE, 1U, -3, -3);
-    DMA_configWrap(myDMA0_BASE, 65535U, 0, 65535U, 0);
+    DMA_configTransfer(myDMA0_BASE, 2U, -3, 1);
+    DMA_configWrap(myDMA0_BASE, 65535U, 0, 2U, -7);
     DMA_configMode(myDMA0_BASE, DMA_TRIGGER_ADCC1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_enableTrigger(myDMA0_BASE);
     DMA_startChannel(myDMA0_BASE);
@@ -561,22 +472,12 @@ void myDMA1_init(){
 void myDMA2_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA2_BASE, ADCB0_results_add, ADCB0_Result_base);
-    DMA_configBurst(myDMA2_BASE, 4U, 1, 1);
-    DMA_configTransfer(myDMA2_BASE, 1U, -3, -3);
-    DMA_configWrap(myDMA2_BASE, 65535U, 0, 65535U, 0);
+    DMA_configBurst(myDMA2_BASE, 2U, 1, 1);
+    DMA_configTransfer(myDMA2_BASE, 2U, -1, 1);
+    DMA_configWrap(myDMA2_BASE, 65535U, 0, 2U, -3);
     DMA_configMode(myDMA2_BASE, DMA_TRIGGER_ADCB1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_enableTrigger(myDMA2_BASE);
     DMA_startChannel(myDMA2_BASE);
-}
-void myDMA3_init(){
-    DMA_setEmulationMode(DMA_EMULATION_STOP);
-    DMA_configAddresses(myDMA3_BASE, VO_results_add, VO_Result_base);
-    DMA_configBurst(myDMA3_BASE, 4U, 1, 1);
-    DMA_configTransfer(myDMA3_BASE, 1U, -3, -3);
-    DMA_configWrap(myDMA3_BASE, 65535U, 0, 65535U, 0);
-    DMA_configMode(myDMA3_BASE, DMA_TRIGGER_ADCC2, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
-    DMA_enableTrigger(myDMA3_BASE);
-    DMA_startChannel(myDMA3_BASE);
 }
 
 //*****************************************************************************
@@ -618,6 +519,7 @@ void EPWM_init(){
     HRPWM_setActionQualifierAction(ControlPWM_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
     HRPWM_setActionQualifierAction(ControlPWM_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
     HRPWM_setActionQualifierAction(ControlPWM_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    HRPWM_setActionQualifierAction(ControlPWM_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_T1_COUNT_UP);	
     HRPWM_setDeadBandDelayPolarity(ControlPWM_BASE, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
     HRPWM_setDeadBandDelayMode(ControlPWM_BASE, EPWM_DB_RED, true);	
     HRPWM_setRisingEdgeDelayCount(ControlPWM_BASE, 20);	
@@ -634,6 +536,52 @@ void EPWM_init(){
     HRPWM_setADCTriggerSource(ControlPWM_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
     HRPWM_setADCTriggerEventPrescale(ControlPWM_BASE, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(ControlPWM_BASE);	
+    HRPWM_setEmulationMode(ControlPWM_fixed_fsw_BASE, EPWM_EMULATION_FREE_RUN);	
+    HRPWM_setClockPrescaler(ControlPWM_fixed_fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
+    EPWM_setTimeBasePeriod(ControlPWM_fixed_fsw_BASE, 5000);	
+    HRPWM_enableGlobalLoadRegisters(ControlPWM_fixed_fsw_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
+    HRPWM_setTimeBaseCounter(ControlPWM_fixed_fsw_BASE, 0);	
+    HRPWM_setTimeBaseCounterMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
+    HRPWM_setCountModeAfterSync(ControlPWM_fixed_fsw_BASE, EPWM_COUNT_MODE_UP_AFTER_SYNC);	
+    HRPWM_disablePhaseShiftLoad(ControlPWM_fixed_fsw_BASE);	
+    HRPWM_setPhaseShift(ControlPWM_fixed_fsw_BASE, 0);	
+    HRPWM_setSyncOutPulseMode(ControlPWM_fixed_fsw_BASE, EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO);	
+    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A, 2500);	
+    HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A);	
+    HRPWM_setCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B, 4999);	
+    HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B);	
+    HRPWM_setCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    HRPWM_enableGlobalLoadRegisters(ControlPWM_fixed_fsw_BASE, EPWM_GL_REGISTER_AQCSFRC);	
+    HRPWM_setActionQualifierContSWForceShadowMode(ControlPWM_fixed_fsw_BASE, EPWM_AQ_SW_IMMEDIATE_LOAD);	
+    HRPWM_setActionQualifierT1TriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
+    HRPWM_setActionQualifierT2TriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_T1_COUNT_UP);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    HRPWM_setActionQualifierAction(ControlPWM_fixed_fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_T1_COUNT_UP);	
+    HRPWM_setDeadBandDelayPolarity(ControlPWM_fixed_fsw_BASE, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
+    HRPWM_setDeadBandDelayMode(ControlPWM_fixed_fsw_BASE, EPWM_DB_RED, true);	
+    HRPWM_setRisingEdgeDelayCount(ControlPWM_fixed_fsw_BASE, 20);	
+    HRPWM_setDeadBandDelayMode(ControlPWM_fixed_fsw_BASE, EPWM_DB_FED, true);	
+    HRPWM_setFallingEdgeDelayCount(ControlPWM_fixed_fsw_BASE, 20);	
+    HRPWM_enableADCTrigger(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A);	
+    HRPWM_setADCTriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_PERIOD);	
+    HRPWM_setADCTriggerEventPrescale(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A, 1);	
+    HRPWM_enableADCTrigger(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B);	
+    HRPWM_setADCTriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
+    HRPWM_setADCTriggerEventPrescale(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B, 1);	
+    HRPWM_enableAutoConversion(ControlPWM_fixed_fsw_BASE);	
     HRPWM_setEmulationMode(ControlPWM_2fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_2fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(ControlPWM_2fsw_BASE, 2500);	
@@ -675,49 +623,10 @@ void EPWM_init(){
     HRPWM_enableADCTrigger(ControlPWM_2fsw_BASE, EPWM_SOC_A);	
     HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_ZERO);	
     HRPWM_setADCTriggerEventPrescale(ControlPWM_2fsw_BASE, EPWM_SOC_A, 1);	
+    HRPWM_enableADCTrigger(ControlPWM_2fsw_BASE, EPWM_SOC_B);	
+    HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
+    HRPWM_setADCTriggerEventPrescale(ControlPWM_2fsw_BASE, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(ControlPWM_2fsw_BASE);	
-    HRPWM_setEmulationMode(ControlPWM_4fsw_BASE, EPWM_EMULATION_FREE_RUN);	
-    HRPWM_setClockPrescaler(ControlPWM_4fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
-    EPWM_setTimeBasePeriod(ControlPWM_4fsw_BASE, 1250);	
-    HRPWM_enableGlobalLoadRegisters(ControlPWM_4fsw_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
-    HRPWM_setTimeBaseCounter(ControlPWM_4fsw_BASE, 0);	
-    HRPWM_setTimeBaseCounterMode(ControlPWM_4fsw_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
-    HRPWM_setCountModeAfterSync(ControlPWM_4fsw_BASE, EPWM_COUNT_MODE_UP_AFTER_SYNC);	
-    HRPWM_disablePhaseShiftLoad(ControlPWM_4fsw_BASE);	
-    HRPWM_setPhaseShift(ControlPWM_4fsw_BASE, 0);	
-    HRPWM_setSyncOutPulseMode(ControlPWM_4fsw_BASE, EPWM_SYNC_OUT_PULSE_ON_EPWMxSYNCIN);	
-    EPWM_setCounterCompareValue(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_A, 625);	
-    HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_A);	
-    HRPWM_setCounterCompareShadowLoadMode(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_B, 1249);	
-    HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_B);	
-    HRPWM_setCounterCompareShadowLoadMode(ControlPWM_4fsw_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    HRPWM_enableGlobalLoadRegisters(ControlPWM_4fsw_BASE, EPWM_GL_REGISTER_AQCSFRC);	
-    HRPWM_setActionQualifierContSWForceShadowMode(ControlPWM_4fsw_BASE, EPWM_AQ_SW_IMMEDIATE_LOAD);	
-    HRPWM_setActionQualifierT1TriggerSource(ControlPWM_4fsw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
-    HRPWM_setActionQualifierT2TriggerSource(ControlPWM_4fsw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_T1_COUNT_UP);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
-    HRPWM_setActionQualifierAction(ControlPWM_4fsw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
-    HRPWM_setDeadBandDelayPolarity(ControlPWM_4fsw_BASE, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
-    HRPWM_setDeadBandDelayMode(ControlPWM_4fsw_BASE, EPWM_DB_RED, true);	
-    HRPWM_setRisingEdgeDelayCount(ControlPWM_4fsw_BASE, 10);	
-    HRPWM_setDeadBandDelayMode(ControlPWM_4fsw_BASE, EPWM_DB_FED, true);	
-    HRPWM_setFallingEdgeDelayCount(ControlPWM_4fsw_BASE, 10);	
-    HRPWM_enableADCTrigger(ControlPWM_4fsw_BASE, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(ControlPWM_4fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_ZERO);	
-    HRPWM_setADCTriggerEventPrescale(ControlPWM_4fsw_BASE, EPWM_SOC_A, 1);	
-    HRPWM_enableAutoConversion(ControlPWM_4fsw_BASE);	
 }
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base){
@@ -754,6 +663,7 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
     HRPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
     HRPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    HRPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_T1_COUNT_UP);	
     HRPWM_setDeadBandDelayPolarity(base, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
     HRPWM_setDeadBandDelayMode(base, EPWM_DB_RED, true);	
     HRPWM_setRisingEdgeDelayCount(base, 20);	
