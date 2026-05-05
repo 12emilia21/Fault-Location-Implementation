@@ -87,7 +87,7 @@ PI_Controller Il_controller;
 #define IL_SCALE IL_MAX/ADC_CODES
 #define IL_OFST 7
 
-#define VIN_MAX ((float32_t)60)         // 10% above rated (60V) - 33
+#define VIN_MAX ((float32_t)80)         // 10% above rated (60V) - 33
 #define VIN_SCALE VIN_MAX/ADC_CODES
 #define VIN_OFST 0
 

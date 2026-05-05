@@ -178,9 +178,6 @@ void samples_to_cla(void){
     io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
     io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
     io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
-    //for (k=0; k<N_SAMPLES; k++){
-    //    
-    //}
     return;
 }
 
@@ -218,7 +215,11 @@ __interrupt void cla1Isr1(void)
         //CPUTimer_stopTimer(alg_timer_BASE);
         //alg_time = CPUTimer_getTimerCount(alg_timer_BASE);
         GPIO_writePin(debug_pin,0);
-        R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
+        // Error calculation
+        if (Io_avg > 1)
+            R_err = fabsf((R_out-REAL_R_LOAD)/REAL_R_LOAD)*100.0f;
+        else 
+            R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
         L_err = fabsf((L_out-REAL_L_FAULT)/REAL_L_FAULT)*100.0f;
     }
     
