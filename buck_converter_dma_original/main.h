@@ -75,25 +75,25 @@ PI_Controller Il_controller;
 //#define VOUT_OFST 0
 
 // Fit to measure complete transient
-#define IIN_MAX ((float32_t)35)
+#define IIN_MAX ((float32_t)40)
 #define IIN_SCALE IIN_MAX/ADC_CODES
-#define IIN_OFST 7
+#define IIN_OFST 12
 
-#define IOUT_MAX ((float32_t)35)
+#define IOUT_MAX ((float32_t)40)
 #define IOUT_SCALE IOUT_MAX/ADC_CODES
-#define IOUT_OFST 7
+#define IOUT_OFST 12
 
-#define IL_MAX ((float32_t)35)        // 50% above rated (9A) - 6.75
+#define IL_MAX ((float32_t)40)        // 50% above rated (9A) - 6.75
 #define IL_SCALE IL_MAX/ADC_CODES
-#define IL_OFST 7
+#define IL_OFST 12
 
-#define VIN_MAX ((float32_t)80)         // 10% above rated (60V) - 33
+#define VIN_MAX ((float32_t)85)         // 10% above rated (60V) - 33
 #define VIN_SCALE VIN_MAX/ADC_CODES
 #define VIN_OFST 0
 
-#define VOUT_MAX ((float32_t)80)        
+#define VOUT_MAX ((float32_t)85)        
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
-#define VOUT_OFST 26
+#define VOUT_OFST 30
 
 #define num_samples  ((uint16_t)4)
 
@@ -105,6 +105,7 @@ void duty_cycle_calculation(void);
 void initializeDMA(void);
 void configureDMAChannels(void);
 void samples_to_cla(void);
+void err_calc(void);
 
 
 

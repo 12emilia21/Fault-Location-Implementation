@@ -54,6 +54,7 @@ void Board_init()
 	CLA_init();
 	MEMCFG_init();
 	ADC_init();
+	CPUTIMER_init();
 	DMA_init();
 	EPWM_init();
 	GPIO_init();
@@ -435,6 +436,25 @@ void CLA_init()
 #endif //_FLASH
 
 	myCLA0_init();
+}
+
+//*****************************************************************************
+//
+// CPUTIMER Configurations
+//
+//*****************************************************************************
+void CPUTIMER_init(){
+	myCPUTIMER0_init();
+}
+
+void myCPUTIMER0_init(){
+	CPUTimer_setEmulationMode(myCPUTIMER0_BASE, CPUTIMER_EMULATIONMODE_RUNFREE);
+	CPUTimer_setPreScaler(myCPUTIMER0_BASE, 99U);
+	CPUTimer_setPeriod(myCPUTIMER0_BASE, 9999U);
+	CPUTimer_disableInterrupt(myCPUTIMER0_BASE);
+	CPUTimer_stopTimer(myCPUTIMER0_BASE);
+
+	CPUTimer_reloadTimerCounter(myCPUTIMER0_BASE);
 }
 
 //*****************************************************************************

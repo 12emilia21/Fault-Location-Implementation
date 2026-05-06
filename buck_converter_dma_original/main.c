@@ -83,29 +83,10 @@ volatile float32_t L_err  = 0.0f;
 #pragma DATA_SECTION(L_err,    "ramgs0");
 
 // Aux
-uint32_t  get_clk    = 0; 
-uint32_t  get_ls_clk = 0; 
-uint32_t  alg_time   = 0.0f; 
-
-// LPF 
-//float32_t num = 1; 
-//float32_t den[2] = {1.3882e-05, 1}; // tau_lpf from matlab simulation
-
-// Filtered results
-//float32_t filt_ADCA_results[2]; 
-//float32_t filt_ADCB_results[4]; 
-//float32_t filt_ADCC_results[8]; 
-//float32_t d_buffer [4]; 
-
-// LPF Array pointers 
-//float32_t *num_ptr            = (float32_t*) num; 
-//float32_t *den_ptr            = (float32_t*) den; 
-//float32_t *d_buffer_ptr       = (float32_t*) d_buffer; 
-//float32_t  *filt_ADCA_res_ptr = (float32_t*) filt_ADCA_results; 
-//float32_t  *filt_ADCB_res_ptr = (float32_t*) filt_ADCB_results; 
-//float32_t  *filt_ADCC_res_ptr = (float32_t*) filt_ADCC_results; 
-
-
+uint32_t  get_clk     = 0; 
+uint32_t  get_ls_clk  = 0; 
+uint32_t  timer_count = 0; 
+float32_t alg_time    = 0.0;
 
 void main(void)
 {
@@ -137,7 +118,6 @@ void main(void)
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
-    get_ls_clk = SysCtl_getLowSpeedClock(DEVICE_OSCSRC_FREQ);
 
     EINT;
     ERTM;
@@ -155,6 +135,7 @@ void INT_ControlPWM_ISR(void){
     transient_det_res = transient_detector(Vo_avg, Il_avg);
     if (transient_det_res == 0) {
         s_count=0;
+        err_calc();
     }
     GPIO_writePin(transient_det_pin, transient_det_res);
     set_duty_cycle(d);
@@ -183,7 +164,7 @@ void samples_to_cla(void){
 
 void INT_transient_det_pin_XINT_ISR(void){
     if (s_count == 0) {
-        //CPUTimer_startTimer(alg_timer_BASE);
+        CPUTimer_startTimer(myCPUTIMER0_BASE);
         GPIO_writePin(debug_pin,1);
     }
     if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
@@ -208,19 +189,24 @@ void duty_cycle_calculation(void){
     return;
 }
 
+void err_calc(void){
+    if (Io_avg > 1)
+        R_err = fabsf((R_out-REAL_R_LOAD)/REAL_R_LOAD)*100.0f;
+    else 
+        R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
+    L_err = fabsf((L_out-REAL_L_FAULT)/REAL_L_FAULT)*100.0f;
+
+    return;
+}
+
 __interrupt void cla1Isr1(void)
 {
     s_count+=1;
     if (s_count == BUFF_SAMPLES/N_SAMPLES) {
-        //CPUTimer_stopTimer(alg_timer_BASE);
-        //alg_time = CPUTimer_getTimerCount(alg_timer_BASE);
+        CPUTimer_stopTimer(myCPUTIMER0_BASE);
+        timer_count = CPUTimer_getTimerCount(myCPUTIMER0_BASE);
+        alg_time = TIMER_PERIOD - timer_count*TIMER_PRESCALER/SYSCLK;
         GPIO_writePin(debug_pin,0);
-        // Error calculation
-        if (Io_avg > 1)
-            R_err = fabsf((R_out-REAL_R_LOAD)/REAL_R_LOAD)*100.0f;
-        else 
-            R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
-        L_err = fabsf((L_out-REAL_L_FAULT)/REAL_L_FAULT)*100.0f;
     }
     
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
