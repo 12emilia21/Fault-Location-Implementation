@@ -245,10 +245,8 @@ void myDMA2_init();
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
 #define ControlPWM_DBFED 20
-#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_LOW
-#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
-#define ControlPWM_OSHT_SOURCES EPWM_TZ_SIGNAL_OSHT1
-#define ControlPWM_TZ_INTERRUPT_SOURCES EPWM_TZ_INTERRUPT_OST
+#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
@@ -322,20 +320,10 @@ extern __interrupt void cla1Isr1(void);
 #define INT_ControlPWM_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
 extern __interrupt void INT_ControlPWM_ISR(void);
 
-// Interrupt Settings for INT_ControlPWM_TZ
-#define INT_ControlPWM_TZ INT_EPWM1_TZ
-#define INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP2
-extern __interrupt void INT_ControlPWM_TZ_ISR(void);
-
 // Interrupt Settings for INT_transient_det_pin_XINT
 #define INT_transient_det_pin_XINT INT_XINT1
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
-
-// Interrupt Settings for INT_tz_pin_XINT
-#define INT_tz_pin_XINT INT_XINT2
-#define INT_tz_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void INT_tz_pin_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -357,9 +345,6 @@ extern __interrupt void INT_tz_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
-#define tz_pin_XINT GPIO_INT_XINT2
-#define tz_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
-void tz_pin_XINT_init();
 
 //*****************************************************************************
 //

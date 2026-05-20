@@ -234,20 +234,20 @@ void INT_transient_det_pin_XINT_ISR(void){
     Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
 }
 
-// --- ISR for the trip-zone interrupt ---
-// The flags are not cleared yet since the trip condition persists (GPIO in low state). 
-// The interruption is only acknowledged. 
+// Comment if trip-zone is not enabled
 
-void INT_ControlPWM_TZ_ISR(void){
-    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
-}
-
-// --- ISR for the trip-zone GPIO ---
-// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
-
-void INT_tz_pin_XINT_ISR(void){
-    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
-}
-
-
+//// --- ISR for the trip-zone interrupt ---
+//// The flags are not cleared yet since the trip condition persists (GPIO in low state). 
+//// The interruption is only acknowledged. 
+//
+//void INT_ControlPWM_TZ_ISR(void){
+//    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
+//}
+//
+//// --- ISR for the trip-zone GPIO ---
+//// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
+//
+//void INT_tz_pin_XINT_ISR(void){
+//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+//    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+//}

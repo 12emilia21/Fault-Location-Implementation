@@ -6,8 +6,7 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CMD_SRCS += \
-../28004x_cla_flash_lnk.cmd \
-../28004x_cla_ram_lnk.cmd 
+../28004x_cla_flash_lnk.cmd 
 
 SYSCFG_SRCS += \
 ../c2000.syscfg 

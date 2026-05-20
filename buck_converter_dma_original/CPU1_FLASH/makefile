@@ -19,7 +19,6 @@ ORDERED_OBJS += \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
 "../28004x_cla_flash_lnk.cmd" \
-"../28004x_cla_ram_lnk.cmd" \
 "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \
@@ -140,7 +139,7 @@ all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --isr_save_vcu_regs=on --tmu_support=tmu0 --vcu_support=vcu0 -O4 --opt_for_speed=5 --fp_mode=relaxed --fp_reassoc=on --advice:performance=all --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"buck_converter_dma_original.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/lib" -i"C:/ti/c2000/C2000Ware_4_03_00_00" -i"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg" -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="buck_converter_dma_original_linkInfo.xml" --entry_point=code_start --rom_model -o "buck_converter_dma_original.out" $(ORDERED_OBJS)
+	"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla1 --float_support=fpu32 --isr_save_vcu_regs=on --tmu_support=tmu0 --vcu_support=vcu0 -O4 --opt_for_speed=5 --fp_mode=relaxed --fp_reassoc=on --advice:performance=all --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"buck_converter_dma_original.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/lib" -i"C:/ti/c2000/C2000Ware_4_03_00_00" -i"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg" -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="buck_converter_dma_original_linkInfo.xml" --entry_point=code_start --rom_model -o "buck_converter_dma_original.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build

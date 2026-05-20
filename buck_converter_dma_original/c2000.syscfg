@@ -287,11 +287,6 @@ epwm1.epwmCounterCompare_cmpB                                    = 4999;
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T1_COUNT_UP        = "EPWM_AQ_OUTPUT_HIGH";
 epwm1.hrpwm_syncSource                                           = "HRPWM_PWMSYNC_SOURCE_ZERO";
 epwm1.epwmTimebase_syncOutPulseMode                              = "EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO";
-epwm1.epwmTripZone_registerInterrupts                            = true;
-epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                      = "EPWM_TZ_ACTION_LOW";
-epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                      = "EPWM_TZ_ACTION_LOW";
-epwm1.epwmTripZone_oneShotSource                                 = ["EPWM_TZ_SIGNAL_OSHT1"];
-epwm1.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_OST"];
 epwm1.epwm.$assign                                               = "EPWM1";
 epwm1.epwm.epwm_aPin.$assign                                     = "ball.79";
 epwm1.epwm.epwm_bPin.$assign                                     = "ball.78";
@@ -391,16 +386,9 @@ gpio2.xint.enableInt            = true;
 gpio2.xint.registerInterrupts   = true;
 gpio2.xint.xInt.enableInterrupt = true;
 
-gpio3.$name                     = "tz_pin";
-gpio3.writeInitialValue         = true;
-gpio3.initialValue              = 1;
-gpio3.useInterrupt              = true;
-gpio3.gpioPin.$assign           = "ball.54";
-gpio3.xint.xintNum              = "GPIO_INT_XINT2";
-gpio3.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
-gpio3.xint.enableInt            = true;
-gpio3.xint.registerInterrupts   = true;
-gpio3.xint.xInt.enableInterrupt = true;
+gpio3.$name           = "tz_pin";
+gpio3.initialValue    = 1;
+gpio3.gpioPin.$assign = "ball.54";
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio2.xint.inputxbar           = inputxbar_input1;
@@ -410,10 +398,10 @@ inputxbar_input2.$name         = "myINPUTXBARINPUT1";
 inputxbar_input2.inputxbarLock = true;
 inputxbar_input2.inputxbarGpio = "GPIO31";
 
-inputxbar_input3.$name         = "myINPUTXBARINPUT4";
-gpio3.xint.inputxbar           = inputxbar_input3;
-inputxbar_input3.inputxbarLock = true;
-inputxbar_input3.inputxbarGpio = "GPIO31";
+inputxbar_input3.$name          = "myINPUTXBARINPUT4";
+inputxbar_input3.inputxbarInput = "XBAR_INPUT5";
+inputxbar_input3.inputxbarLock  = true;
+inputxbar_input3.inputxbarGpio  = "GPIO31";
 
 memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
 memcfg.config_MEMCFG_SECT_LS2 = "CLA_data";

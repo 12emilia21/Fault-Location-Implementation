@@ -547,10 +547,6 @@ void EPWM_init(){
     HRPWM_setRisingEdgeDelayCount(ControlPWM_BASE, 20);	
     HRPWM_setDeadBandDelayMode(ControlPWM_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_BASE, 20);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(ControlPWM_BASE, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(ControlPWM_BASE, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableInterrupt(ControlPWM_BASE);	
     HRPWM_setInterruptSource(ControlPWM_BASE, EPWM_INT_TBCTR_U_CMPB);	
     HRPWM_setInterruptEventCount(ControlPWM_BASE, 1);	
@@ -695,10 +691,6 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setRisingEdgeDelayCount(base, 20);	
     HRPWM_setDeadBandDelayMode(base, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(base, 20);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(base, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(base, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableInterrupt(base);	
     HRPWM_setInterruptSource(base, EPWM_INT_TBCTR_U_CMPB);	
     HRPWM_setInterruptEventCount(base, 1);	
@@ -738,7 +730,6 @@ void transient_det_pin_init(){
 	GPIO_setControllerCore(transient_det_pin, GPIO_CORE_CPU1);
 }
 void tz_pin_init(){
-	GPIO_writePin(tz_pin, 1);
 	GPIO_setPadConfig(tz_pin, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(tz_pin, GPIO_QUAL_SYNC);
 	GPIO_setDirectionMode(tz_pin, GPIO_DIR_MODE_IN);
@@ -783,17 +774,9 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_ControlPWM, &INT_ControlPWM_ISR);
 	Interrupt_enable(INT_ControlPWM);
 	
-	// Interrupt Setings for INT_ControlPWM_TZ
-	Interrupt_register(INT_ControlPWM_TZ, &INT_ControlPWM_TZ_ISR);
-	Interrupt_disable(INT_ControlPWM_TZ);
-	
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
-	
-	// Interrupt Setings for INT_tz_pin_XINT
-	Interrupt_register(INT_tz_pin_XINT, &INT_tz_pin_XINT_ISR);
-	Interrupt_enable(INT_tz_pin_XINT);
 }
 //*****************************************************************************
 //
@@ -879,17 +862,11 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
-	tz_pin_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
 	GPIO_setInterruptType(transient_det_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
-}
-void tz_pin_XINT_init(){
-	GPIO_setInterruptType(tz_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
-	GPIO_setInterruptPin(tz_pin, tz_pin_XINT);
-	GPIO_enableInterrupt(tz_pin_XINT);
 }
 
