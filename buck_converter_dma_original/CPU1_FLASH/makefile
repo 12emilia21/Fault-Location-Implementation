@@ -10,22 +10,16 @@ GEN_OPTS__FLAG := --cmd_file="syscfg/board.opt" --cmd_file="syscfg/c2000ware_lib
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./Controller.obj" \
 "./syscfg/board.obj" \
 "./syscfg/c2000ware_libraries.obj" \
 "./cla_tasks.obj" \
-"./cla_tasks_con_punteros.obj" \
-"./cla_tasks_orig_no_func.obj" \
 "./control_functions.obj" \
-"./ls_algorithm.obj" \
+"./main.obj" \
 "./transient_det.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
 "../28004x_cla_flash_lnk.cmd" \
-"../28004x_cla_ram_lnk 1.cmd" \
 "../28004x_cla_ram_lnk.cmd" \
-"../28004x_generic_flash_lnk.cmd" \
-"../28004x_generic_ram_lnk_original.cmd" \
 "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \
@@ -146,7 +140,7 @@ all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --isr_save_vcu_regs=on --tmu_support=tmu0 --vcu_support=vcu0 -O4 --opt_for_speed=5 --fp_mode=relaxed --fp_reassoc=on --advice:performance=all --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"buck_converter_dma_original.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/lib" -i"C:/ti/c2000/C2000Ware_4_03_00_00" -i"C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg" -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="buck_converter_dma_original_linkInfo.xml" --entry_point=code_start --rom_model -o "buck_converter_dma_original.out" $(ORDERED_OBJS)
+	"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/bin/cl2000" -v28 -ml -mt --float_support=fpu32 --isr_save_vcu_regs=on --tmu_support=tmu0 --vcu_support=vcu0 -O4 --opt_for_speed=5 --fp_mode=relaxed --fp_reassoc=on --advice:performance=all --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"buck_converter_dma_original.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/lib" -i"C:/ti/c2000/C2000Ware_4_03_00_00" -i"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg" -i"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="buck_converter_dma_original_linkInfo.xml" --entry_point=code_start --rom_model -o "buck_converter_dma_original.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -154,22 +148,22 @@ buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Controller.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "cla_tasks_con_punteros.obj" "cla_tasks_orig_no_func.obj" "control_functions.obj" "ls_algorithm.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "Controller.d" "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "ls_algorithm.d" "transient_det.d" "device\device.d" 
-	-$(RM) "cla_tasks.d" "cla_tasks_con_punteros.d" "cla_tasks_orig_no_func.d" 
+	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "control_functions.obj" "main.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "main.d" "transient_det.d" "device\device.d" 
+	-$(RM) "cla_tasks.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
 
 post-build:
-	-if 0 == 1  mkdir "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation"
-	-if 0 == 1  C:/TDM-GCC-64/bin/g++  -c -DCLB_SIM -IC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc-2.3.3/src -IC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/include/type2 -IC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original -IC:/TDM-GCC-64/bin/include -Og -g -gdwarf-3 -gstrict-dwarf -Wall -MMD -MP -MFC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.d -MTC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o -IC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg   -fno-threadsafe-statics  -oC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg/clb_sim.cpp
-	-if 0 == 1  C:/TDM-GCC-64/bin/g++ -DCLB_SIM -Og -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/simulation_output.map -LC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc-2.3.3/build/src -oC:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/simulation_output.exe C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_FSM_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_HLC_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_LUT4_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_OutputLUT_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_counter_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_counter_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_FSM_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_LUT4_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_OutputLUT_top_SC_model.o  -Wl,--start-group -lsystemc -Wl,--end-group
+	-if 0 == 1  mkdir "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation"
+	-if 0 == 1  C:/TDM-GCC-64/bin/g++  -c -DCLB_SIM -IC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc-2.3.3/src -IC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/include/type2 -IC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original -IC:/TDM-GCC-64/bin/include -Og -g -gdwarf-3 -gstrict-dwarf -Wall -MMD -MP -MFC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.d -MTC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o -IC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg   -fno-threadsafe-statics  -oC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg/clb_sim.cpp
+	-if 0 == 1  C:/TDM-GCC-64/bin/g++ -DCLB_SIM -Og -g -gdwarf-3 -gstrict-dwarf -Wall -Wl,-Map,C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/simulation_output.map -LC:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc-2.3.3/build/src -oC:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/simulation_output.exe C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/simulation/clb_sim.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_FSM_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_HLC_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_LUT4_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_OutputLUT_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_counter_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_counter_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_FSM_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_LUT4_top_SC_model.o C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/systemc/src/type2/CLB_OutputLUT_top_SC_model.o  -Wl,--start-group -lsystemc -Wl,--end-group
 	-if 0 == 1  "./simulation/simulation_output.exe"
-	-if 0 == 1  C:/ti/ccs2040/ccs/tools/node/node.exe "C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/" "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg" "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg/clb.dot"
-	-if 0 == 1  mkdir "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/diagrams"
-	-if 0 == 1  C:/ti/ccs2040/ccs/tools/node/node.exe "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/.meta/generate_diagrams.js" "C:/ti/c2000/C2000Ware_4_03_00_00" "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/diagrams" "C:/Users/mem21/OneDrive - Simon Fraser University (1sfu)/CCS_workspace_clean/buck_converter_dma_original/CPU1_FLASH/syscfg"
+	-if 0 == 1  C:/ti/ccs2040/ccs/tools/node/node.exe "C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "C:/ti/c2000/C2000Ware_4_03_00_00/utilities/clb_tool/clb_syscfg/" "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg" "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg/clb.dot"
+	-if 0 == 1  mkdir "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/diagrams"
+	-if 0 == 1  C:/ti/ccs2040/ccs/tools/node/node.exe "C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/.meta/generate_diagrams.js" "C:/ti/c2000/C2000Ware_4_03_00_00" "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/diagrams" "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_FLASH/syscfg"
 	-@echo ' '
 
 .PHONY: all clean dependents

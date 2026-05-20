@@ -19,7 +19,8 @@
 #define TWO_RES         ((uint16_t)18)                  // PWM pulses required to cover 2 converter resonance cycles
 #define N_SAMPLES       ((uint16_t)4)  
 #define BUFF_SAMPLES    ((uint16_t)TWO_RES*N_SAMPLES)
-#define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)//25e-6)         //fsw = 10e3, oversample = 4  
+//#define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)//25e-6)         //fsw = 10e3, oversample = 4  
+#define TSMPL           ((float32_t)25e-6)         //fsw = 10e3, oversample = 4  
 #define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
 //#define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
 

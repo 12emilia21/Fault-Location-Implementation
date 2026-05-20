@@ -102,9 +102,14 @@ void main(void)
     // Initialize the PIE vector table with pointers to the shell Interrupt Service Routines (ISR).
     Interrupt_initVectorTable();
 
+     // Disable sync(Freeze clock to PWM as well)
+    SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
+
     // PinMux and Peripheral Initialization
     Board_init();
-   // EPWM_setSyncInPulseSource(ControlPWM_fixed_fsw_BASE, EPWM_SYNC_IN_PULSE_SRC_EPWM1SYNCOUT);
+
+    // Enable sync and clock to PWM
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
 
     // C2000Ware Library initialization
     C2000Ware_libraries_init();
@@ -126,27 +131,13 @@ void main(void)
     }
 }
 
-void INT_ControlPWM_ISR(void){
-    EPWM_clearEventTriggerInterruptFlag(ControlPWM_BASE);
-    Interrupt_clearACKGroup(INT_ControlPWM_INTERRUPT_ACK_GROUP);
-    average_samples();
-    samples_to_cla();
-    duty_cycle_calculation();
-    transient_det_res = transient_detector(Vo_avg, Il_avg);
-    if (transient_det_res == 0) {
-        s_count=0;
-        err_calc();
-    }
-    GPIO_writePin(transient_det_pin, transient_det_res);
-    set_duty_cycle(d);
-}
-
 void average_samples(void){
-    Iin_avg = 0.5f *((ADCA_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCA_results[1]*IIN_SCALE   - IIN_OFST ));
-    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE  - IOUT_OFST));
+    Iin_avg = 0.5f *((ADCC_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCC_results[4]*IIN_SCALE   - IIN_OFST ));
     Il_avg  = 0.5f *((ADCC_results[1]*IL_SCALE   - IL_OFST  ) + (ADCC_results[5]*IL_SCALE    - IL_OFST  ));
-    Vin_avg = 0.5f *((ADCC_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCC_results[4]*VIN_SCALE   - VIN_OFST ));
-    Vo_avg  = 0.5f *((ADCC_results[2]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[6]*VOUT_SCALE - VOUT_OFST));
+    Vo_avg  = 0.5f *((ADCC_results[2]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[6]*VOUT_SCALE  - VOUT_OFST));
+    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE  - IOUT_OFST));
+    Vin_avg = 0.5f *((ADCA_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCA_results[1]*VIN_SCALE   - VIN_OFST ));
+   
     return;
 }
 
@@ -160,17 +151,6 @@ void samples_to_cla(void){
     io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
     io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
     return;
-}
-
-void INT_transient_det_pin_XINT_ISR(void){
-    if (s_count == 0) {
-        CPUTimer_startTimer(myCPUTIMER0_BASE);
-        GPIO_writePin(debug_pin,1);
-    }
-    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
-        GPIO_writePin(transient_det_pin, 0);
-    } 
-    Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
 }
 
 void duty_cycle_calculation(void){
@@ -199,6 +179,33 @@ void err_calc(void){
     return;
 }
 
+// ----------------- ISRs -----------------
+
+// --- ISR for controller + estimation ---
+// Obtain avg measurements and calculate duty cycle. 
+// Assign samples to CLA arrays. 
+// Calculate duty cycle (if fixed, maintains the same value).
+// Detects transient and calculates error if the estimation is over. 
+
+void INT_ControlPWM_ISR(void){
+    EPWM_clearEventTriggerInterruptFlag(ControlPWM_BASE);
+    Interrupt_clearACKGroup(INT_ControlPWM_INTERRUPT_ACK_GROUP);
+    average_samples();
+    samples_to_cla();
+    duty_cycle_calculation();
+    transient_det_res = transient_detector(Vo_avg, Il_avg);
+    if (transient_det_res == 0) {
+        s_count=0;
+        err_calc();
+    }
+    GPIO_writePin(transient_det_pin, transient_det_res);
+    set_duty_cycle(d);
+}
+
+// --- ISR for CLA operation ---
+// Stop counter and compute the execution time. 
+// (from the detection of the fault until the obtentions of the estimated parameters)
+
 __interrupt void cla1Isr1(void)
 {
     s_count+=1;
@@ -210,6 +217,37 @@ __interrupt void cla1Isr1(void)
     }
     
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
+}
+
+// --- ISR for transient detection/sample collection ---
+// Clear GPIO to continue sending data to the CLA on every rising edge. 
+// Once the amount of samples required is reached, the pin remains in 1 until "naturally cleared" (by detection algorithm).  
+
+void INT_transient_det_pin_XINT_ISR(void){
+    if (s_count == 0) {
+        CPUTimer_startTimer(myCPUTIMER0_BASE);
+        GPIO_writePin(debug_pin,1);
+    }
+    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
+        GPIO_writePin(transient_det_pin, 0);
+    } 
+    Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
+}
+
+// --- ISR for the trip-zone interrupt ---
+// The flags are not cleared yet since the trip condition persists (GPIO in low state). 
+// The interruption is only acknowledged. 
+
+void INT_ControlPWM_TZ_ISR(void){
+    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
+}
+
+// --- ISR for the trip-zone GPIO ---
+// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
+
+void INT_tz_pin_XINT_ISR(void){
+    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
 }
 
 

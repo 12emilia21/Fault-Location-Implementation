@@ -10,8 +10,9 @@ transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/incl
 transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/sys/cdefs.h
 transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_types.h
 transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_limits.h
-transient_det.obj: ../defines.h
-transient_det.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h
+transient_det.obj: syscfg/c2000ware_libraries.h
+transient_det.obj: syscfg/board.h
+transient_det.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -100,14 +101,11 @@ transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-transient_det.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h
+transient_det.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
 transient_det.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stddef.h
-transient_det.obj: syscfg/board.h
-transient_det.obj: syscfg/c2000ware_libraries.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fastrts.h
 transient_det.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28x_FPU_FastRTS.h
-transient_det.obj: ../control_functions.h
 
 ../transient_det.c:
 
@@ -129,9 +127,11 @@ C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_types.
 
 C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_limits.h:
 
-../defines.h:
+syscfg/c2000ware_libraries.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/driverlib.h:
+syscfg/board.h:
+
+C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -309,19 +309,13 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/CCS_workspace_clean/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
 
 C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stddef.h:
-
-syscfg/board.h:
-
-syscfg/c2000ware_libraries.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fastrts.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28x_FPU_FastRTS.h:
-
-../control_functions.h:
 

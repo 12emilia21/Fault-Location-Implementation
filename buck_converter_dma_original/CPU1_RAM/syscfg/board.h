@@ -113,6 +113,10 @@ extern "C"
 // GPIO12 - GPIO Settings
 //
 #define transient_det_pin_GPIO_PIN_CONFIG GPIO_12_GPIO12
+//
+// GPIO16 - GPIO Settings
+//
+#define tz_pin_GPIO_PIN_CONFIG GPIO_16_GPIO16
 
 //*****************************************************************************
 //
@@ -121,25 +125,25 @@ extern "C"
 //*****************************************************************************
 #define myADC0_BASE ADCA_BASE
 #define myADC0_RESULT_BASE ADCARESULT_BASE
-#define myADC0_Iin1 ADC_SOC_NUMBER0
-#define myADC0_FORCE_Iin1 ADC_FORCE_SOC0
-#define myADC0_SAMPLE_WINDOW_Iin1 55.1
-#define myADC0_TRIGGER_SOURCE_Iin1 ADC_TRIGGER_EPWM2_SOCA
-#define myADC0_CHANNEL_Iin1 ADC_CH_ADCIN0
-#define myADC0_Iin2 ADC_SOC_NUMBER1
-#define myADC0_FORCE_Iin2 ADC_FORCE_SOC1
-#define myADC0_SAMPLE_WINDOW_Iin2 55.1
-#define myADC0_TRIGGER_SOURCE_Iin2 ADC_TRIGGER_EPWM2_SOCB
-#define myADC0_CHANNEL_Iin2 ADC_CH_ADCIN0
+#define myADC0_Vin1 ADC_SOC_NUMBER0
+#define myADC0_FORCE_Vin1 ADC_FORCE_SOC0
+#define myADC0_SAMPLE_WINDOW_Vin1 55.1
+#define myADC0_TRIGGER_SOURCE_Vin1 ADC_TRIGGER_EPWM2_SOCA
+#define myADC0_CHANNEL_Vin1 ADC_CH_ADCIN0
+#define myADC0_Vin2 ADC_SOC_NUMBER1
+#define myADC0_FORCE_Vin2 ADC_FORCE_SOC1
+#define myADC0_SAMPLE_WINDOW_Vin2 55.1
+#define myADC0_TRIGGER_SOURCE_Vin2 ADC_TRIGGER_EPWM2_SOCB
+#define myADC0_CHANNEL_Vin2 ADC_CH_ADCIN0
 void myADC0_init();
 
 #define myADC1_BASE ADCC_BASE
 #define myADC1_RESULT_BASE ADCCRESULT_BASE
-#define myADC1_Vin ADC_SOC_NUMBER0
-#define myADC1_FORCE_Vin ADC_FORCE_SOC0
-#define myADC1_SAMPLE_WINDOW_Vin 59.03
-#define myADC1_TRIGGER_SOURCE_Vin ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Vin ADC_CH_ADCIN5
+#define myADC1_Iin ADC_SOC_NUMBER0
+#define myADC1_FORCE_Iin ADC_FORCE_SOC0
+#define myADC1_SAMPLE_WINDOW_Iin 59.03
+#define myADC1_TRIGGER_SOURCE_Iin ADC_TRIGGER_EPWM3_SOCA
+#define myADC1_CHANNEL_Iin ADC_CH_ADCIN5
 #define myADC1_Il ADC_SOC_NUMBER1
 #define myADC1_FORCE_Il ADC_FORCE_SOC1
 #define myADC1_SAMPLE_WINDOW_Il 59.11
@@ -241,8 +245,10 @@ void myDMA2_init();
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
 #define ControlPWM_DBFED 20
-#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_LOW
+#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
+#define ControlPWM_OSHT_SOURCES EPWM_TZ_SIGNAL_OSHT1
+#define ControlPWM_TZ_INTERRUPT_SOURCES EPWM_TZ_INTERRUPT_OST
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
@@ -267,8 +273,8 @@ void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_2fsw_CMPB 2499
 #define ControlPWM_2fsw_CMPC 0
 #define ControlPWM_2fsw_CMPD 0
-#define ControlPWM_2fsw_DBRED 10
-#define ControlPWM_2fsw_DBFED 10
+#define ControlPWM_2fsw_DBRED 20
+#define ControlPWM_2fsw_DBFED 20
 #define ControlPWM_2fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_2fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
@@ -282,6 +288,8 @@ void ePWMConfigurationTemplate(uint32_t base);
 void debug_pin_init();
 #define transient_det_pin 12
 void transient_det_pin_init();
+#define tz_pin 16
+void tz_pin_init();
 
 //*****************************************************************************
 //
@@ -291,12 +299,12 @@ void transient_det_pin_init();
 #define myINPUTXBARINPUT0_SOURCE 12
 #define myINPUTXBARINPUT0_INPUT XBAR_INPUT4
 void myINPUTXBARINPUT0_init();
-#define myINPUTXBARINPUT1_SOURCE 16
-#define myINPUTXBARINPUT1_INPUT XBAR_INPUT5
+#define myINPUTXBARINPUT1_SOURCE 31
+#define myINPUTXBARINPUT1_INPUT XBAR_INPUT1
 void myINPUTXBARINPUT1_init();
-#define myINPUTXBARINPUT2_SOURCE 17
-#define myINPUTXBARINPUT2_INPUT XBAR_INPUT13
-void myINPUTXBARINPUT2_init();
+#define myINPUTXBARINPUT4_SOURCE 31
+#define myINPUTXBARINPUT4_INPUT XBAR_INPUT5
+void myINPUTXBARINPUT4_init();
 
 //*****************************************************************************
 //
@@ -314,10 +322,20 @@ extern __interrupt void cla1Isr1(void);
 #define INT_ControlPWM_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
 extern __interrupt void INT_ControlPWM_ISR(void);
 
+// Interrupt Settings for INT_ControlPWM_TZ
+#define INT_ControlPWM_TZ INT_EPWM1_TZ
+#define INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP2
+extern __interrupt void INT_ControlPWM_TZ_ISR(void);
+
 // Interrupt Settings for INT_transient_det_pin_XINT
 #define INT_transient_det_pin_XINT INT_XINT1
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
+
+// Interrupt Settings for INT_tz_pin_XINT
+#define INT_tz_pin_XINT INT_XINT2
+#define INT_tz_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
+extern __interrupt void INT_tz_pin_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -339,6 +357,9 @@ extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
+#define tz_pin_XINT GPIO_INT_XINT2
+#define tz_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
+void tz_pin_XINT_init();
 
 //*****************************************************************************
 //
