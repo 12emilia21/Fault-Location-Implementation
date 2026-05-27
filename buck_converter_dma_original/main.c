@@ -67,8 +67,8 @@ volatile float32_t L_out=0.0f;
 #pragma DATA_SECTION(L_out,    "Cla1ToCpuMsgRAM");
 
 // CPU to CLA
-float32_t  vo_sample_test[num_samples];
-float32_t  io_sample_test[num_samples];
+float32_t  vo_sample_test[N_SAMPLES];
+float32_t  io_sample_test[N_SAMPLES];
 uint16_t   s_count     = 0; 
 
 #pragma DATA_SECTION(vo_sample_test,    "CpuToCla1MsgRAM");

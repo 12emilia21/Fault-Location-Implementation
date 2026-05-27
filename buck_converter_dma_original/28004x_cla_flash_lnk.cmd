@@ -117,7 +117,7 @@ SECTIONS
 #else
     /* CLA specific sections */
     Cla1Prog        : LOAD = FLASH_BANK0_SEC4,
-                      RUN = RAMLS0,
+                      RUN = RAMLS0 ,
                       LOAD_START(_Cla1ProgLoadStart),
                       RUN_START(_Cla1ProgRunStart),
                       LOAD_SIZE(_Cla1ProgLoadSize),

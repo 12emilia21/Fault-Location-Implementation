@@ -24,8 +24,14 @@
 #define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
 //#define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
 
-
 // Algorithm timer 
 #define TIMER_PRESCALER 100
 #define TIMER_PERIOD    10e-3
 #define SYSCLK          100e6
+
+// Saturation of sensors
+#define V_SAT_H           ((float32_t)49.27)
+#define V_SAT_L           ((float32_t)0.0)
+#define I_SAT_H           ((float32_t)20.625)
+#define I_SAT_L           ((float32_t)0.0)
+

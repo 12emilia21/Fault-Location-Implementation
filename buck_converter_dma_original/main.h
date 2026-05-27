@@ -53,28 +53,29 @@ PI_Controller Il_controller;
 
 #define ADC_CODES           ((uint16_t)(4096))
 
-// Regular operation
-//#define IIN_MAX ((float32_t)6.75)
-//#define IIN_SCALE IIN_MAX/ADC_CODES
-//#define IIN_OFST 0
-//
-//#define IOUT_MAX ((float32_t)6.75)
-//#define IOUT_SCALE IOUT_MAX/ADC_CODES
-//#define IOUT_OFST 0
-//
-//#define IL_MAX ((float32_t)6.75)        // 50% above rated (9A) - 6.75
-//#define IL_SCALE IL_MAX/ADC_CODES
-//#define IL_OFST 0
-//
-//#define VIN_MAX ((float32_t)33)         // 10% above rated (60V) - 33
-//#define VIN_SCALE VIN_MAX/ADC_CODES
-//#define VIN_OFST 0
-//
-//#define VOUT_MAX ((float32_t)33)        
-//#define VOUT_SCALE VOUT_MAX/ADC_CODES
-//#define VOUT_OFST 0
+#define IIN_MAX ((float32_t)20.625)
+#define IIN_SCALE IIN_MAX/ADC_CODES
+#define IIN_OFST 0
 
+#define IOUT_MAX ((float32_t)20.625)
+#define IOUT_SCALE IOUT_MAX/ADC_CODES
+#define IOUT_OFST 0
+
+#define IL_MAX ((float32_t)20.625)
+#define IL_SCALE IL_MAX/ADC_CODES
+#define IL_OFST 0
+
+#define VIN_MAX ((float32_t)49.27)
+#define VIN_SCALE VIN_MAX/ADC_CODES
+#define VIN_OFST 0
+
+#define VOUT_MAX ((float32_t)49.27)
+#define VOUT_SCALE VOUT_MAX/ADC_CODES
+#define VOUT_OFST 0
+
+// Scale defined for RTBOX (21/05/26)
 // Fit to measure complete transient
+/*
 #define IIN_MAX ((float32_t)40)
 #define IIN_SCALE IIN_MAX/ADC_CODES
 #define IIN_OFST 12
@@ -94,8 +95,8 @@ PI_Controller Il_controller;
 #define VOUT_MAX ((float32_t)85)        
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
 #define VOUT_OFST 30
+*/
 
-#define num_samples  ((uint16_t)4)
 
 #endif /* MAIN_H_ */
 
@@ -108,4 +109,4 @@ void samples_to_cla(void);
 void err_calc(void);
 
 
-
+// 
