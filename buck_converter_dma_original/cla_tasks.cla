@@ -61,25 +61,26 @@ volatile float dot2;
 float sol[2];
 
 // Saturation considerations
-volatile int nsat_smpl;       // Count consecutive non-saturated samples
-volatile int nsat_smpl_prev;  // To detect begining/end of valid data batches
-volatile int ef_index;        // Index of effective samples
+volatile int nsat_smpl;           // Count consecutive non-saturated samples
+volatile int sat_smpl;            // Count saturated samples - (to clear buffers)
+volatile int nsat_smpl_prev;      // To detect begining/end of valid data batches
+volatile int ef_index;            // Index of effective samples
 
-// Derivatives calculation as they arrive from 4 in 4
+//int valid_smpl[BUFF_SAMPLES];     // Verify the samples that are not saturated 
+//int valid_smpl_val[BUFF_SAMPLES]; // Verify the samples that are not saturated 
+
+
+// Derivatives calculation 
 /*
-void derivatives (void){
-    if(s_count == 0){
-        dio_smpl_cla[0] = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
+void derivatives(void){
+    dio_smpl_cla[0]              = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
+    dio_smpl_cla[BUFF_SAMPLES-1] = (io_smpl_cla[BUFF_SAMPLES-1] - io_smpl_cla[BUFF_SAMPLES-2]) / TSMPL;
+
+    for(i=1;(uint32_t)i<(uint32_t)(BUFF_SAMPLES-1);i++) {
+        dio_smpl_cla[i] = (io_smpl_cla[i+1]   - io_smpl_cla[i-1]) / (2.0f*TSMPL);
     }
-    else {
-        dio_smpl_cla[2*s_count-1] = (io_smpl_cla[2*s_count]   - io_smpl_cla[2*s_count-2]) / (2.0f*TSMPL);
-        dio_smpl_cla[2*s_count]   = (io_smpl_cla[2*s_count+1] - io_smpl_cla[2*s_count-1]) / (2.0f*TSMPL);
-        
-        if(s_count == N_COMPUTE-1){
-            dio_smpl_cla[2*s_count+1] = (io_smpl_cla[2*s_count+1] - io_smpl_cla[2*s_count]) / TSMPL;
-        }
-    }
-    return;
+
+    return; 
 }
 */
 
@@ -87,23 +88,29 @@ void derivatives (void){
 // Saturation derivatives: analyze begining/end of valid samples
 // Calculates 1 in 1 
 
-void derivatives (void){
+void derivatives (int index){
     // Central and forward
     if(nsat_smpl > 1 ){
         if(nsat_smpl > 2) 
-            dio_smpl_cla[ef_index-1] = (io_smpl_cla[ef_index]   - io_smpl_cla[ef_index-2]) / (2.0f*TSMPL);
+            dio_smpl_cla[index-1] = (io_smpl_cla[index]   - io_smpl_cla[index-2]) / (2.0f*TSMPL);
         else 
-            dio_smpl_cla[ef_index-1] = (io_smpl_cla[ef_index] - io_smpl_cla[ef_index-1]) / TSMPL;
+            dio_smpl_cla[index-1] = (io_smpl_cla[index] - io_smpl_cla[index-1]) / TSMPL;
     }
     // Backward
+    // Verificar si estp esta bien 
     else if(nsat_smpl == 0){
         if(nsat_smpl_prev > 1){
-            dio_smpl_cla[ef_index-1] = (io_smpl_cla[ef_index-1] - io_smpl_cla[ef_index-2]) / TSMPL;
+            dio_smpl_cla[index-1] = (io_smpl_cla[index-1] - io_smpl_cla[index-2]) / TSMPL;
         }
         else if(nsat_smpl_prev == 1){
             ef_index--; 
         }
     }
+    // Agregado para el calculo de la ultima derivada del buffer
+    if(s_count==(N_COMPUTE-1)){
+        dio_smpl_cla[index] = (io_smpl_cla[index] - io_smpl_cla[index-1]) / TSMPL;
+    }
+
     return;
 }
 
@@ -231,7 +238,16 @@ void back_subs (void){
     return;
 }
 
-
+// Temp: Clear buffer once the effective samples have already been received. 
+// Change: Implement the cleaning of the buffers after every estimation. This doesn't work for debugging but for final version.  
+void clear_buffer (void){
+    for(i=ef_index; i<BUFF_SAMPLES; i++){
+        vo_smpl_cla[i]  = 0; 
+        io_smpl_cla[i]  = 0;
+        dio_smpl_cla[i] = 0;
+    }
+    return; 
+}
 
 __attribute__((interrupt)) void Cla1Task1(void)
 { 
@@ -242,27 +258,31 @@ __attribute__((interrupt)) void Cla1Task1(void)
     }
 
     if (s_count<N_COMPUTE){
-        for(i=0;i<(N_SAMPLES-1);i++){
+        for(i=0;i<N_SAMPLES;i++){
             if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
                 vo_smpl_cla[ef_index] = vo_sample_test[i]; 
                 io_smpl_cla[ef_index] = io_sample_test[i];
                 nsat_smpl++; 
                 ef_index++;  
+                derivatives((ef_index-1)); 
             } 
-            derivatives(); 
+            else{
+                nsat_smpl = 0;
+                derivatives((ef_index)); 
+            }
+            //valid_smpl[N_SAMPLES*s_count+i]     = nsat_smpl;
+            //valid_smpl_val[N_SAMPLES*s_count+i] = vo_sample_test[i];
             nsat_smpl_prev = nsat_smpl;
         }
-        //derivatives();
-        partial_norms();
+    }
 
-        if (s_count==(N_COMPUTE-1)){
-            //derivatives();
-            //partial_norms();
-            pivot();
-            hh1();
-            hh2();
-            back_subs();
-        }
+    if (s_count==(N_COMPUTE-1)){
+        clear_buffer(); 
+        partial_norms();
+        pivot();
+        hh1();
+        hh2();
+        back_subs();
     }
 }
 
@@ -270,18 +290,15 @@ __attribute__((interrupt)) void Cla1Task1(void)
  __attribute__((interrupt)) void Cla1Task1(void)
 { 
     if (s_count<N_COMPUTE){
-        vo_smpl_cla[N_SAMPLES*s_count]   = vo_sample_test[0]; 
-        vo_smpl_cla[N_SAMPLES*s_count+1] = vo_sample_test[1]; 
-        vo_smpl_cla[N_SAMPLES*s_count+2] = vo_sample_test[2]; 
-        vo_smpl_cla[N_SAMPLES*s_count+3] = vo_sample_test[3]; 
-        io_smpl_cla[N_SAMPLES*s_count]   = io_sample_test[0]; 
-        io_smpl_cla[N_SAMPLES*s_count+1] = io_sample_test[1]; 
-        io_smpl_cla[N_SAMPLES*s_count+2] = io_sample_test[2]; 
-        io_smpl_cla[N_SAMPLES*s_count+3] = io_sample_test[3]; 
+
+        for(i=0; i<N_SAMPLES; i++){
+            vo_smpl_cla[N_SAMPLES*s_count+i] = vo_sample_test[i]; 
+            io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
+        }
         
         //derivatives();
         //partial_norms();
-//
+
         if (s_count==(N_COMPUTE-1)){
             derivatives();
             partial_norms();
@@ -292,4 +309,5 @@ __attribute__((interrupt)) void Cla1Task1(void)
         }
     }
 }
+
  */

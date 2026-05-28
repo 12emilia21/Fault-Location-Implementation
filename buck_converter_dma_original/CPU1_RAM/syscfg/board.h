@@ -236,26 +236,28 @@ void myDMA2_init();
 //
 //*****************************************************************************
 #define ControlPWM_BASE EPWM1_BASE
-#define ControlPWM_TBPRD 1000
+#define ControlPWM_TBPRD 5000
 #define ControlPWM_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_TBPHS 0
-#define ControlPWM_CMPA 500
-#define ControlPWM_CMPB 999
+#define ControlPWM_CMPA 2500
+#define ControlPWM_CMPB 4999
 #define ControlPWM_CMPC 0
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
 #define ControlPWM_DBFED 20
-#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_LOW
+#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
+#define ControlPWM_OSHT_SOURCES EPWM_TZ_SIGNAL_OSHT1
+#define ControlPWM_TZ_INTERRUPT_SOURCES EPWM_TZ_INTERRUPT_OST
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_fixed_fsw_BASE EPWM2_BASE
-#define ControlPWM_fixed_fsw_TBPRD 1000
+#define ControlPWM_fixed_fsw_TBPRD 5000
 #define ControlPWM_fixed_fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_fixed_fsw_TBPHS 0
-#define ControlPWM_fixed_fsw_CMPA 500
-#define ControlPWM_fixed_fsw_CMPB 999
+#define ControlPWM_fixed_fsw_CMPA 2500
+#define ControlPWM_fixed_fsw_CMPB 4999
 #define ControlPWM_fixed_fsw_CMPC 0
 #define ControlPWM_fixed_fsw_CMPD 0
 #define ControlPWM_fixed_fsw_DBRED 20
@@ -264,11 +266,11 @@ void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_fixed_fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_fixed_fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 #define ControlPWM_2fsw_BASE EPWM3_BASE
-#define ControlPWM_2fsw_TBPRD 500
+#define ControlPWM_2fsw_TBPRD 2500
 #define ControlPWM_2fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_2fsw_TBPHS 0
-#define ControlPWM_2fsw_CMPA 250
-#define ControlPWM_2fsw_CMPB 499
+#define ControlPWM_2fsw_CMPA 1250
+#define ControlPWM_2fsw_CMPB 2499
 #define ControlPWM_2fsw_CMPC 0
 #define ControlPWM_2fsw_CMPD 0
 #define ControlPWM_2fsw_DBRED 20
@@ -320,10 +322,20 @@ extern __interrupt void cla1Isr1(void);
 #define INT_ControlPWM_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
 extern __interrupt void INT_ControlPWM_ISR(void);
 
+// Interrupt Settings for INT_ControlPWM_TZ
+#define INT_ControlPWM_TZ INT_EPWM1_TZ
+#define INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP2
+extern __interrupt void INT_ControlPWM_TZ_ISR(void);
+
 // Interrupt Settings for INT_transient_det_pin_XINT
 #define INT_transient_det_pin_XINT INT_XINT1
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
+
+// Interrupt Settings for INT_tz_pin_XINT
+#define INT_tz_pin_XINT INT_XINT2
+#define INT_tz_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
+extern __interrupt void INT_tz_pin_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -345,6 +357,9 @@ extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
+#define tz_pin_XINT GPIO_INT_XINT2
+#define tz_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
+void tz_pin_XINT_init();
 
 //*****************************************************************************
 //

@@ -105,7 +105,8 @@ SECTIONS
    dclfuncs         : > RAMLS5,     PAGE = 1
 
    // CLA Sections
-   Cla1Prog         : > RAMLS0,           PAGE = 0
+   //Cla1Prog         : > RAMLS0,           PAGE = 0
+   Cla1Prog         : >>RAMLS0 | RAMLS4,  PAGE = 0 
    .scratchpad      : > RAMLS3,           PAGE = 0
    .bss_cla         : > RAMLS3,           PAGE = 0
    .const_cla       : > RAMLS3,           PAGE = 0
