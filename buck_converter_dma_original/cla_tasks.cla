@@ -62,66 +62,20 @@ float sol[2];
 
 // Saturation considerations
 volatile int nsat_smpl;           // Count consecutive non-saturated samples
-volatile int sat_smpl;            // Count saturated samples - (to clear buffers)
+volatile int sat_smpl;            // Count saturated samples - in the end: sat_smpl+ef_index = BUFF_SAMPLES
 volatile int nsat_smpl_prev;      // To detect begining/end of valid data batches
 volatile int ef_index;            // Index of effective samples
+volatile int single_smpl;         // Discard samples in between saturated values. 
 
 //int valid_smpl[BUFF_SAMPLES];     // Verify the samples that are not saturated 
-//int valid_smpl_val[BUFF_SAMPLES]; // Verify the samples that are not saturated 
-
-
-// Derivatives calculation 
-/*
-void derivatives(void){
-    dio_smpl_cla[0]              = (io_smpl_cla[1] - io_smpl_cla[0]) / TSMPL;
-    dio_smpl_cla[BUFF_SAMPLES-1] = (io_smpl_cla[BUFF_SAMPLES-1] - io_smpl_cla[BUFF_SAMPLES-2]) / TSMPL;
-
-    for(i=1;(uint32_t)i<(uint32_t)(BUFF_SAMPLES-1);i++) {
-        dio_smpl_cla[i] = (io_smpl_cla[i+1]   - io_smpl_cla[i-1]) / (2.0f*TSMPL);
-    }
-
-    return; 
-}
-*/
-
-
-// Saturation derivatives: analyze begining/end of valid samples
-// Calculates 1 in 1 
-
-/*
-
-void derivatives (int index){
-    // Central and forward
-    if(nsat_smpl > 1 ){
-        if(nsat_smpl > 2) 
-            dio_smpl_cla[index-1] = (io_smpl_cla[index]   - io_smpl_cla[index-2]) / (2.0f*TSMPL);
-        else {
-            dio_smpl_cla[index-1] = (io_smpl_cla[index] - io_smpl_cla[index-1]) / TSMPL;
-        }
-    }
-    // Backward
-    // Verificar si esto esta bien 
-    else if(nsat_smpl == 0){
-        if(nsat_smpl_prev > 1){
-            dio_smpl_cla[index-1] = (io_smpl_cla[index-1] - io_smpl_cla[index-2]) / TSMPL;
-        }
-        else if(nsat_smpl_prev == 1){
-            ef_index--; 
-        }
-    }
-    // Agregado para el calculo de la ultima derivada del buffer
-    if(index == BUFF_SAMPLES-1){
-        dio_smpl_cla[index] = (io_smpl_cla[index] - io_smpl_cla[index-1]) / TSMPL;
-    }
-
-    return;
-}
-*/
+int valid_smpl_val[BUFF_SAMPLES]; // Verify the samples that are not saturated 
 
 // Calculate derivatives: considering saturation there are 6 scenarios
 // nsat_smpls = 2 -> 2 consecutive samples
-// regular index of samples, 0 when saturated values 
-void derivatives(int index){
+// index indicates the location of last valid data in the buffer
+int derivatives(int index){
+
+    int single_smpl_det = 0; 
 
     if (index < (BUFF_SAMPLES-1)) {
         if (nsat_smpl == 0){
@@ -132,6 +86,7 @@ void derivatives(int index){
                 dio_smpl_cla[index-1] = 0;
                 io_smpl_cla[index-1]  = 0;
                 vo_smpl_cla[index-1]  = 0;
+                single_smpl_det       = 1; 
             }
         } 
         else if (nsat_smpl == 2){
@@ -141,11 +96,13 @@ void derivatives(int index){
             dio_smpl_cla[index-1] = (io_smpl_cla[index]   - io_smpl_cla[index-2]) / (2.0f*TSMPL);
         }
     }
+
     else {
         if (nsat_smpl == 1){
             dio_smpl_cla[index] = 0;
             io_smpl_cla[index]  = 0;
             vo_smpl_cla[index]  = 0;
+            single_smpl_det     = 1;
         }
         else if (nsat_smpl > 1){
             dio_smpl_cla[index] = (io_smpl_cla[index] - io_smpl_cla[index-1]) / TSMPL;
@@ -158,7 +115,7 @@ void derivatives(int index){
         }
     }
 
-    return; 
+    return single_smpl_det; 
 }
 
 void partial_norms (void){  
@@ -296,57 +253,35 @@ __attribute__((interrupt)) void Cla1Task1(void)
     if (s_count<N_COMPUTE){
         for(i=0;i<N_SAMPLES;i++){
             if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
-                vo_smpl_cla[N_SAMPLES*s_count+i] = vo_sample_test[i]; 
-                io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
+                vo_smpl_cla[ef_index] = vo_sample_test[i]; 
+                io_smpl_cla[ef_index] = io_sample_test[i];
                 nsat_smpl++; 
                 ef_index++;  
+                // Debugging
+                valid_smpl_val[N_SAMPLES*s_count+i] = vo_sample_test[i];
             } 
             else{
                 nsat_smpl = 0;
-
-                vo_smpl_cla[N_SAMPLES*s_count+i]  = 0; 
-                io_smpl_cla[N_SAMPLES*s_count+i]  = 0;
-                dio_smpl_cla[N_SAMPLES*s_count+i] = 0;                 
+                sat_smpl++; 
+                // Begin clearing from the end 
+                vo_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 0; 
+                io_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 0;
+                dio_smpl_cla[BUFF_SAMPLES-sat_smpl] = 0;     
+                // Debugging
+                valid_smpl_val[N_SAMPLES*s_count+i] = 0;            
             }
-            //valid_smpl[N_SAMPLES*s_count+i]     = nsat_smpl;
-            //valid_smpl_val[N_SAMPLES*s_count+i] = vo_sample_test[i];
-            //derivatives(N_SAMPLES*s_count+i);
-            derivatives(ef_index); 
+            
+            single_smpl    = derivatives(ef_index-1);   // Resto por el incremento de linea 302 
+            ef_index       = ef_index-single_smpl;      // Index correction      
             nsat_smpl_prev = nsat_smpl;
         }
     }
 
-   if (s_count==(N_COMPUTE-1)){
+   //if (s_count==(N_COMPUTE-1)){
         //partial_norms();
         //pivot();
         //hh1();
         //hh2();
         //back_subs();
-    }
+    //}
 }
-
-/*
- __attribute__((interrupt)) void Cla1Task1(void)
-{ 
-    if (s_count<N_COMPUTE){
-
-        for(i=0; i<N_SAMPLES; i++){
-            vo_smpl_cla[N_SAMPLES*s_count+i] = vo_sample_test[i]; 
-            io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
-        }
-        
-        //derivatives();
-        //partial_norms();
-
-        if (s_count==(N_COMPUTE-1)){
-            derivatives();
-            partial_norms();
-            pivot();
-            hh1();
-            hh2();
-            back_subs();
-        }
-    }
-}
-
- */
