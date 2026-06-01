@@ -300,29 +300,28 @@ __attribute__((interrupt)) void Cla1Task1(void)
                 io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
                 nsat_smpl++; 
                 ef_index++;  
-                derivatives(N_SAMPLES*s_count+i); 
             } 
             else{
                 nsat_smpl = 0;
 
                 vo_smpl_cla[N_SAMPLES*s_count+i]  = 0; 
                 io_smpl_cla[N_SAMPLES*s_count+i]  = 0;
-                dio_smpl_cla[N_SAMPLES*s_count+i] = 0;
-                
-                derivatives(N_SAMPLES*s_count+i); 
+                dio_smpl_cla[N_SAMPLES*s_count+i] = 0;                 
             }
             //valid_smpl[N_SAMPLES*s_count+i]     = nsat_smpl;
             //valid_smpl_val[N_SAMPLES*s_count+i] = vo_sample_test[i];
+            //derivatives(N_SAMPLES*s_count+i);
+            derivatives(ef_index); 
             nsat_smpl_prev = nsat_smpl;
         }
     }
 
    if (s_count==(N_COMPUTE-1)){
-        partial_norms();
-        pivot();
-        hh1();
-        hh2();
-        back_subs();
+        //partial_norms();
+        //pivot();
+        //hh1();
+        //hh2();
+        //back_subs();
     }
 }
 

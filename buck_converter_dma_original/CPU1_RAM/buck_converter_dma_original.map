@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v22.6.3                     
 ******************************************************************************
->> Linked Thu May 28 16:22:56 2026
+>> Linked Thu May 28 16:56:24 2026
 
 OUTPUT FILE NAME:   <buck_converter_dma_original.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00000000
@@ -14,9 +14,9 @@ MEMORY CONFIGURATION
 PAGE 0:
   BEGIN                 00000000   00000002  00000002  00000000  RWIX
   RAMM0                 000000f6   0000030a  00000004  00000306  RWIX
-  RAMLS0                00008000   00000800  000007f8  00000008  RWIX
+  RAMLS0                00008000   00000800  0000037e  00000482  RWIX
   RAMLS3                00009800   00000800  000002fe  00000502  RWIX
-  RAMLS4                0000a000   00000800  0000010e  000006f2  RWIX
+  RAMLS4                0000a000   00000800  00000000  00000800  RWIX
   FLASH_BANK0_SEC0      00080000   00001000  00000000  00001000  RWIX
   FLASH_BANK0_SEC1      00081000   00001000  00000000  00001000  RWIX
   FLASH_BANK0_SEC2      00082000   00001000  00000000  00001000  RWIX
@@ -129,35 +129,20 @@ codestart
                   0000b3e6    0000001a     --HOLE--
                   0000b400    00000032     main.obj (.data)
 
+.bss_cla   0    00009af0    00000008     UNINITIALIZED
+                  00009af0    00000008     cla_tasks.obj (.bss_cla)
+
 ramgs0     1    0000c000    00000012     UNINITIALIZED
                   0000c000    0000000e     main.obj (ramgs0:uninit)
                   0000c00e    00000004     main.obj (ramgs0:init)
 
-Cla1Prog.1 
-*          0    00008000    000007f8     
-                  00008000    0000021e     cla_tasks.obj (Cla1Prog:hh1)
-                  0000821e    000001f0     cla_tasks.obj (Cla1Prog:Cla1Task1)
-                  0000840e    000001d8     cla_tasks.obj (Cla1Prog:derivatives)
-                  000085e6    000001d8     cla_tasks.obj (Cla1Prog:hh2)
-                  000087be    0000003a     cla_tasks.obj (Cla1Prog:pivot)
-
 .scratchpad 
-*          0    00009af0    00000006     UNINITIALIZED
-                  00009af0    00000006     cla_tasks.obj (.scratchpad:Cla1Prog:derivatives)
-                  00009af0    00000002     cla_tasks.obj (.scratchpad:Cla1Prog:partial_norms)
-                  00009af0    00000002     cla_tasks.obj (.scratchpad:Cla1Prog:back_subs)
-
-.bss_cla   0    00009af6    00000008     UNINITIALIZED
-                  00009af6    00000008     cla_tasks.obj (.bss_cla)
+*          0    00009af8    00000006     UNINITIALIZED
+                  00009af8    00000006     cla_tasks.obj (.scratchpad:Cla1Prog:derivatives)
 
 Cla1DataRam 
 *          0    00009800    000002f0     UNINITIALIZED
                   00009800    000002f0     cla_tasks.obj (Cla1DataRam)
-
-Cla1Prog.2 
-*          0    0000a000    0000010e     
-                  0000a000    0000009c     cla_tasks.obj (Cla1Prog:partial_norms)
-                  0000a09c    00000072     cla_tasks.obj (Cla1Prog:back_subs)
 
 Cla1ToCpuMsgRAM 
 *          1    00001480    00000004     UNINITIALIZED
@@ -167,6 +152,10 @@ CpuToCla1MsgRAM
 *          1    00001500    00000011     UNINITIALIZED
                   00001500    00000010     main.obj (CpuToCla1MsgRAM:uninit)
                   00001510    00000001     main.obj (CpuToCla1MsgRAM:init)
+
+Cla1Prog   0    00008000    0000037e     
+                  00008000    000001d8     cla_tasks.obj (Cla1Prog:derivatives)
+                  000081d8    000001a6     cla_tasks.obj (Cla1Prog:Cla1Task1)
 
 .text      1    0000c012    00001993     
                   0000c012    000003c9     board.obj (.text:EPWM_init)
@@ -290,12 +279,12 @@ MODULE SUMMARY
        Module                        code   ro data   rw data
        ------                        ----   -------   -------
     .\
-       cla_tasks.obj                 2310   0         770    
+       cla_tasks.obj                 894    0         766    
        main.obj                      754    0         107    
        transient_det.obj             278    0         104    
        control_functions.obj         81     0         2      
     +--+-----------------------------+------+---------+---------+
-       Total:                        3423   0         983    
+       Total:                        2007   0         979    
                                                              
     .\device\
        device.obj                    349    0         0      
@@ -340,7 +329,7 @@ MODULE SUMMARY
        Stack:                        0      0         1016   
        Linker Generated:             0      106       0      
     +--+-----------------------------+------+---------+---------+
-       Grand Total:                  8863   1091      2007   
+       Grand Total:                  7447   1091      2003   
 
 
 LINKER GENERATED COPY TABLES
@@ -351,8 +340,8 @@ __TI_cinit_table @ 0000a8c4 records: 8, size/record: 4, table size: 32
 	Cla1ToCpuMsgRAM: load addr=0000a8aa, load size=00000005 bytes, run addr=00001480, run size=00000004 bytes, compression=lzss
 	CpuToCla1MsgRAM: load addr=0000a8af, load size=00000005 bytes, run addr=00001500, run size=00000011 bytes, compression=lzss
 	.bss: load addr=0000a8b4, load size=00000004 bytes, run addr=0000a800, run size=0000007a bytes, compression=zero_init
-	.bss_cla: load addr=0000a8b8, load size=00000004 bytes, run addr=00009af6, run size=00000008 bytes, compression=zero_init
-	.scratchpad: load addr=0000a8bc, load size=00000004 bytes, run addr=00009af0, run size=00000006 bytes, compression=zero_init
+	.bss_cla: load addr=0000a8b8, load size=00000004 bytes, run addr=00009af0, run size=00000008 bytes, compression=zero_init
+	.scratchpad: load addr=0000a8bc, load size=00000004 bytes, run addr=00009af8, run size=00000006 bytes, compression=zero_init
 	Cla1DataRam: load addr=0000a8c0, load size=00000004 bytes, run addr=00009800, run size=000002f0 bytes, compression=zero_init
 
 
@@ -404,10 +393,10 @@ address     data page           name
 00009ae8     26b (00009ac0)     v2v2
 00009aea     26b (00009ac0)     dot2
 00009aec     26b (00009ac0)     sol
-00009af6     26b (00009ac0)     nsat_smpl
-00009af8     26b (00009ac0)     sat_smpl
-00009afa     26b (00009ac0)     nsat_smpl_prev
-00009afc     26b (00009ac0)     ef_index
+00009af0     26b (00009ac0)     nsat_smpl
+00009af2     26b (00009ac0)     sat_smpl
+00009af4     26b (00009ac0)     nsat_smpl_prev
+00009af6     26b (00009ac0)     ef_index
 
 0000a800     2a0 (0000a800)     io_buff
 0000a820     2a0 (0000a800)     tr_buff
@@ -482,7 +471,7 @@ page  address   name
 1     0000d4cc  CLA_setTriggerSource           
 1     0000d517  CPUTIMER_init                  
 1     0000d892  CPUTimer_setEmulationMode      
-0     0000821e  Cla1Task1                      
+0     000081d8  Cla1Task1                      
 1     0000d4f2  DMA_configAddresses            
 1     0000d560  DMA_configBurst                
 1     0000c786  DMA_configMode                 
@@ -569,7 +558,6 @@ n/a   UNDEFED   __c_args__
 0     00009ada  alpha                          
 0     00009ae4  alpha2                         
 1     0000c823  average_samples                
-0     0000a09c  back_subs                      
 0     00009adc  beta                           
 0     00009ae6  beta2                          
 1     0000ce12  cla1Isr1                       
@@ -578,14 +566,14 @@ n/a   UNDEFED   __c_args__
 0     00009ad9  col1                           
 1     0000b40e  d                              
 1     0000d77c  debug_pin_init                 
-0     0000840e  derivatives                    
+0     00008000  derivatives                    
 0     00009922  dio_smpl_cla                   
 0     00009ae0  dot                            
 0     00009ae2  dot1                           
 0     00009aea  dot2                           
 1     0000d18f  duty_cycle_calculation         
 1     0000d7ec  duty_cycle_saturation          
-0     00009afc  ef_index                       
+0     00009af6  ef_index                       
 1     0000d024  err_calc                       
 1     0000d47d  exit                           
 1     0000b410  fixed_d                        
@@ -593,8 +581,6 @@ n/a   UNDEFED   __c_args__
 1     0000b42a  get_clk                        
 1     0000b42c  get_ls_clk                     
 1     0000a870  head                           
-0     00008000  hh1                            
-0     000085e6  hh2                            
 0     00009800  i                              
 1     0000d960  init_PI                        
 1     0000c6e7  init_detector                  
@@ -622,16 +608,14 @@ n/a   UNDEFED   __c_args__
 1     0000d974  myINPUTXBARINPUT4_init         
 0     00009ad2  n1_partial                     
 0     00009ad4  n2_partial                     
-0     00009af6  nsat_smpl                      
-0     00009afa  nsat_smpl_prev                 
-0     0000a000  partial_norms                  
+0     00009af0  nsat_smpl                      
+0     00009af4  nsat_smpl_prev                 
 0     00009ad6  piv0                           
 0     00009ad7  piv1                           
-0     000087be  pivot                          
 1     0000d98c  reset_PI                       
 1     00001510  s_count                        
 1     0000c937  samples_to_cla                 
-0     00009af8  sat_smpl                       
+0     00009af2  sat_smpl                       
 1     0000d8f7  set_duty_cycle                 
 0     00009aec  sol                            
 1     0000b42e  timer_count                    
@@ -660,11 +644,8 @@ page  address   name
 ----  -------   ----                           
 0     00000000  code_start                     
 0     000000f6  SysCtl_delay                   
-0     00008000  hh1                            
-0     0000821e  Cla1Task1                      
-0     0000840e  derivatives                    
-0     000085e6  hh2                            
-0     000087be  pivot                          
+0     00008000  derivatives                    
+0     000081d8  Cla1Task1                      
 0     00009800  i                              
 0     00009802  vo_smpl_cla                    
 0     00009892  io_smpl_cla                    
@@ -687,12 +668,10 @@ page  address   name
 0     00009ae8  v2v2                           
 0     00009aea  dot2                           
 0     00009aec  sol                            
-0     00009af6  nsat_smpl                      
-0     00009af8  sat_smpl                       
-0     00009afa  nsat_smpl_prev                 
-0     00009afc  ef_index                       
-0     0000a000  partial_norms                  
-0     0000a09c  back_subs                      
+0     00009af0  nsat_smpl                      
+0     00009af2  sat_smpl                       
+0     00009af4  nsat_smpl_prev                 
+0     00009af6  ef_index                       
 1     00000400  __stack                        
 1     000007f8  __TI_STACK_END                 
 1     00001480  R_out                          
@@ -847,4 +826,4 @@ abs   ffffffff  __TI_prof_data_size
 abs   ffffffff  __TI_prof_data_start           
 n/a   UNDEFED   __c_args__                     
 
-[188 symbols]
+[183 symbols]
