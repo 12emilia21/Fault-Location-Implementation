@@ -68,25 +68,30 @@ volatile int ef_index;            // Index of effective samples
 volatile int single_smpl;         // Discard samples in between saturated values. 
 
 //int valid_smpl[BUFF_SAMPLES];     // Verify the samples that are not saturated 
-int valid_smpl_val[BUFF_SAMPLES]; // Verify the samples that are not saturated 
+float valid_smpl_val_v[BUFF_SAMPLES]; // Verify the samples that are not saturated 
+float valid_smpl_val_i[BUFF_SAMPLES]; // Verify the samples that are not saturated 
 
 // Calculate derivatives: considering saturation there are 6 scenarios
 // nsat_smpls = 2 -> 2 consecutive samples
 // index indicates the location of last valid data in the buffer
-int derivatives(int index){
+int derivatives(int index, int real_index){
 
     int single_smpl_det = 0; 
 
-    if (index < (BUFF_SAMPLES-1)) {
+    if (real_index < (BUFF_SAMPLES-1)) {
         if (nsat_smpl == 0){
             if (nsat_smpl_prev > 1){
                 dio_smpl_cla[index-1] = (io_smpl_cla[index-1] - io_smpl_cla[index-2]) / TSMPL;
             }
             else if (nsat_smpl_prev == 1){
+                single_smpl_det       = 1;
+                sat_smpl++; 
+                //dio_smpl_cla[BUFF_SAMPLES-sat_smpl] = 350;
+                //io_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 350;
+                //vo_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 350; 
                 dio_smpl_cla[index-1] = 0;
                 io_smpl_cla[index-1]  = 0;
-                vo_smpl_cla[index-1]  = 0;
-                single_smpl_det       = 1; 
+                vo_smpl_cla[index-1]  = 0; 
             }
         } 
         else if (nsat_smpl == 2){
@@ -247,41 +252,49 @@ __attribute__((interrupt)) void Cla1Task1(void)
     if (s_count == 0){
         nsat_smpl      = 0;     
         nsat_smpl_prev = 0; 
-        ef_index       = 0;      
+        ef_index       = 0; 
+        sat_smpl       = 0;      
     }
 
     if (s_count<N_COMPUTE){
         for(i=0;i<N_SAMPLES;i++){
             if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
-                vo_smpl_cla[ef_index] = vo_sample_test[i]; 
-                io_smpl_cla[ef_index] = io_sample_test[i];
+                //vo_smpl_cla[ef_index] = vo_sample_test[i]; 
+                //io_smpl_cla[ef_index] = io_sample_test[i];
+                vo_smpl_cla[N_SAMPLES*s_count+i] = vo_sample_test[i]; 
+                io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
                 nsat_smpl++; 
                 ef_index++;  
                 // Debugging
-                valid_smpl_val[N_SAMPLES*s_count+i] = vo_sample_test[i];
+                valid_smpl_val_v[N_SAMPLES*s_count+i] = vo_sample_test[i];
+                valid_smpl_val_i[N_SAMPLES*s_count+i] = io_sample_test[i];
             } 
             else{
                 nsat_smpl = 0;
                 sat_smpl++; 
                 // Begin clearing from the end 
-                vo_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 0; 
-                io_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 0;
-                dio_smpl_cla[BUFF_SAMPLES-sat_smpl] = 0;     
+                //vo_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 450; 
+                //io_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 450;
+                //dio_smpl_cla[BUFF_SAMPLES-sat_smpl] = 450;   
+                vo_smpl_cla[N_SAMPLES*s_count+i]  = 0; 
+                io_smpl_cla[N_SAMPLES*s_count+i]  = 0;
+                dio_smpl_cla[N_SAMPLES*s_count+i] = 0;     
                 // Debugging
-                valid_smpl_val[N_SAMPLES*s_count+i] = 0;            
+                valid_smpl_val_v[N_SAMPLES*s_count+i] = 85;  
+                valid_smpl_val_i[N_SAMPLES*s_count+i] = 75;          
             }
             
-            single_smpl    = derivatives(ef_index-1);   // Resto por el incremento de linea 302 
+            single_smpl    = derivatives(N_SAMPLES*s_count+i, N_SAMPLES*s_count+i);   // Resto por el incremento de linea 302 
             ef_index       = ef_index-single_smpl;      // Index correction      
             nsat_smpl_prev = nsat_smpl;
         }
     }
 
-   //if (s_count==(N_COMPUTE-1)){
-        //partial_norms();
-        //pivot();
-        //hh1();
-        //hh2();
-        //back_subs();
-    //}
+    if (s_count==(N_COMPUTE-1)){
+        partial_norms();
+        pivot();
+        hh1();
+        hh2();
+        back_subs();
+    }
 }

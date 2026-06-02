@@ -141,15 +141,24 @@ void average_samples(void){
     return;
 }
 
+// Eliminar DMA
 void samples_to_cla(void){
-    vo_sample_test[0] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[1] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[2] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[3] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
-    io_sample_test[0] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
+    //vo_sample_test[0] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
+    //vo_sample_test[1] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
+    //vo_sample_test[2] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
+    //vo_sample_test[3] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
+    //io_sample_test[0] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
+    //io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
+    //io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
+    //io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
+    vo_sample_test[0] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[1] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[2] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[3] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
+    io_sample_test[0] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[1] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[2] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[3] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
     return;
 }
 
