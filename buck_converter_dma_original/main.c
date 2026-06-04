@@ -88,6 +88,9 @@ uint32_t  get_ls_clk  = 0;
 uint32_t  timer_count = 0; 
 float32_t alg_time    = 0.0;
 
+// Synch DMA 
+bool dma_done = 0;
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -196,19 +199,22 @@ void err_calc(void){
 // Calculate duty cycle (if fixed, maintains the same value).
 // Detects transient and calculates error if the estimation is over. 
 
-void INT_ControlPWM_ISR(void){
-    EPWM_clearEventTriggerInterruptFlag(ControlPWM_BASE);
-    Interrupt_clearACKGroup(INT_ControlPWM_INTERRUPT_ACK_GROUP);
-    average_samples();
-    samples_to_cla();
-    duty_cycle_calculation();
-    transient_det_res = transient_detector(Vo_avg, Il_avg);
-    if (transient_det_res == 0) {
-        s_count=0;
-        err_calc();
+void INT_ControlPWM_fixed_fsw_ISR(void){
+    if (dma_done){
+        dma_done = 0; 
+        average_samples();
+        samples_to_cla();
+        duty_cycle_calculation();
+        transient_det_res = transient_detector(Vo_avg, Il_avg);
+        if (transient_det_res == 0) {
+            s_count=0;
+            err_calc();
+        }
+        GPIO_writePin(transient_det_pin, transient_det_res);
+        set_duty_cycle(d);
     }
-    GPIO_writePin(transient_det_pin, transient_det_res);
-    set_duty_cycle(d);
+    EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
+    Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
 
 // --- ISR for CLA operation ---
@@ -260,3 +266,10 @@ void INT_tz_pin_XINT_ISR(void){
     EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
     Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
 }
+
+// 
+void INT_myDMA0_ISR(void){
+    dma_done = 1;
+    Interrupt_clearACKGroup(INT_myDMA0_INTERRUPT_ACK_GROUP);
+}
+
