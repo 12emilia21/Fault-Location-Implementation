@@ -167,33 +167,20 @@ void myADC0_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN0
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM2_SOCA, ADC_CH_ADCIN0, 6U);
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 6U);
 	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
-	// Start of Conversion 1 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM2_SOCB
-	//	  	Channel			: ADC_CH_ADCIN0
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM2_SOCB, ADC_CH_ADCIN0, 6U);
-	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
-	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 1
+	// 		SOC/EOC number	: 0
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
+	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
 	ADC_enableInterrupt(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC0_BASE, ADC_INT_NUMBER1);
@@ -478,15 +465,18 @@ void myDMA0_init(){
     DMA_configTransfer(myDMA0_BASE, 2U, -3, 1);
     DMA_configWrap(myDMA0_BASE, 65535U, 0, 2U, -7);
     DMA_configMode(myDMA0_BASE, DMA_TRIGGER_ADCC1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
+    DMA_setInterruptMode(myDMA0_BASE, DMA_INT_AT_END);
+    DMA_enableInterrupt(myDMA0_BASE);
+    DMA_disableOverrunInterrupt(myDMA0_BASE);
     DMA_enableTrigger(myDMA0_BASE);
     DMA_startChannel(myDMA0_BASE);
 }
 void myDMA1_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA1_BASE, ADCA0_results_add, ADCA0_Result_base);
-    DMA_configBurst(myDMA1_BASE, 2U, 1, 1);
-    DMA_configTransfer(myDMA1_BASE, 1U, -1, -1);
-    DMA_configWrap(myDMA1_BASE, 65535U, 0, 65535U, 0);
+    DMA_configBurst(myDMA1_BASE, 1U, 0, 1);
+    DMA_configTransfer(myDMA1_BASE, 2U, 0, 1);
+    DMA_configWrap(myDMA1_BASE, 65535U, 0, 2U, -1);
     DMA_configMode(myDMA1_BASE, DMA_TRIGGER_ADCA1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
     DMA_enableTrigger(myDMA1_BASE);
     DMA_startChannel(myDMA1_BASE);
@@ -510,7 +500,7 @@ void myDMA2_init(){
 void EPWM_init(){
     HRPWM_setEmulationMode(ControlPWM_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
-    EPWM_setTimeBasePeriod(ControlPWM_BASE, 5000);	
+    EPWM_setTimeBasePeriod(ControlPWM_BASE, 1000);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
     HRPWM_setTimeBaseCounter(ControlPWM_BASE, 0);	
     HRPWM_setTimeBaseCounterMode(ControlPWM_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
@@ -518,10 +508,10 @@ void EPWM_init(){
     HRPWM_disablePhaseShiftLoad(ControlPWM_BASE);	
     HRPWM_setPhaseShift(ControlPWM_BASE, 0);	
     HRPWM_setSyncOutPulseMode(ControlPWM_BASE, EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A, 2500);	
+    EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A, 500);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_B, 4999);	
+    EPWM_setCounterCompareValue(ControlPWM_BASE, EPWM_COUNTER_COMPARE_B, 999);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_BASE, EPWM_COUNTER_COMPARE_B);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_BASE, EPWM_GL_REGISTER_AQCSFRC);	
@@ -551,20 +541,10 @@ void EPWM_init(){
     HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
     EPWM_enableTripZoneSignals(ControlPWM_BASE, EPWM_TZ_SIGNAL_OSHT1);	
     HRPWM_enableTripZoneInterrupt(ControlPWM_BASE, EPWM_TZ_INTERRUPT_OST);	
-    HRPWM_enableInterrupt(ControlPWM_BASE);	
-    HRPWM_setInterruptSource(ControlPWM_BASE, EPWM_INT_TBCTR_U_CMPB);	
-    HRPWM_setInterruptEventCount(ControlPWM_BASE, 1);	
-    HRPWM_forceInterruptEventCountInit(ControlPWM_BASE);	
-    HRPWM_enableADCTrigger(ControlPWM_BASE, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(ControlPWM_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_PERIOD);	
-    HRPWM_setADCTriggerEventPrescale(ControlPWM_BASE, EPWM_SOC_A, 1);	
-    HRPWM_enableADCTrigger(ControlPWM_BASE, EPWM_SOC_B);	
-    HRPWM_setADCTriggerSource(ControlPWM_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
-    HRPWM_setADCTriggerEventPrescale(ControlPWM_BASE, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(ControlPWM_BASE);	
     HRPWM_setEmulationMode(ControlPWM_fixed_fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_fixed_fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
-    EPWM_setTimeBasePeriod(ControlPWM_fixed_fsw_BASE, 5000);	
+    EPWM_setTimeBasePeriod(ControlPWM_fixed_fsw_BASE, 1000);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_fixed_fsw_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
     HRPWM_setTimeBaseCounter(ControlPWM_fixed_fsw_BASE, 0);	
     HRPWM_setTimeBaseCounterMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
@@ -572,10 +552,10 @@ void EPWM_init(){
     HRPWM_disablePhaseShiftLoad(ControlPWM_fixed_fsw_BASE);	
     HRPWM_setPhaseShift(ControlPWM_fixed_fsw_BASE, 0);	
     HRPWM_setSyncOutPulseMode(ControlPWM_fixed_fsw_BASE, EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A, 2500);	
+    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A, 500);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B, 4999);	
+    EPWM_setCounterCompareValue(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B, 999);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_fixed_fsw_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_fixed_fsw_BASE, EPWM_GL_REGISTER_AQCSFRC);	
@@ -601,16 +581,14 @@ void EPWM_init(){
     HRPWM_setRisingEdgeDelayCount(ControlPWM_fixed_fsw_BASE, 20);	
     HRPWM_setDeadBandDelayMode(ControlPWM_fixed_fsw_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_fixed_fsw_BASE, 20);	
-    HRPWM_enableADCTrigger(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_PERIOD);	
-    HRPWM_setADCTriggerEventPrescale(ControlPWM_fixed_fsw_BASE, EPWM_SOC_A, 1);	
-    HRPWM_enableADCTrigger(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B);	
-    HRPWM_setADCTriggerSource(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
-    HRPWM_setADCTriggerEventPrescale(ControlPWM_fixed_fsw_BASE, EPWM_SOC_B, 1);	
+    HRPWM_enableInterrupt(ControlPWM_fixed_fsw_BASE);	
+    HRPWM_setInterruptSource(ControlPWM_fixed_fsw_BASE, EPWM_INT_TBCTR_U_CMPB);	
+    HRPWM_setInterruptEventCount(ControlPWM_fixed_fsw_BASE, 1);	
+    HRPWM_forceInterruptEventCountInit(ControlPWM_fixed_fsw_BASE);	
     HRPWM_enableAutoConversion(ControlPWM_fixed_fsw_BASE);	
     HRPWM_setEmulationMode(ControlPWM_2fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_2fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
-    EPWM_setTimeBasePeriod(ControlPWM_2fsw_BASE, 2500);	
+    EPWM_setTimeBasePeriod(ControlPWM_2fsw_BASE, 500);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_2fsw_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
     HRPWM_setTimeBaseCounter(ControlPWM_2fsw_BASE, 0);	
     HRPWM_setTimeBaseCounterMode(ControlPWM_2fsw_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
@@ -618,10 +596,10 @@ void EPWM_init(){
     HRPWM_disablePhaseShiftLoad(ControlPWM_2fsw_BASE);	
     HRPWM_setPhaseShift(ControlPWM_2fsw_BASE, 0);	
     HRPWM_setSyncOutPulseMode(ControlPWM_2fsw_BASE, EPWM_SYNC_OUT_PULSE_ON_EPWMxSYNCIN);	
-    EPWM_setCounterCompareValue(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_A, 1250);	
+    EPWM_setCounterCompareValue(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_A, 250);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_A);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    EPWM_setCounterCompareValue(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_B, 2499);	
+    EPWM_setCounterCompareValue(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_B, 499);	
     HRPWM_disableCounterCompareShadowLoadMode(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_B);	
     HRPWM_setCounterCompareShadowLoadMode(ControlPWM_2fsw_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     HRPWM_enableGlobalLoadRegisters(ControlPWM_2fsw_BASE, EPWM_GL_REGISTER_AQCSFRC);	
@@ -647,10 +625,10 @@ void EPWM_init(){
     HRPWM_setDeadBandDelayMode(ControlPWM_2fsw_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_2fsw_BASE, 20);	
     HRPWM_enableADCTrigger(ControlPWM_2fsw_BASE, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_ZERO);	
+    HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPA);	
     HRPWM_setADCTriggerEventPrescale(ControlPWM_2fsw_BASE, EPWM_SOC_A, 1);	
     HRPWM_enableADCTrigger(ControlPWM_2fsw_BASE, EPWM_SOC_B);	
-    HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_PERIOD);	
+    HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_D_CMPA);	
     HRPWM_setADCTriggerEventPrescale(ControlPWM_2fsw_BASE, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(ControlPWM_2fsw_BASE);	
 }
@@ -658,7 +636,7 @@ void EPWM_init(){
 void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setEmulationMode(base, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(base, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
-    EPWM_setTimeBasePeriod(base, 5000);	
+    EPWM_setTimeBasePeriod(base, 1000);	
     HRPWM_enableGlobalLoadRegisters(base, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
     HRPWM_setTimeBaseCounter(base, 0);	
     HRPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP_DOWN);	
@@ -666,10 +644,10 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_disablePhaseShiftLoad(base);	
     HRPWM_setPhaseShift(base, 0);	
     HRPWM_setSyncOutPulseMode(base, EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO);	
-    EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_A, 2500);	
+    EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_A, 500);	
     HRPWM_disableCounterCompareShadowLoadMode(base, EPWM_COUNTER_COMPARE_A);	
     HRPWM_setCounterCompareShadowLoadMode(base, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
-    EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_B, 4999);	
+    EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_B, 999);	
     HRPWM_disableCounterCompareShadowLoadMode(base, EPWM_COUNTER_COMPARE_B);	
     HRPWM_setCounterCompareShadowLoadMode(base, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     HRPWM_enableGlobalLoadRegisters(base, EPWM_GL_REGISTER_AQCSFRC);	
@@ -699,16 +677,6 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
     EPWM_enableTripZoneSignals(base, EPWM_TZ_SIGNAL_OSHT1);	
     HRPWM_enableTripZoneInterrupt(base, EPWM_TZ_INTERRUPT_OST);	
-    HRPWM_enableInterrupt(base);	
-    HRPWM_setInterruptSource(base, EPWM_INT_TBCTR_U_CMPB);	
-    HRPWM_setInterruptEventCount(base, 1);	
-    HRPWM_forceInterruptEventCountInit(base);	
-    HRPWM_enableADCTrigger(base, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(base, EPWM_SOC_A, EPWM_SOC_TBCTR_PERIOD);	
-    HRPWM_setADCTriggerEventPrescale(base, EPWM_SOC_A, 1);	
-    HRPWM_enableADCTrigger(base, EPWM_SOC_B);	
-    HRPWM_setADCTriggerSource(base, EPWM_SOC_B, EPWM_SOC_TBCTR_ZERO);	
-    HRPWM_setADCTriggerEventPrescale(base, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(base);	
 }
 
@@ -779,13 +747,17 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_myCLA01, &cla1Isr1);
 	Interrupt_enable(INT_myCLA01);
 	
-	// Interrupt Setings for INT_ControlPWM
-	Interrupt_register(INT_ControlPWM, &INT_ControlPWM_ISR);
-	Interrupt_enable(INT_ControlPWM);
+	// Interrupt Setings for INT_myDMA0
+	Interrupt_register(INT_myDMA0, &INT_myDMA0_ISR);
+	Interrupt_enable(INT_myDMA0);
 	
 	// Interrupt Setings for INT_ControlPWM_TZ
 	Interrupt_register(INT_ControlPWM_TZ, &INT_ControlPWM_TZ_ISR);
 	Interrupt_disable(INT_ControlPWM_TZ);
+	
+	// Interrupt Setings for INT_ControlPWM_fixed_fsw
+	Interrupt_register(INT_ControlPWM_fixed_fsw, &INT_ControlPWM_fixed_fsw_ISR);
+	Interrupt_enable(INT_ControlPWM_fixed_fsw);
 	
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);

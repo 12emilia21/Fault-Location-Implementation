@@ -125,16 +125,11 @@ extern "C"
 //*****************************************************************************
 #define myADC0_BASE ADCA_BASE
 #define myADC0_RESULT_BASE ADCARESULT_BASE
-#define myADC0_Vin1 ADC_SOC_NUMBER0
-#define myADC0_FORCE_Vin1 ADC_FORCE_SOC0
-#define myADC0_SAMPLE_WINDOW_Vin1 55.1
-#define myADC0_TRIGGER_SOURCE_Vin1 ADC_TRIGGER_EPWM2_SOCA
-#define myADC0_CHANNEL_Vin1 ADC_CH_ADCIN0
-#define myADC0_Vin2 ADC_SOC_NUMBER1
-#define myADC0_FORCE_Vin2 ADC_FORCE_SOC1
-#define myADC0_SAMPLE_WINDOW_Vin2 55.1
-#define myADC0_TRIGGER_SOURCE_Vin2 ADC_TRIGGER_EPWM2_SOCB
-#define myADC0_CHANNEL_Vin2 ADC_CH_ADCIN0
+#define myADC0_Vin ADC_SOC_NUMBER0
+#define myADC0_FORCE_Vin ADC_FORCE_SOC0
+#define myADC0_SAMPLE_WINDOW_Vin 55.1
+#define myADC0_TRIGGER_SOURCE_Vin ADC_TRIGGER_EPWM3_SOCA
+#define myADC0_CHANNEL_Vin ADC_CH_ADCIN0
 void myADC0_init();
 
 #define myADC1_BASE ADCC_BASE
@@ -220,8 +215,8 @@ void myDMA0_init();
 extern const void *ADCA0_Result_base;
 extern const void *ADCA0_results_add;
 #define myDMA1_BASE DMA_CH2_BASE 
-#define myDMA1_BURSTSIZE 2U
-#define myDMA1_TRANSFERSIZE 1U
+#define myDMA1_BURSTSIZE 1U
+#define myDMA1_TRANSFERSIZE 2U
 void myDMA1_init();
 extern const void *ADCB0_Result_base;
 extern const void *ADCB0_results_add;
@@ -236,11 +231,11 @@ void myDMA2_init();
 //
 //*****************************************************************************
 #define ControlPWM_BASE EPWM1_BASE
-#define ControlPWM_TBPRD 5000
+#define ControlPWM_TBPRD 1000
 #define ControlPWM_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_TBPHS 0
-#define ControlPWM_CMPA 2500
-#define ControlPWM_CMPB 4999
+#define ControlPWM_CMPA 500
+#define ControlPWM_CMPB 999
 #define ControlPWM_CMPC 0
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
@@ -249,28 +244,28 @@ void myDMA2_init();
 #define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
 #define ControlPWM_OSHT_SOURCES EPWM_TZ_SIGNAL_OSHT1
 #define ControlPWM_TZ_INTERRUPT_SOURCES EPWM_TZ_INTERRUPT_OST
-#define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
+#define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_fixed_fsw_BASE EPWM2_BASE
-#define ControlPWM_fixed_fsw_TBPRD 5000
+#define ControlPWM_fixed_fsw_TBPRD 1000
 #define ControlPWM_fixed_fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_fixed_fsw_TBPHS 0
-#define ControlPWM_fixed_fsw_CMPA 2500
-#define ControlPWM_fixed_fsw_CMPB 4999
+#define ControlPWM_fixed_fsw_CMPA 500
+#define ControlPWM_fixed_fsw_CMPB 999
 #define ControlPWM_fixed_fsw_CMPC 0
 #define ControlPWM_fixed_fsw_CMPD 0
 #define ControlPWM_fixed_fsw_DBRED 20
 #define ControlPWM_fixed_fsw_DBFED 20
 #define ControlPWM_fixed_fsw_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_fixed_fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_fixed_fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define ControlPWM_fixed_fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 #define ControlPWM_2fsw_BASE EPWM3_BASE
-#define ControlPWM_2fsw_TBPRD 2500
+#define ControlPWM_2fsw_TBPRD 500
 #define ControlPWM_2fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_2fsw_TBPHS 0
-#define ControlPWM_2fsw_CMPA 1250
-#define ControlPWM_2fsw_CMPB 2499
+#define ControlPWM_2fsw_CMPA 250
+#define ControlPWM_2fsw_CMPB 499
 #define ControlPWM_2fsw_CMPC 0
 #define ControlPWM_2fsw_CMPD 0
 #define ControlPWM_2fsw_DBRED 20
@@ -317,15 +312,20 @@ void myINPUTXBARINPUT4_init();
 #define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
 extern __interrupt void cla1Isr1(void);
 
-// Interrupt Settings for INT_ControlPWM
-#define INT_ControlPWM INT_EPWM1
-#define INT_ControlPWM_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
-extern __interrupt void INT_ControlPWM_ISR(void);
+// Interrupt Settings for INT_myDMA0
+#define INT_myDMA0 INT_DMA_CH1
+#define INT_myDMA0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
+extern __interrupt void INT_myDMA0_ISR(void);
 
 // Interrupt Settings for INT_ControlPWM_TZ
 #define INT_ControlPWM_TZ INT_EPWM1_TZ
 #define INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP2
 extern __interrupt void INT_ControlPWM_TZ_ISR(void);
+
+// Interrupt Settings for INT_ControlPWM_fixed_fsw
+#define INT_ControlPWM_fixed_fsw INT_EPWM2
+#define INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
+extern __interrupt void INT_ControlPWM_fixed_fsw_ISR(void);
 
 // Interrupt Settings for INT_transient_det_pin_XINT
 #define INT_transient_det_pin_XINT INT_XINT1

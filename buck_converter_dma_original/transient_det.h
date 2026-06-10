@@ -7,8 +7,8 @@
 
 // Defines
 #define N_AVG        ((uint16_t)8)//16)              
-#define RATED_VO     ((float32_t)48)
-#define RATED_IO     ((float32_t)20.83)  
+#define RATED_VO     ((float32_t)12)//48)
+#define RATED_IO     ((float32_t)2.25)//20.83)  
 #define VO_VAR_VAL   ((float32_t)(0.02*RATED_VO))
 #define IO_VAR_VAL   ((float32_t)(0.025*RATED_IO))
 

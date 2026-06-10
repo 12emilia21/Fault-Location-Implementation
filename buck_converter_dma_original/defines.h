@@ -28,9 +28,32 @@
 #define TIMER_PERIOD    10e-3
 #define SYSCLK          100e6
 
+// ADC definitions
+#define ADC_CODES           ((uint16_t)(4096))
+
+#define IIN_MAX ((float32_t)20.625)
+#define IIN_SCALE IIN_MAX/ADC_CODES
+#define IIN_OFST 0
+
+#define IOUT_MAX ((float32_t)20.625)
+#define IOUT_SCALE IOUT_MAX/ADC_CODES
+#define IOUT_OFST 0
+
+#define IL_MAX ((float32_t)20.625)
+#define IL_SCALE IL_MAX/ADC_CODES
+#define IL_OFST 0
+
+#define VIN_MAX ((float32_t)50)
+#define VIN_SCALE VIN_MAX/ADC_CODES
+#define VIN_OFST 0
+
+#define VOUT_MAX ((float32_t)50)
+#define VOUT_SCALE VOUT_MAX/ADC_CODES
+#define VOUT_OFST 0
+
 // Saturation of sensors
-#define V_SAT_H           ((float32_t)49)//49.27)
+#define V_SAT_H           ((float32_t)50)//49)//49.27)
 #define V_SAT_L           ((float32_t)0.0)
-#define I_SAT_H           ((float32_t)20.5)//20.625)
+#define I_SAT_H           ((float32_t)33)//5)//20.5)//20.625)
 #define I_SAT_L           ((float32_t)0.0)
 
