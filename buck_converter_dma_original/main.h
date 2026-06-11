@@ -17,24 +17,16 @@
 #include "defines.h"
 
 // Sample controller data
-uint16_t ADCA_results[2]; // Iin samples 2 pswc
-uint16_t ADCB_results[4]; // Io samples 4 pswc
-uint16_t ADCC_results[8]; // (Vin+Il) 2 + 4 Vo samples pswc each
-//uint16_t VO_results[4];   // Vo samples 4 pswc
+uint16_t ADCA_results[8]; // Vin (2), Iin (2), Iout (4)
+uint16_t ADCC_results[6]; // Il (2), Vout(4)
 
 #pragma DATA_SECTION(ADCA_results,    "ramgs0");
-#pragma DATA_SECTION(ADCB_results,    "ramgs0");
-#pragma DATA_SECTION(ADCC_results,    "ramgs0");
-//#pragma DATA_SECTION(VO_results,      "ramgs0");
+#pragma DATA_SECTION(ADCC_results,    "ramgs0");\
 
 const void * ADCA0_results_add = (const void *) ADCA_results;
 const void * ADCA0_Result_base = (const void *) myADC0_RESULT_BASE;
-const void * ADCB0_results_add = (const void *) ADCB_results;
-const void * ADCB0_Result_base = (const void *) myADC2_RESULT_BASE;
 const void * ADCC0_results_add = (const void *) ADCC_results;
 const void * ADCC0_Result_base = (const void *) myADC1_RESULT_BASE;
-//const void * VO_results_add    = (const void *) VO_results;
-//const void * VO_Result_base    = (const void *) myADC1_RESULT_BASE+4;
 
 float32_t d                = 0;
 float32_t fixed_d          = 0.5;

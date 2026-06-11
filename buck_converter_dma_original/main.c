@@ -135,12 +135,12 @@ void main(void)
 }
 
 void average_samples(void){
-    Iin_avg = 0.5f *((ADCC_results[0]*IIN_SCALE  - IIN_OFST ) + (ADCC_results[4]*IIN_SCALE   - IIN_OFST ));
-    Il_avg  = 0.5f *((ADCC_results[1]*IL_SCALE   - IL_OFST  ) + (ADCC_results[5]*IL_SCALE    - IL_OFST  ));
-    Vo_avg  = 0.5f *((ADCC_results[2]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[6]*VOUT_SCALE  - VOUT_OFST));
-    Io_avg  = 0.5f *((ADCB_results[0]*IOUT_SCALE - IOUT_OFST) + (ADCB_results[2]*IOUT_SCALE  - IOUT_OFST));
-    Vin_avg = 0.5f *((ADCA_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCA_results[1]*VIN_SCALE   - VIN_OFST ));
-   
+    Vin_avg = 0.5f *((ADCA_results[0]*VIN_SCALE  - VIN_OFST ) + (ADCA_results[4]*VIN_SCALE   - VIN_OFST ));
+    Iin_avg = 0.5f *((ADCA_results[1]*IIN_SCALE  - IIN_OFST ) + (ADCA_results[5]*IIN_SCALE   - IIN_OFST ));
+    Io_avg  = 0.5f *((ADCA_results[2]*IOUT_SCALE - IOUT_OFST) + (ADCA_results[6]*IOUT_SCALE  - IOUT_OFST));
+
+    Il_avg  = 0.5f *((ADCC_results[0]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE    - IL_OFST  ));
+    Vo_avg  = 0.5f *((ADCC_results[1]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[4]*VOUT_SCALE  - VOUT_OFST)); 
     return;
 }
 
@@ -154,14 +154,14 @@ void samples_to_cla(void){
     //io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
     //io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
     //io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
-    vo_sample_test[0] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[1] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[2] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
-    vo_sample_test[3] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
-    io_sample_test[0] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[1] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[2] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[3] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
+    vo_sample_test[0] = ADCC_results[4]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[1] = ADCC_results[5]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[2] = ADCC_results[1]*VOUT_SCALE - VOUT_OFST;
+    vo_sample_test[3] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
+    io_sample_test[0] = ADCA_results[6]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[1] = ADCA_results[7]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[2] = ADCA_results[2]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[3] = ADCA_results[3]*IOUT_SCALE - IOUT_OFST;
     return;
 }
 
@@ -251,25 +251,25 @@ void INT_transient_det_pin_XINT_ISR(void){
 
 // Comment if trip-zone is not enabled
 
-//// --- ISR for the trip-zone interrupt ---
-//// The flags are not cleared yet since the trip condition persists (GPIO in low state). 
-//// The interruption is only acknowledged. 
-//
-//void INT_ControlPWM_TZ_ISR(void){
-//    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
-//}
-//
-////// --- ISR for the trip-zone GPIO ---
-////// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
-//
-//void INT_tz_pin_XINT_ISR(void){
-//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-//    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
-//}
+// --- ISR for the trip-zone interrupt ---
+// The flags are not cleared yet since the trip condition persists (GPIO in low state). 
+// The interruption is only acknowledged. 
 
-// 
-void INT_myDMA0_ISR(void){
+void INT_ControlPWM_TZ_ISR(void){
+    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
+}
+
+//// --- ISR for the trip-zone GPIO ---
+//// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
+
+void INT_tz_pin_XINT_ISR(void){
+    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+}
+
+ 
+void INT_myDMA1_ISR(void){
     dma_done = 1;
-    Interrupt_clearACKGroup(INT_myDMA0_INTERRUPT_ACK_GROUP);
+    Interrupt_clearACKGroup(INT_myDMA1_INTERRUPT_ACK_GROUP);
 }
 

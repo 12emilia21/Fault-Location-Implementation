@@ -18,8 +18,47 @@ ORDERED_OBJS += \
 "./transient_det.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
+"./device/driverlib/adc.obj" \
+"./device/driverlib/asysctl.obj" \
+"./device/driverlib/can.obj" \
+"./device/driverlib/cla.obj" \
+"./device/driverlib/clapromcrc.obj" \
+"./device/driverlib/clb.obj" \
+"./device/driverlib/cmpss.obj" \
+"./device/driverlib/cputimer.obj" \
+"./device/driverlib/dac.obj" \
+"./device/driverlib/dcc.obj" \
+"./device/driverlib/dcsm.obj" \
+"./device/driverlib/dma.obj" \
+"./device/driverlib/ecap.obj" \
+"./device/driverlib/epwm.obj" \
+"./device/driverlib/eqep.obj" \
+"./device/driverlib/erad.obj" \
+"./device/driverlib/flash.obj" \
+"./device/driverlib/fsi.obj" \
+"./device/driverlib/gpio.obj" \
+"./device/driverlib/hrcap.obj" \
+"./device/driverlib/hrpwm.obj" \
+"./device/driverlib/i2c.obj" \
+"./device/driverlib/interrupt.obj" \
+"./device/driverlib/lin.obj" \
+"./device/driverlib/memcfg.obj" \
+"./device/driverlib/pga.obj" \
+"./device/driverlib/pmbus.obj" \
+"./device/driverlib/sci.obj" \
+"./device/driverlib/sdfm.obj" \
+"./device/driverlib/spi.obj" \
+"./device/driverlib/sysctl.obj" \
+"./device/driverlib/version.obj" \
+"./device/driverlib/xbar.obj" \
 "../28004x_cla_ram_lnk.cmd" \
-"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
+"../driverlib.lib" \
+"../device/driverlib/ccs/Debug/driverlib.lib" \
+"../device/driverlib/ccs/Debug/driverlib_coff.lib" \
+"../device/driverlib/ccs/Debug/driverlib_eabi.lib" \
+"../device/driverlib/ccs/Release/driverlib.lib" \
+"../device/driverlib/ccs/Release/driverlib_coff.lib" \
+"../device/driverlib/ccs/Release/driverlib_eabi.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \
 -lrts2800_fpu32_eabi.lib \
@@ -33,8 +72,14 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include device/subdir_vars.mk
+-include device/driverlib/subdir_vars.mk
+-include device/driverlib/ccs/Debug/subdir_vars.mk
+-include device/driverlib/ccs/Release/subdir_vars.mk
 -include subdir_rules.mk
 -include device/subdir_rules.mk
+-include device/driverlib/subdir_rules.mk
+-include device/driverlib/ccs/Debug/subdir_rules.mk
+-include device/driverlib/ccs/Release/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -147,8 +192,9 @@ buck_converter_dma_original.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "control_functions.obj" "main.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "main.d" "transient_det.d" "device\device.d" 
+	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "cla_tasks.obj" "control_functions.obj" "main.obj" "transient_det.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" "device\driverlib\adc.obj" "device\driverlib\asysctl.obj" "device\driverlib\can.obj" "device\driverlib\cla.obj" "device\driverlib\clapromcrc.obj" "device\driverlib\clb.obj" "device\driverlib\cmpss.obj" "device\driverlib\cputimer.obj" "device\driverlib\dac.obj" "device\driverlib\dcc.obj" "device\driverlib\dcsm.obj" "device\driverlib\dma.obj" "device\driverlib\ecap.obj" "device\driverlib\epwm.obj" "device\driverlib\eqep.obj" "device\driverlib\erad.obj" "device\driverlib\flash.obj" "device\driverlib\fsi.obj" "device\driverlib\gpio.obj" "device\driverlib\hrcap.obj" "device\driverlib\hrpwm.obj" "device\driverlib\i2c.obj" "device\driverlib\interrupt.obj" "device\driverlib\lin.obj" "device\driverlib\memcfg.obj" "device\driverlib\pga.obj" "device\driverlib\pmbus.obj" "device\driverlib\sci.obj" "device\driverlib\sdfm.obj" 
+	-$(RM) "device\driverlib\spi.obj" "device\driverlib\sysctl.obj" "device\driverlib\version.obj" "device\driverlib\xbar.obj" 
+	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "control_functions.d" "main.d" "transient_det.d" "device\device.d" "device\driverlib\adc.d" "device\driverlib\asysctl.d" "device\driverlib\can.d" "device\driverlib\cla.d" "device\driverlib\clapromcrc.d" "device\driverlib\clb.d" "device\driverlib\cmpss.d" "device\driverlib\cputimer.d" "device\driverlib\dac.d" "device\driverlib\dcc.d" "device\driverlib\dcsm.d" "device\driverlib\dma.d" "device\driverlib\ecap.d" "device\driverlib\epwm.d" "device\driverlib\eqep.d" "device\driverlib\erad.d" "device\driverlib\flash.d" "device\driverlib\fsi.d" "device\driverlib\gpio.d" "device\driverlib\hrcap.d" "device\driverlib\hrpwm.d" "device\driverlib\i2c.d" "device\driverlib\interrupt.d" "device\driverlib\lin.d" "device\driverlib\memcfg.d" "device\driverlib\pga.d" "device\driverlib\pmbus.d" "device\driverlib\sci.d" "device\driverlib\sdfm.d" "device\driverlib\spi.d" "device\driverlib\sysctl.d" "device\driverlib\version.d" "device\driverlib\xbar.d" 
 	-$(RM) "cla_tasks.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)

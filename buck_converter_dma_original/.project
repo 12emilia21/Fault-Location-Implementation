@@ -24,13 +24,6 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>driverlib.lib</name>
-			<type>1</type>
-			<locationURI>COM_TI_C2000WARE_SOFTWARE_PACKAGE_INSTALL_DIR/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib</locationURI>
-		</link>
-	</linkedResources>
 	<variableList>
 		<variable>
 			<name>C2000WARE_DLIB_ROOT</name>
