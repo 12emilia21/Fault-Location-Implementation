@@ -27,9 +27,12 @@ const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
 const gpio1            = gpio.addInstance();
 const gpio2            = gpio.addInstance();
 const gpio3            = gpio.addInstance();
+const gpio4            = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
 const inputxbar_input2 = inputxbar_input.addInstance();
+const inputxbar_input3 = inputxbar_input.addInstance();
+const inputxbar_input4 = inputxbar_input.addInstance();
 const memcfg           = scripting.addModule("/driverlib/memcfg.js");
 const FPUfastRTS       = scripting.addModule("/libraries/math/FPUfastRTS/FPUfastRTS.js", {}, false);
 const FPUfastRTS1      = FPUfastRTS.addInstance();
@@ -334,26 +337,38 @@ gpio2.xint.enableInt            = true;
 gpio2.xint.registerInterrupts   = true;
 gpio2.xint.xInt.enableInterrupt = true;
 
-gpio3.$name                     = "tz_pin";
-gpio3.initialValue              = 1;
-gpio3.writeInitialValue         = true;
-gpio3.useInterrupt              = true;
-gpio3.gpioPin.$assign           = "ball.54";
-gpio3.xint.xintNum              = "GPIO_INT_XINT2";
-gpio3.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
-gpio3.xint.enableInt            = true;
-gpio3.xint.registerInterrupts   = true;
-gpio3.xint.xInt.enableInterrupt = true;
+gpio3.$name             = "tz_pin";
+gpio3.initialValue      = 1;
+gpio3.writeInitialValue = true;
+gpio3.gpioPin.$assign   = "ball.54";
+
+gpio4.useInterrupt              = true;
+gpio4.$name                     = "tz_clear_pin";
+gpio4.writeInitialValue         = true;
+gpio4.gpioPin.$assign           = "ball.52";
+gpio4.xint.xintNum              = "GPIO_INT_XINT3";
+gpio4.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
+gpio4.xint.enableInt            = true;
+gpio4.xint.registerInterrupts   = true;
+gpio4.xint.xInt.enableInterrupt = true;
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio2.xint.inputxbar           = inputxbar_input1;
 inputxbar_input1.inputxbarGpio = "GPIO12";
 
 inputxbar_input2.$name          = "myINPUTXBARINPUT1";
-gpio3.xint.inputxbar            = inputxbar_input2;
+inputxbar_input2.inputxbarInput = "XBAR_INPUT5";
 inputxbar_input2.inputxbarGpio  = "GPIO31";
 inputxbar_input2.inputxbarLock  = true;
-inputxbar_input2.inputxbarInput = "XBAR_INPUT5";
+
+inputxbar_input3.$name         = "myINPUTXBARINPUT2";
+inputxbar_input3.inputxbarGpio = "GPIO31";
+inputxbar_input3.inputxbarLock = true;
+
+inputxbar_input4.$name         = "myINPUTXBARINPUT3";
+gpio4.xint.inputxbar           = inputxbar_input4;
+inputxbar_input4.inputxbarLock = true;
+inputxbar_input4.inputxbarGpio = "GPIO34";
 
 memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
 memcfg.config_MEMCFG_SECT_LS2 = "CLA_data";

@@ -43,33 +43,7 @@ float32_t Vo_ref           = 10;
 PI_Controller Vo_controller;
 PI_Controller Il_controller;
 
-// Scale defined for RTBOX (21/05/26)
-// Fit to measure complete transient
-/*
-#define IIN_MAX ((float32_t)40)
-#define IIN_SCALE IIN_MAX/ADC_CODES
-#define IIN_OFST 12
-
-#define IOUT_MAX ((float32_t)40)
-#define IOUT_SCALE IOUT_MAX/ADC_CODES
-#define IOUT_OFST 12
-
-#define IL_MAX ((float32_t)40)        // 50% above rated (9A) - 6.75
-#define IL_SCALE IL_MAX/ADC_CODES
-#define IL_OFST 12
-
-#define VIN_MAX ((float32_t)85)         // 10% above rated (60V) - 33
-#define VIN_SCALE VIN_MAX/ADC_CODES
-#define VIN_OFST 0
-
-#define VOUT_MAX ((float32_t)85)        
-#define VOUT_SCALE VOUT_MAX/ADC_CODES
-#define VOUT_OFST 30
-*/
-
-
 #endif /* MAIN_H_ */
-
 
 void average_samples(void);
 void duty_cycle_calculation(void);
@@ -78,5 +52,4 @@ void configureDMAChannels(void);
 void samples_to_cla(void);
 void err_calc(void);
 
-
-// 
+ 

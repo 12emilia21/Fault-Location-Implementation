@@ -91,6 +91,9 @@ float32_t alg_time    = 0.0;
 // Synch DMA 
 bool dma_done = 0;
 
+// Clear TZ
+uint32_t clear_tz = 0; 
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -131,6 +134,8 @@ void main(void)
     ERTM;
     while(1)
     {
+
+        //GPIO_writePin(tz_clear_pin, clear_tz);
     }
 }
 
@@ -144,16 +149,7 @@ void average_samples(void){
     return;
 }
 
-// Eliminar DMA
 void samples_to_cla(void){
-    //vo_sample_test[0] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
-    //vo_sample_test[1] = ADCC_results[3]*VOUT_SCALE - VOUT_OFST;
-    //vo_sample_test[2] = ADCC_results[6]*VOUT_SCALE - VOUT_OFST;
-    //vo_sample_test[3] = ADCC_results[7]*VOUT_SCALE - VOUT_OFST;
-    //io_sample_test[0] = ADCB_results[0]*IOUT_SCALE - IOUT_OFST;
-    //io_sample_test[1] = ADCB_results[1]*IOUT_SCALE - IOUT_OFST;
-    //io_sample_test[2] = ADCB_results[2]*IOUT_SCALE - IOUT_OFST;
-    //io_sample_test[3] = ADCB_results[3]*IOUT_SCALE - IOUT_OFST;
     vo_sample_test[0] = ADCC_results[4]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[1] = ADCC_results[5]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[2] = ADCC_results[1]*VOUT_SCALE - VOUT_OFST;
@@ -182,12 +178,38 @@ void duty_cycle_calculation(void){
 }
 
 void err_calc(void){
-    if (Io_avg > 1)
-        R_err = fabsf((R_out-REAL_R_LOAD)/REAL_R_LOAD)*100.0f;
-    else 
-        R_err = fabsf((R_out-REAL_R_FAULT)/REAL_R_FAULT)*100.0f;
-    L_err = fabsf((L_out-REAL_L_FAULT)/REAL_L_FAULT)*100.0f;
+    float r_result;
+    float l_result;
 
+    switch ((int)FAULT_LOC){
+        case 100:
+            r_result = REAL_R_FAULT_100;
+            l_result = REAL_L_FAULT_100;
+        break;
+        case 75:
+            r_result = REAL_R_FAULT_75;
+            l_result = REAL_L_FAULT_75;
+        break;
+        case 50:
+            r_result = REAL_R_FAULT_50;
+            l_result = REAL_L_FAULT_50;
+        break;
+        case 25:
+            r_result = REAL_R_FAULT_25;
+            l_result = REAL_L_FAULT_25;
+        break;
+    }
+    
+
+    if (Io_avg > 1){
+        R_err = fabsf((R_out-REAL_R_LOAD)/REAL_R_LOAD)*100.0f;
+        L_err = fabsf((L_out-REAL_L_LOAD)/REAL_L_LOAD)*100.0f;
+    }
+    else {
+
+        R_err = fabsf((R_out-r_result)/r_result)*100.0f;
+        L_err = fabsf((L_out-l_result)/l_result)*100.0f;
+    }
     return;
 }
 
@@ -200,8 +222,8 @@ void err_calc(void){
 // Detects transient and calculates error if the estimation is over. 
 
 void INT_ControlPWM_fixed_fsw_ISR(void){
-    if (dma_done){
-        dma_done = 0; 
+    //if (dma_done){
+    //    dma_done = 0; 
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -212,7 +234,8 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
         set_duty_cycle(d);
-    }
+        GPIO_togglePin(tz_clear_pin);
+    //}
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
@@ -262,9 +285,15 @@ void INT_ControlPWM_TZ_ISR(void){
 //// --- ISR for the trip-zone GPIO ---
 //// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
 
-void INT_tz_pin_XINT_ISR(void){
+//void INT_tz_pin_XINT_ISR(void){
+//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+//    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+//}
+
+void INT_tz_clear_pin_XINT_ISR (void){
+    //GPIO_writePin(tz_clear_pin, 0);
     EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
 }
 
  

@@ -117,6 +117,10 @@ extern "C"
 // GPIO16 - GPIO Settings
 //
 #define tz_pin_GPIO_PIN_CONFIG GPIO_16_GPIO16
+//
+// GPIO11 - GPIO Settings
+//
+#define tz_clear_pin_GPIO_PIN_CONFIG GPIO_11_GPIO11
 
 //*****************************************************************************
 //
@@ -275,6 +279,8 @@ void debug_pin_init();
 void transient_det_pin_init();
 #define tz_pin 16
 void tz_pin_init();
+#define tz_clear_pin 11
+void tz_clear_pin_init();
 
 //*****************************************************************************
 //
@@ -287,6 +293,12 @@ void myINPUTXBARINPUT0_init();
 #define myINPUTXBARINPUT1_SOURCE 31
 #define myINPUTXBARINPUT1_INPUT XBAR_INPUT5
 void myINPUTXBARINPUT1_init();
+#define myINPUTXBARINPUT2_SOURCE 31
+#define myINPUTXBARINPUT2_INPUT XBAR_INPUT1
+void myINPUTXBARINPUT2_init();
+#define myINPUTXBARINPUT3_SOURCE 11
+#define myINPUTXBARINPUT3_INPUT XBAR_INPUT6
+void myINPUTXBARINPUT3_init();
 
 //*****************************************************************************
 //
@@ -319,10 +331,10 @@ extern __interrupt void INT_ControlPWM_fixed_fsw_ISR(void);
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
 
-// Interrupt Settings for INT_tz_pin_XINT
-#define INT_tz_pin_XINT INT_XINT2
-#define INT_tz_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void INT_tz_pin_XINT_ISR(void);
+// Interrupt Settings for INT_tz_clear_pin_XINT
+#define INT_tz_clear_pin_XINT INT_XINT3
+#define INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP12
+extern __interrupt void INT_tz_clear_pin_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -344,9 +356,9 @@ extern __interrupt void INT_tz_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
-#define tz_pin_XINT GPIO_INT_XINT2
-#define tz_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
-void tz_pin_XINT_init();
+#define tz_clear_pin_XINT GPIO_INT_XINT3
+#define tz_clear_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
+void tz_clear_pin_XINT_init();
 
 //*****************************************************************************
 //

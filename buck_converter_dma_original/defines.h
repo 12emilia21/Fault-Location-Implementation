@@ -6,22 +6,35 @@
 
 // Circuit characteristics 
 
-#define R_FAULT         ((float32_t)0.01)
-#define L_LINE          ((float32_t)5.4857e-5f)
-#define R_LINE          ((float32_t)0.2304)
-#define FAULT_LOC       ((float32_t)1)                  // Value between 0 and 1
-#define REAL_R_LOAD     ((float32_t)5.8667)             // No fault 
-#define REAL_R_FAULT    ((float32_t)0.5433)             // Fault 
-#define REAL_L_FAULT    ((float32_t)0.00012698) 
+#define R_FAULT             ((float32_t)0.01)
+#define L_LINE              ((float32_t)5.4857e-5f)
+#define R_LINE              ((float32_t)0.2304)
+#define FAULT_LOC           ((float32_t)100)                // Value between 0 and 100
+
+// -- No fault values --
+#define REAL_R_LOAD         ((float32_t)5.8667)             // No fault 
+#define REAL_L_LOAD         ((float32_t)0.00012698)         // No fault 
+
+// -- Fault values at 100% length --
+#define REAL_R_FAULT_100    ((float32_t)0.5433)             
+#define REAL_L_FAULT_100    ((float32_t)0.00012698) 
+// -- Fault values at 75% length --
+#define REAL_R_FAULT_75     ((float32_t)0.41)            
+#define REAL_L_FAULT_75     ((float32_t)9.5238e-5) 
+// -- Fault values at 50% length --
+#define REAL_R_FAULT_50     ((float32_t)0.27)        
+#define REAL_L_FAULT_50     ((float32_t)6.3492e-5) 
+// -- Fault values at 25% length --
+#define REAL_R_FAULT_25     ((float32_t)0.1433)
+#define REAL_L_FAULT_25     ((float32_t)3.1746e-5)
 
 // LS algorithm 
 #define SW_PERIOD       ((float32_t)100e-6)             // RTbox implementation 10kHz
 #define TWO_RES         ((uint16_t)18)                  // PWM pulses required to cover 2 converter resonance cycles
 #define N_SAMPLES       ((uint16_t)4)  
 #define BUFF_SAMPLES    ((uint16_t)TWO_RES*N_SAMPLES)
-#define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)//25e-6)         //fsw = 10e3, oversample = 4  
+#define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)  //fsw = 10e3, oversample = 4  
 #define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
-//#define TSMPL           ((float32_t)50e-6)         //fsw = 10e3, oversample = 2
 
 // Algorithm timer 
 #define TIMER_PRESCALER 100
@@ -43,11 +56,11 @@
 #define IL_SCALE IL_MAX/ADC_CODES
 #define IL_OFST 0
 
-#define VIN_MAX ((float32_t)10)//49.27)
+#define VIN_MAX ((float32_t)20)//49.27)
 #define VIN_SCALE VIN_MAX/ADC_CODES
 #define VIN_OFST 0
 
-#define VOUT_MAX ((float32_t)10)//49.27)
+#define VOUT_MAX ((float32_t)20)//49.27)
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
 #define VOUT_OFST 0
 

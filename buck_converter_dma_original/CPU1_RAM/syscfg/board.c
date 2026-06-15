@@ -114,6 +114,8 @@ void PinMux_init()
 	GPIO_setPinConfig(GPIO_12_GPIO12);
 	// GPIO16 -> tz_pin Pinmux
 	GPIO_setPinConfig(GPIO_16_GPIO16);
+	// GPIO11 -> tz_clear_pin Pinmux
+	GPIO_setPinConfig(GPIO_11_GPIO11);
 
 }
 
@@ -633,6 +635,7 @@ void GPIO_init(){
 	debug_pin_init();
 	transient_det_pin_init();
 	tz_pin_init();
+	tz_clear_pin_init();
 }
 
 void debug_pin_init(){
@@ -656,6 +659,13 @@ void tz_pin_init(){
 	GPIO_setDirectionMode(tz_pin, GPIO_DIR_MODE_IN);
 	GPIO_setControllerCore(tz_pin, GPIO_CORE_CPU1);
 }
+void tz_clear_pin_init(){
+	GPIO_writePin(tz_clear_pin, 0);
+	GPIO_setPadConfig(tz_clear_pin, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(tz_clear_pin, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(tz_clear_pin, GPIO_DIR_MODE_IN);
+	GPIO_setControllerCore(tz_clear_pin, GPIO_CORE_CPU1);
+}
 
 //*****************************************************************************
 //
@@ -665,6 +675,8 @@ void tz_pin_init(){
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
 	myINPUTXBARINPUT1_init();
+	myINPUTXBARINPUT2_init();
+	myINPUTXBARINPUT3_init();
 }
 
 void myINPUTXBARINPUT0_init(){
@@ -673,6 +685,14 @@ void myINPUTXBARINPUT0_init(){
 void myINPUTXBARINPUT1_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
 	XBAR_lockInput(myINPUTXBARINPUT1_INPUT);
+}
+void myINPUTXBARINPUT2_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
+	XBAR_lockInput(myINPUTXBARINPUT2_INPUT);
+}
+void myINPUTXBARINPUT3_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT3_INPUT, myINPUTXBARINPUT3_SOURCE);
+	XBAR_lockInput(myINPUTXBARINPUT3_INPUT);
 }
 
 //*****************************************************************************
@@ -702,9 +722,9 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
 	
-	// Interrupt Setings for INT_tz_pin_XINT
-	Interrupt_register(INT_tz_pin_XINT, &INT_tz_pin_XINT_ISR);
-	Interrupt_enable(INT_tz_pin_XINT);
+	// Interrupt Setings for INT_tz_clear_pin_XINT
+	Interrupt_register(INT_tz_clear_pin_XINT, &INT_tz_clear_pin_XINT_ISR);
+	Interrupt_enable(INT_tz_clear_pin_XINT);
 }
 //*****************************************************************************
 //
@@ -791,7 +811,7 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
-	tz_pin_XINT_init();
+	tz_clear_pin_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
@@ -799,9 +819,9 @@ void transient_det_pin_XINT_init(){
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
 }
-void tz_pin_XINT_init(){
-	GPIO_setInterruptType(tz_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
-	GPIO_setInterruptPin(tz_pin, tz_pin_XINT);
-	GPIO_enableInterrupt(tz_pin_XINT);
+void tz_clear_pin_XINT_init(){
+	GPIO_setInterruptType(tz_clear_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
+	GPIO_setInterruptPin(tz_clear_pin, tz_clear_pin_XINT);
+	GPIO_enableInterrupt(tz_clear_pin_XINT);
 }
 
