@@ -11,8 +11,8 @@
 #include "driverlib.h"
 #include "board.h"
 
-#define PWM_TICKS_PERIOD     ((uint16_t) 5000)  // 10kHz
-//#define PWM_TICKS_PERIOD     ((uint16_t) 1000)  // 50kHz
+//#define PWM_TICKS_PERIOD     ((uint16_t) 5000)  // 10kHz
+#define PWM_TICKS_PERIOD     ((uint16_t) 1000)  // 50kHz
 
 typedef struct {
   float32_t kp;

@@ -225,11 +225,11 @@ void myDMA1_init();
 //
 //*****************************************************************************
 #define ControlPWM_BASE EPWM1_BASE
-#define ControlPWM_TBPRD 5000
+#define ControlPWM_TBPRD 1000
 #define ControlPWM_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_TBPHS 0
-#define ControlPWM_CMPA 2500
-#define ControlPWM_CMPB 4999
+#define ControlPWM_CMPA 500
+#define ControlPWM_CMPB 999
 #define ControlPWM_CMPC 0
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
@@ -242,11 +242,11 @@ void myDMA1_init();
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_fixed_fsw_BASE EPWM2_BASE
-#define ControlPWM_fixed_fsw_TBPRD 5000
+#define ControlPWM_fixed_fsw_TBPRD 1000
 #define ControlPWM_fixed_fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_fixed_fsw_TBPHS 0
-#define ControlPWM_fixed_fsw_CMPA 2500
-#define ControlPWM_fixed_fsw_CMPB 4999
+#define ControlPWM_fixed_fsw_CMPA 500
+#define ControlPWM_fixed_fsw_CMPB 999
 #define ControlPWM_fixed_fsw_CMPC 0
 #define ControlPWM_fixed_fsw_CMPD 0
 #define ControlPWM_fixed_fsw_DBRED 20
@@ -255,11 +255,11 @@ void ePWMConfigurationTemplate(uint32_t base);
 #define ControlPWM_fixed_fsw_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_fixed_fsw_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPB
 #define ControlPWM_2fsw_BASE EPWM3_BASE
-#define ControlPWM_2fsw_TBPRD 2500
+#define ControlPWM_2fsw_TBPRD 500
 #define ControlPWM_2fsw_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
 #define ControlPWM_2fsw_TBPHS 0
-#define ControlPWM_2fsw_CMPA 1250
-#define ControlPWM_2fsw_CMPB 2499
+#define ControlPWM_2fsw_CMPA 250
+#define ControlPWM_2fsw_CMPB 499
 #define ControlPWM_2fsw_CMPC 0
 #define ControlPWM_2fsw_CMPD 0
 #define ControlPWM_2fsw_DBRED 20
@@ -296,7 +296,7 @@ void myINPUTXBARINPUT1_init();
 #define myINPUTXBARINPUT2_SOURCE 31
 #define myINPUTXBARINPUT2_INPUT XBAR_INPUT1
 void myINPUTXBARINPUT2_init();
-#define myINPUTXBARINPUT3_SOURCE 11
+#define myINPUTXBARINPUT3_SOURCE 34
 #define myINPUTXBARINPUT3_INPUT XBAR_INPUT6
 void myINPUTXBARINPUT3_init();
 
