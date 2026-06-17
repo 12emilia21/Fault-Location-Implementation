@@ -52,7 +52,6 @@ ORDERED_OBJS += \
 "./device/driverlib/version.obj" \
 "./device/driverlib/xbar.obj" \
 "../28004x_cla_ram_lnk.cmd" \
-"../driverlib.lib" \
 "../device/driverlib/ccs/Debug/driverlib.lib" \
 "../device/driverlib/ccs/Debug/driverlib_coff.lib" \
 "../device/driverlib/ccs/Debug/driverlib_eabi.lib" \
