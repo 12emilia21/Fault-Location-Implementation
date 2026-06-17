@@ -30,9 +30,6 @@ const gpio3            = gpio.addInstance();
 const gpio4            = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
-const inputxbar_input2 = inputxbar_input.addInstance();
-const inputxbar_input3 = inputxbar_input.addInstance();
-const inputxbar_input4 = inputxbar_input.addInstance();
 const memcfg           = scripting.addModule("/driverlib/memcfg.js");
 const FPUfastRTS       = scripting.addModule("/libraries/math/FPUfastRTS/FPUfastRTS.js", {}, false);
 const FPUfastRTS1      = FPUfastRTS.addInstance();
@@ -230,18 +227,12 @@ epwm1.epwmDeadband_enableFED                                     = true;
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T1_COUNT_UP        = "EPWM_AQ_OUTPUT_HIGH";
 epwm1.hrpwm_syncSource                                           = "HRPWM_PWMSYNC_SOURCE_ZERO";
 epwm1.epwmTimebase_syncOutPulseMode                              = "EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO";
-epwm1.epwmTripZone_oneShotSource                                 = ["EPWM_TZ_SIGNAL_OSHT1"];
-epwm1.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_OST"];
 epwm1.epwmTimebase_period                                        = 5000;
 epwm1.epwmCounterCompare_cmpA                                    = 2500;
 epwm1.epwmCounterCompare_cmpB                                    = 4999;
-epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                      = "EPWM_TZ_ACTION_LOW";
-epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                      = "EPWM_TZ_ACTION_LOW";
-epwm1.epwmTripZone_registerInterrupts                            = true;
 epwm1.epwm.$assign                                               = "EPWM1";
 epwm1.epwm.epwm_aPin.$assign                                     = "ball.79";
 epwm1.epwm.epwm_bPin.$assign                                     = "ball.78";
-epwm1.epwmTZInt.enableInterrupt                                  = true;
 
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_LOW";
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_HIGH";
@@ -342,33 +333,13 @@ gpio3.initialValue      = 1;
 gpio3.writeInitialValue = true;
 gpio3.gpioPin.$assign   = "ball.54";
 
-gpio4.useInterrupt              = true;
-gpio4.$name                     = "tz_clear_pin";
-gpio4.writeInitialValue         = true;
-gpio4.gpioPin.$assign           = "ball.52";
-gpio4.xint.xintNum              = "GPIO_INT_XINT3";
-gpio4.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
-gpio4.xint.enableInt            = true;
-gpio4.xint.registerInterrupts   = true;
-gpio4.xint.xInt.enableInterrupt = true;
+gpio4.$name             = "tz_clear_pin";
+gpio4.writeInitialValue = true;
+gpio4.gpioPin.$assign   = "ball.52";
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio2.xint.inputxbar           = inputxbar_input1;
 inputxbar_input1.inputxbarGpio = "GPIO12";
-
-inputxbar_input2.$name          = "myINPUTXBARINPUT1";
-inputxbar_input2.inputxbarInput = "XBAR_INPUT5";
-inputxbar_input2.inputxbarGpio  = "GPIO31";
-inputxbar_input2.inputxbarLock  = true;
-
-inputxbar_input3.$name         = "myINPUTXBARINPUT2";
-inputxbar_input3.inputxbarGpio = "GPIO31";
-inputxbar_input3.inputxbarLock = true;
-
-inputxbar_input4.$name         = "myINPUTXBARINPUT3";
-gpio4.xint.inputxbar           = inputxbar_input4;
-inputxbar_input4.inputxbarLock = true;
-inputxbar_input4.inputxbarGpio = "GPIO34";
 
 memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
 memcfg.config_MEMCFG_SECT_LS2 = "CLA_data";

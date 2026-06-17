@@ -14,9 +14,6 @@ SYSCFG_SRCS += \
 CLA_SRCS += \
 ../cla_tasks.cla 
 
-LIB_SRCS += \
-../driverlib.lib 
-
 C_SRCS += \
 ./syscfg/board.c \
 ./syscfg/c2000ware_libraries.c \

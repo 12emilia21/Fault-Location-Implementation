@@ -483,10 +483,6 @@ void EPWM_init(){
     HRPWM_setRisingEdgeDelayCount(ControlPWM_BASE, 20);	
     HRPWM_setDeadBandDelayMode(ControlPWM_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_BASE, 20);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(ControlPWM_BASE, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(ControlPWM_BASE, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(ControlPWM_BASE);	
     HRPWM_setEmulationMode(ControlPWM_fixed_fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_fixed_fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
@@ -619,10 +615,6 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setRisingEdgeDelayCount(base, 20);	
     HRPWM_setDeadBandDelayMode(base, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(base, 20);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(base, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(base, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(base);	
 }
 
@@ -674,25 +666,10 @@ void tz_clear_pin_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
-	myINPUTXBARINPUT1_init();
-	myINPUTXBARINPUT2_init();
-	myINPUTXBARINPUT3_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
-}
-void myINPUTXBARINPUT1_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT1_INPUT);
-}
-void myINPUTXBARINPUT2_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT2_INPUT);
-}
-void myINPUTXBARINPUT3_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT3_INPUT, myINPUTXBARINPUT3_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT3_INPUT);
 }
 
 //*****************************************************************************
@@ -710,10 +687,6 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_myDMA1, &INT_myDMA1_ISR);
 	Interrupt_enable(INT_myDMA1);
 	
-	// Interrupt Setings for INT_ControlPWM_TZ
-	Interrupt_register(INT_ControlPWM_TZ, &INT_ControlPWM_TZ_ISR);
-	Interrupt_enable(INT_ControlPWM_TZ);
-	
 	// Interrupt Setings for INT_ControlPWM_fixed_fsw
 	Interrupt_register(INT_ControlPWM_fixed_fsw, &INT_ControlPWM_fixed_fsw_ISR);
 	Interrupt_enable(INT_ControlPWM_fixed_fsw);
@@ -721,10 +694,6 @@ void INTERRUPT_init(){
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
-	
-	// Interrupt Setings for INT_tz_clear_pin_XINT
-	Interrupt_register(INT_tz_clear_pin_XINT, &INT_tz_clear_pin_XINT_ISR);
-	Interrupt_enable(INT_tz_clear_pin_XINT);
 }
 //*****************************************************************************
 //
@@ -811,17 +780,11 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
-	tz_clear_pin_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
 	GPIO_setInterruptType(transient_det_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
-}
-void tz_clear_pin_XINT_init(){
-	GPIO_setInterruptType(tz_clear_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
-	GPIO_setInterruptPin(tz_clear_pin, tz_clear_pin_XINT);
-	GPIO_enableInterrupt(tz_clear_pin_XINT);
 }
 
