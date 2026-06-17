@@ -117,6 +117,10 @@ extern "C"
 // GPIO16 - GPIO Settings
 //
 #define tz_pin_GPIO_PIN_CONFIG GPIO_16_GPIO16
+//
+// GPIO11 - GPIO Settings
+//
+#define tz_clear_pin_GPIO_PIN_CONFIG GPIO_11_GPIO11
 
 //*****************************************************************************
 //
@@ -130,45 +134,41 @@ extern "C"
 #define myADC0_SAMPLE_WINDOW_Vin 55.1
 #define myADC0_TRIGGER_SOURCE_Vin ADC_TRIGGER_EPWM3_SOCA
 #define myADC0_CHANNEL_Vin ADC_CH_ADCIN0
+#define myADC0_Iin ADC_SOC_NUMBER1
+#define myADC0_FORCE_Iin ADC_FORCE_SOC1
+#define myADC0_SAMPLE_WINDOW_Iin 58.1
+#define myADC0_TRIGGER_SOURCE_Iin ADC_TRIGGER_EPWM3_SOCA
+#define myADC0_CHANNEL_Iin ADC_CH_ADCIN3
+#define myADC0_Iout1 ADC_SOC_NUMBER2
+#define myADC0_FORCE_Iout1 ADC_FORCE_SOC2
+#define myADC0_SAMPLE_WINDOW_Iout1 57.41
+#define myADC0_TRIGGER_SOURCE_Iout1 ADC_TRIGGER_EPWM3_SOCA
+#define myADC0_CHANNEL_Iout1 ADC_CH_ADCIN6
+#define myADC0_Iout2 ADC_SOC_NUMBER3
+#define myADC0_FORCE_Iout2 ADC_FORCE_SOC3
+#define myADC0_SAMPLE_WINDOW_Iout2 57.41
+#define myADC0_TRIGGER_SOURCE_Iout2 ADC_TRIGGER_EPWM3_SOCB
+#define myADC0_CHANNEL_Iout2 ADC_CH_ADCIN6
 void myADC0_init();
 
 #define myADC1_BASE ADCC_BASE
 #define myADC1_RESULT_BASE ADCCRESULT_BASE
-#define myADC1_Iin ADC_SOC_NUMBER0
-#define myADC1_FORCE_Iin ADC_FORCE_SOC0
-#define myADC1_SAMPLE_WINDOW_Iin 59.03
-#define myADC1_TRIGGER_SOURCE_Iin ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Iin ADC_CH_ADCIN5
-#define myADC1_Il ADC_SOC_NUMBER1
-#define myADC1_FORCE_Il ADC_FORCE_SOC1
-#define myADC1_SAMPLE_WINDOW_Il 59.11
+#define myADC1_Il ADC_SOC_NUMBER0
+#define myADC1_FORCE_Il ADC_FORCE_SOC0
+#define myADC1_SAMPLE_WINDOW_Il 58.66
 #define myADC1_TRIGGER_SOURCE_Il ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Il ADC_CH_ADCIN3
-#define myADC1_Vo1 ADC_SOC_NUMBER2
-#define myADC1_FORCE_Vo1 ADC_FORCE_SOC2
-#define myADC1_SAMPLE_WINDOW_Vo1 59.94
-#define myADC1_TRIGGER_SOURCE_Vo1 ADC_TRIGGER_EPWM3_SOCA
-#define myADC1_CHANNEL_Vo1 ADC_CH_ADCIN14
-#define myADC1_Vo2 ADC_SOC_NUMBER3
-#define myADC1_FORCE_Vo2 ADC_FORCE_SOC3
-#define myADC1_SAMPLE_WINDOW_Vo2 59.94
-#define myADC1_TRIGGER_SOURCE_Vo2 ADC_TRIGGER_EPWM3_SOCB
-#define myADC1_CHANNEL_Vo2 ADC_CH_ADCIN14
+#define myADC1_CHANNEL_Il ADC_CH_ADCIN1
+#define myADC1_Vout1 ADC_SOC_NUMBER1
+#define myADC1_FORCE_Vout1 ADC_FORCE_SOC1
+#define myADC1_SAMPLE_WINDOW_Vout1 59.94
+#define myADC1_TRIGGER_SOURCE_Vout1 ADC_TRIGGER_EPWM3_SOCA
+#define myADC1_CHANNEL_Vout1 ADC_CH_ADCIN14
+#define myADC1_Vout2 ADC_SOC_NUMBER2
+#define myADC1_FORCE_Vout2 ADC_FORCE_SOC2
+#define myADC1_SAMPLE_WINDOW_Vout2 59.94
+#define myADC1_TRIGGER_SOURCE_Vout2 ADC_TRIGGER_EPWM3_SOCB
+#define myADC1_CHANNEL_Vout2 ADC_CH_ADCIN14
 void myADC1_init();
-
-#define myADC2_BASE ADCB_BASE
-#define myADC2_RESULT_BASE ADCBRESULT_BASE
-#define myADC2_Io1 ADC_SOC_NUMBER0
-#define myADC2_FORCE_Io1 ADC_FORCE_SOC0
-#define myADC2_SAMPLE_WINDOW_Io1 56.73
-#define myADC2_TRIGGER_SOURCE_Io1 ADC_TRIGGER_EPWM3_SOCA
-#define myADC2_CHANNEL_Io1 ADC_CH_ADCIN6
-#define myADC2_Io2 ADC_SOC_NUMBER1
-#define myADC2_FORCE_Io2 ADC_FORCE_SOC1
-#define myADC2_SAMPLE_WINDOW_Io2 56.73
-#define myADC2_TRIGGER_SOURCE_Io2 ADC_TRIGGER_EPWM3_SOCB
-#define myADC2_CHANNEL_Io2 ADC_CH_ADCIN6
-void myADC2_init();
 
 
 //*****************************************************************************
@@ -209,21 +209,15 @@ void myCPUTIMER0_init();
 extern const void *ADCC0_Result_base;
 extern const void *ADCC0_results_add;
 #define myDMA0_BASE DMA_CH1_BASE 
-#define myDMA0_BURSTSIZE 4U
+#define myDMA0_BURSTSIZE 3U
 #define myDMA0_TRANSFERSIZE 2U
 void myDMA0_init();
 extern const void *ADCA0_Result_base;
 extern const void *ADCA0_results_add;
 #define myDMA1_BASE DMA_CH2_BASE 
-#define myDMA1_BURSTSIZE 1U
+#define myDMA1_BURSTSIZE 4U
 #define myDMA1_TRANSFERSIZE 2U
 void myDMA1_init();
-extern const void *ADCB0_Result_base;
-extern const void *ADCB0_results_add;
-#define myDMA2_BASE DMA_CH3_BASE 
-#define myDMA2_BURSTSIZE 2U
-#define myDMA2_TRANSFERSIZE 2U
-void myDMA2_init();
 
 //*****************************************************************************
 //
@@ -240,10 +234,8 @@ void myDMA2_init();
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
 #define ControlPWM_DBFED 20
-#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_LOW
-#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
-#define ControlPWM_OSHT_SOURCES EPWM_TZ_SIGNAL_OSHT1
-#define ControlPWM_TZ_INTERRUPT_SOURCES EPWM_TZ_INTERRUPT_OST
+#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
@@ -285,6 +277,8 @@ void debug_pin_init();
 void transient_det_pin_init();
 #define tz_pin 16
 void tz_pin_init();
+#define tz_clear_pin 11
+void tz_clear_pin_init();
 
 //*****************************************************************************
 //
@@ -294,12 +288,6 @@ void tz_pin_init();
 #define myINPUTXBARINPUT0_SOURCE 12
 #define myINPUTXBARINPUT0_INPUT XBAR_INPUT4
 void myINPUTXBARINPUT0_init();
-#define myINPUTXBARINPUT1_SOURCE 31
-#define myINPUTXBARINPUT1_INPUT XBAR_INPUT1
-void myINPUTXBARINPUT1_init();
-#define myINPUTXBARINPUT4_SOURCE 31
-#define myINPUTXBARINPUT4_INPUT XBAR_INPUT5
-void myINPUTXBARINPUT4_init();
 
 //*****************************************************************************
 //
@@ -312,15 +300,10 @@ void myINPUTXBARINPUT4_init();
 #define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
 extern __interrupt void cla1Isr1(void);
 
-// Interrupt Settings for INT_myDMA0
-#define INT_myDMA0 INT_DMA_CH1
-#define INT_myDMA0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
-extern __interrupt void INT_myDMA0_ISR(void);
-
-// Interrupt Settings for INT_ControlPWM_TZ
-#define INT_ControlPWM_TZ INT_EPWM1_TZ
-#define INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP2
-extern __interrupt void INT_ControlPWM_TZ_ISR(void);
+// Interrupt Settings for INT_myDMA1
+#define INT_myDMA1 INT_DMA_CH2
+#define INT_myDMA1_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP7
+extern __interrupt void INT_myDMA1_ISR(void);
 
 // Interrupt Settings for INT_ControlPWM_fixed_fsw
 #define INT_ControlPWM_fixed_fsw INT_EPWM2
@@ -331,11 +314,6 @@ extern __interrupt void INT_ControlPWM_fixed_fsw_ISR(void);
 #define INT_transient_det_pin_XINT INT_XINT1
 #define INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void INT_transient_det_pin_XINT_ISR(void);
-
-// Interrupt Settings for INT_tz_pin_XINT
-#define INT_tz_pin_XINT INT_XINT2
-#define INT_tz_pin_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void INT_tz_pin_XINT_ISR(void);
 
 //*****************************************************************************
 //
@@ -357,9 +335,6 @@ extern __interrupt void INT_tz_pin_XINT_ISR(void);
 #define transient_det_pin_XINT GPIO_INT_XINT1
 #define transient_det_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
 void transient_det_pin_XINT_init();
-#define tz_pin_XINT GPIO_INT_XINT2
-#define tz_pin_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
-void tz_pin_XINT_init();
 
 //*****************************************************************************
 //

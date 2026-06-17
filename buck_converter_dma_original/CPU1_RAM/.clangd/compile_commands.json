@@ -2,6 +2,16 @@
    {
       "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
       "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg/board.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
+      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg/c2000ware_libraries.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
+      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
       "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/cla_tasks.cla"
    },
    {
@@ -13,31 +23,6 @@
       "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
       "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
       "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.c"
-   },
-   {
-      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
-      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\"",
-      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/f28004x_codestartbranch.asm"
-   },
-   {
-      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
-      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
-      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/main.c"
-   },
-   {
-      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
-      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
-      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/transient_det.c"
-   },
-   {
-      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
-      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
-      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg/board.c"
-   },
-   {
-      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
-      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
-      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg/c2000ware_libraries.c"
    },
    {
       "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
@@ -203,5 +188,20 @@
       "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
       "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
       "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib/xbar.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
+      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\"",
+      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/f28004x_codestartbranch.asm"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
+      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/main.c"
+   },
+   {
+      "directory" : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM",
+      "command"   : "clang++ -I\"_CPU1\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original\" -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device\" -I\"C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include\" -I\"C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/CLAmath/c28/include\" -DDEBUG -I\"C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/CPU1_RAM/syscfg\" -xc",
+      "file"      : "C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/transient_det.c"
    }
 ]

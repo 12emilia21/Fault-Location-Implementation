@@ -114,6 +114,8 @@ void PinMux_init()
 	GPIO_setPinConfig(GPIO_12_GPIO12);
 	// GPIO16 -> tz_pin Pinmux
 	GPIO_setPinConfig(GPIO_16_GPIO16);
+	// GPIO11 -> tz_clear_pin Pinmux
+	GPIO_setPinConfig(GPIO_11_GPIO11);
 
 }
 
@@ -125,7 +127,6 @@ void PinMux_init()
 void ADC_init(){
 	myADC0_init();
 	myADC1_init();
-	myADC2_init();
 }
 
 void myADC0_init(){
@@ -175,12 +176,51 @@ void myADC0_init(){
 	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 6U);
 	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
+	// Start of Conversion 1 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 1
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN3
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
+	//
+	// Start of Conversion 2 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 2
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Channel			: ADC_CH_ADCIN6
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
+	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
+	//
+	// Start of Conversion 3 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 3
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCB
+	//	  	Channel			: ADC_CH_ADCIN6
+	//	 	Sample Window	: 6 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN6, 6U);
+	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
+	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 0
+	// 		SOC/EOC number	: 3
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
+	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER3);
 	ADC_enableInterrupt(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC0_BASE, ADC_INT_NUMBER1);
@@ -225,11 +265,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN5
+	//	  	Channel			: ADC_CH_ADCIN1
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN5, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN1, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -238,11 +278,11 @@ void myADC1_init(){
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 1
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN3
+	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 6U);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
 	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -250,106 +290,23 @@ void myADC1_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 2
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN14
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 3 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 3
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCB
 	//	  	Channel			: ADC_CH_ADCIN14
 	//	 	Sample Window	: 6 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN14, 6U);
-	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN14, 6U);
+	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 3
+	// 		SOC/EOC number	: 2
 	// 		Interrupt Source: enabled
 	//		Continuous Mode	: enabled
 	//
-	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER3);
+	ADC_setInterruptSource(myADC1_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER2);
 	ADC_enableInterrupt(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER1);
 	ADC_enableContinuousMode(myADC1_BASE, ADC_INT_NUMBER1);
-}
-void myADC2_init(){
-	//
-	// ADC Initialization: Write ADC configurations and power up the ADC
-	//
-	// Configures the ADC module's offset trim
-	//
-	ADC_setOffsetTrimAll(ADC_REFERENCE_INTERNAL,ADC_REFERENCE_3_3V);
-	//
-	// Configures the analog-to-digital converter module prescaler.
-	//
-	ADC_setPrescaler(myADC2_BASE, ADC_CLK_DIV_1_0);
-	//
-	// Sets the timing of the end-of-conversion pulse
-	//
-	ADC_setInterruptPulseMode(myADC2_BASE, ADC_PULSE_END_OF_CONV);
-	//
-	// Powers up the analog-to-digital converter core.
-	//
-	ADC_enableConverter(myADC2_BASE);
-	//
-	// Delay for 1ms to allow ADC time to power up
-	//
-	DEVICE_DELAY_US(5000);
-	//
-	// SOC Configuration: Setup ADC EPWM channel and trigger settings
-	//
-	// Disables SOC burst mode.
-	//
-	ADC_disableBurstMode(myADC2_BASE);
-	//
-	// Sets the priority mode of the SOCs.
-	//
-	ADC_setSOCPriority(myADC2_BASE, ADC_PRI_ALL_ROUND_ROBIN);
-	//
-	// Start of Conversion 0 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 0
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
-	//	  	Channel			: ADC_CH_ADCIN6
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN6, 6U);
-	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// Start of Conversion 1 Configuration
-	//
-	//
-	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
-	// 	  	SOC number		: 1
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCB
-	//	  	Channel			: ADC_CH_ADCIN6
-	//	 	Sample Window	: 6 SYSCLK cycles
-	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
-	//
-	ADC_setupSOC(myADC2_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCB, ADC_CH_ADCIN6, 6U);
-	ADC_setInterruptSOCTrigger(myADC2_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
-	//
-	// ADC Interrupt 1 Configuration
-	// 		SOC/EOC number	: 1
-	// 		Interrupt Source: enabled
-	//		Continuous Mode	: enabled
-	//
-	ADC_setInterruptSource(myADC2_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
-	ADC_enableInterrupt(myADC2_BASE, ADC_INT_NUMBER1);
-	ADC_clearInterruptStatus(myADC2_BASE, ADC_INT_NUMBER1);
-	ADC_enableContinuousMode(myADC2_BASE, ADC_INT_NUMBER1);
 }
 
 //*****************************************************************************
@@ -455,41 +412,30 @@ void DMA_init(){
     DMA_initController();
 	myDMA0_init();
 	myDMA1_init();
-	myDMA2_init();
 }
 
 void myDMA0_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA0_BASE, ADCC0_results_add, ADCC0_Result_base);
-    DMA_configBurst(myDMA0_BASE, 4U, 1, 1);
-    DMA_configTransfer(myDMA0_BASE, 2U, -3, 1);
-    DMA_configWrap(myDMA0_BASE, 65535U, 0, 2U, -7);
+    DMA_configBurst(myDMA0_BASE, 3U, 1, 1);
+    DMA_configTransfer(myDMA0_BASE, 2U, -2, 1);
+    DMA_configWrap(myDMA0_BASE, 65535U, 0, 2U, -5);
     DMA_configMode(myDMA0_BASE, DMA_TRIGGER_ADCC1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
-    DMA_setInterruptMode(myDMA0_BASE, DMA_INT_AT_END);
-    DMA_enableInterrupt(myDMA0_BASE);
-    DMA_disableOverrunInterrupt(myDMA0_BASE);
     DMA_enableTrigger(myDMA0_BASE);
     DMA_startChannel(myDMA0_BASE);
 }
 void myDMA1_init(){
     DMA_setEmulationMode(DMA_EMULATION_STOP);
     DMA_configAddresses(myDMA1_BASE, ADCA0_results_add, ADCA0_Result_base);
-    DMA_configBurst(myDMA1_BASE, 1U, 0, 1);
-    DMA_configTransfer(myDMA1_BASE, 2U, 0, 1);
-    DMA_configWrap(myDMA1_BASE, 65535U, 0, 2U, -1);
+    DMA_configBurst(myDMA1_BASE, 4U, 1, 1);
+    DMA_configTransfer(myDMA1_BASE, 2U, -3, 1);
+    DMA_configWrap(myDMA1_BASE, 65535U, 0, 2U, -7);
     DMA_configMode(myDMA1_BASE, DMA_TRIGGER_ADCA1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
+    DMA_setInterruptMode(myDMA1_BASE, DMA_INT_AT_BEGINNING);
+    DMA_enableInterrupt(myDMA1_BASE);
+    DMA_disableOverrunInterrupt(myDMA1_BASE);
     DMA_enableTrigger(myDMA1_BASE);
     DMA_startChannel(myDMA1_BASE);
-}
-void myDMA2_init(){
-    DMA_setEmulationMode(DMA_EMULATION_STOP);
-    DMA_configAddresses(myDMA2_BASE, ADCB0_results_add, ADCB0_Result_base);
-    DMA_configBurst(myDMA2_BASE, 2U, 1, 1);
-    DMA_configTransfer(myDMA2_BASE, 2U, -1, 1);
-    DMA_configWrap(myDMA2_BASE, 65535U, 0, 2U, -3);
-    DMA_configMode(myDMA2_BASE, DMA_TRIGGER_ADCB1, DMA_CFG_ONESHOT_DISABLE | DMA_CFG_CONTINUOUS_ENABLE | DMA_CFG_SIZE_16BIT);
-    DMA_enableTrigger(myDMA2_BASE);
-    DMA_startChannel(myDMA2_BASE);
 }
 
 //*****************************************************************************
@@ -537,10 +483,6 @@ void EPWM_init(){
     HRPWM_setRisingEdgeDelayCount(ControlPWM_BASE, 20);	
     HRPWM_setDeadBandDelayMode(ControlPWM_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_BASE, 20);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(ControlPWM_BASE, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(ControlPWM_BASE, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(ControlPWM_BASE);	
     HRPWM_setEmulationMode(ControlPWM_fixed_fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_fixed_fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
@@ -673,10 +615,6 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setRisingEdgeDelayCount(base, 20);	
     HRPWM_setDeadBandDelayMode(base, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(base, 20);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(base, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(base, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(base);	
 }
 
@@ -689,6 +627,7 @@ void GPIO_init(){
 	debug_pin_init();
 	transient_det_pin_init();
 	tz_pin_init();
+	tz_clear_pin_init();
 }
 
 void debug_pin_init(){
@@ -712,6 +651,13 @@ void tz_pin_init(){
 	GPIO_setDirectionMode(tz_pin, GPIO_DIR_MODE_IN);
 	GPIO_setControllerCore(tz_pin, GPIO_CORE_CPU1);
 }
+void tz_clear_pin_init(){
+	GPIO_writePin(tz_clear_pin, 0);
+	GPIO_setPadConfig(tz_clear_pin, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(tz_clear_pin, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(tz_clear_pin, GPIO_DIR_MODE_IN);
+	GPIO_setControllerCore(tz_clear_pin, GPIO_CORE_CPU1);
+}
 
 //*****************************************************************************
 //
@@ -720,20 +666,10 @@ void tz_pin_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
-	myINPUTXBARINPUT1_init();
-	myINPUTXBARINPUT4_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
-}
-void myINPUTXBARINPUT1_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT1_INPUT);
-}
-void myINPUTXBARINPUT4_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT4_INPUT, myINPUTXBARINPUT4_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT4_INPUT);
 }
 
 //*****************************************************************************
@@ -747,13 +683,9 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_myCLA01, &cla1Isr1);
 	Interrupt_enable(INT_myCLA01);
 	
-	// Interrupt Setings for INT_myDMA0
-	Interrupt_register(INT_myDMA0, &INT_myDMA0_ISR);
-	Interrupt_enable(INT_myDMA0);
-	
-	// Interrupt Setings for INT_ControlPWM_TZ
-	Interrupt_register(INT_ControlPWM_TZ, &INT_ControlPWM_TZ_ISR);
-	Interrupt_disable(INT_ControlPWM_TZ);
+	// Interrupt Setings for INT_myDMA1
+	Interrupt_register(INT_myDMA1, &INT_myDMA1_ISR);
+	Interrupt_enable(INT_myDMA1);
 	
 	// Interrupt Setings for INT_ControlPWM_fixed_fsw
 	Interrupt_register(INT_ControlPWM_fixed_fsw, &INT_ControlPWM_fixed_fsw_ISR);
@@ -762,10 +694,6 @@ void INTERRUPT_init(){
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
-	
-	// Interrupt Setings for INT_tz_pin_XINT
-	Interrupt_register(INT_tz_pin_XINT, &INT_tz_pin_XINT_ISR);
-	Interrupt_enable(INT_tz_pin_XINT);
 }
 //*****************************************************************************
 //
@@ -852,17 +780,11 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
-	tz_pin_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
 	GPIO_setInterruptType(transient_det_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
-}
-void tz_pin_XINT_init(){
-	GPIO_setInterruptType(tz_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
-	GPIO_setInterruptPin(tz_pin, tz_pin_XINT);
-	GPIO_enableInterrupt(tz_pin_XINT);
 }
 
