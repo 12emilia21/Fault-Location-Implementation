@@ -222,8 +222,8 @@ void err_calc(void){
 // Detects transient and calculates error if the estimation is over. 
 
 void INT_ControlPWM_fixed_fsw_ISR(void){
-    //if (dma_done){
-    //    dma_done = 0; 
+    if (dma_done){
+        dma_done = 0; 
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -235,7 +235,7 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
         GPIO_writePin(transient_det_pin, transient_det_res);
         set_duty_cycle(d);
         GPIO_togglePin(tz_clear_pin);
-    //}
+    }
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
