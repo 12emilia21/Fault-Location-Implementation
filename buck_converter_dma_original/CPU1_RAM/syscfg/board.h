@@ -234,8 +234,8 @@ void myDMA1_init();
 #define ControlPWM_CMPD 0
 #define ControlPWM_DBRED 20
 #define ControlPWM_DBFED 20
-#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define ControlPWM_TZA_ACTION EPWM_TZ_ACTION_LOW
+#define ControlPWM_TZB_ACTION EPWM_TZ_ACTION_LOW
 #define ControlPWM_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base);
