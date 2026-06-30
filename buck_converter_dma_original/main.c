@@ -92,7 +92,8 @@ float32_t alg_time    = 0.0;
 bool dma_done = 0;
 
 // Clear TZ
-uint32_t clear_tz = 0; 
+bool clear_tz     = 0; 
+bool clear_tz_bis = 0; 
 
 void main(void)
 {
@@ -134,8 +135,7 @@ void main(void)
     ERTM;
     while(1)
     {
-
-        //GPIO_writePin(tz_clear_pin, clear_tz);
+        
     }
 }
 
@@ -234,8 +234,12 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
         set_duty_cycle(d);
-        GPIO_togglePin(tz_clear_pin);
     }
+
+    clear_tz_bis = clear_tz;
+    if (clear_tz_bis) GPIO_writePin(tz_clear_pin, 1);
+    else GPIO_writePin(tz_clear_pin, 0);
+
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
@@ -285,18 +289,11 @@ void INT_ControlPWM_TZ_ISR(void){
 //// --- ISR for the trip-zone GPIO ---
 //// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
 
-void INT_tz_pin_XINT_ISR(void){
+void INT_tz_clear_pin_XINT_ISR (void){
     EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
 }
 
-//void INT_tz_clear_pin_XINT_ISR (void){
-//    //GPIO_writePin(tz_clear_pin, 0);
-//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-//    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
-//}
-
- 
 void INT_myDMA1_ISR(void){
     dma_done = 1;
     Interrupt_clearACKGroup(INT_myDMA1_INTERRUPT_ACK_GROUP);

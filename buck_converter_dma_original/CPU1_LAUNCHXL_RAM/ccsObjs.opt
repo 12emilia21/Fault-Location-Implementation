@@ -8,6 +8,6 @@
 "./device/f28004x_codestartbranch.obj"
 "../28004x_cla_flash_lnk.cmd"
 "../28004x_cla_ram_lnk.cmd"
-"C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib"
+"../driverlib.lib"
 -lc2000ware_libraries.cmd.genlibs
 -llibc.a

@@ -336,20 +336,21 @@ gpio2.xint.enableInt            = true;
 gpio2.xint.registerInterrupts   = true;
 gpio2.xint.xInt.enableInterrupt = true;
 
-gpio3.$name                     = "tz_pin";
-gpio3.initialValue              = 1;
-gpio3.writeInitialValue         = true;
-gpio3.useInterrupt              = true;
-gpio3.gpioPin.$assign           = "ball.54";
-gpio3.xint.xintNum              = "GPIO_INT_XINT2";
-gpio3.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
-gpio3.xint.enableInt            = true;
-gpio3.xint.registerInterrupts   = true;
-gpio3.xint.xInt.enableInterrupt = true;
+gpio3.$name             = "tz_pin";
+gpio3.initialValue      = 1;
+gpio3.writeInitialValue = true;
+gpio3.gpioPin.$assign   = "ball.54";
 
-gpio4.$name             = "tz_clear_pin";
-gpio4.writeInitialValue = true;
-gpio4.gpioPin.$assign   = "ball.52";
+gpio4.$name                     = "tz_clear_pin";
+gpio4.writeInitialValue         = true;
+gpio4.useInterrupt              = true;
+gpio4.direction                 = "GPIO_DIR_MODE_OUT";
+gpio4.gpioPin.$assign           = "ball.59";
+gpio4.xint.xintNum              = "GPIO_INT_XINT2";
+gpio4.xint.intType              = "GPIO_INT_TYPE_RISING_EDGE";
+gpio4.xint.enableInt            = true;
+gpio4.xint.registerInterrupts   = true;
+gpio4.xint.xInt.enableInterrupt = true;
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio2.xint.inputxbar           = inputxbar_input1;
@@ -360,10 +361,9 @@ inputxbar_input2.inputxbarGpio = "GPIO31";
 inputxbar_input2.inputxbarLock = true;
 
 inputxbar_input3.$name         = "myINPUTXBARINPUT2";
-gpio3.xint.inputxbar           = inputxbar_input3;
-inputxbar_input3.inputxbarGpio = "GPIO31";
+gpio4.xint.inputxbar           = inputxbar_input3;
 inputxbar_input3.inputxbarLock = true;
-scripting.suppress("Select GPIO16 which is the selection in your GPIO PinMux entry\\.", inputxbar_input3, "inputxbarGpio");
+inputxbar_input3.inputxbarGpio = "GPIO27";
 
 memcfg.config_MEMCFG_SECT_LS0 = "CLA_prog";
 memcfg.config_MEMCFG_SECT_LS2 = "CLA_data";

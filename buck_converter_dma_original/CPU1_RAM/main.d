@@ -2,7 +2,7 @@
 
 main.obj: ../main.c
 main.obj: ../main.h
-main.obj: C:/Users/mem21/OneDrive/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
+main.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/driverlib.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 main.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -96,7 +96,7 @@ main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/spi.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-main.obj: C:/Users/mem21/OneDrive/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
+main.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/device.h
 main.obj: syscfg/board.h
 main.obj: syscfg/c2000ware_libraries.h
 main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h
@@ -113,7 +113,7 @@ main.obj: ../defines.h
 
 ../main.h:
 
-C:/Users/mem21/OneDrive/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -301,7 +301,7 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/mem21/OneDrive/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/device.h:
 
 syscfg/board.h:
 
