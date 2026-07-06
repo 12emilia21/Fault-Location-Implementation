@@ -49,6 +49,9 @@
 //
 #include "main.h"
 
+// Fault switch
+#define FAULT_PWM_TICKS_PERIOD     ((uint16_t) 1000)  
+
 // Controller
 float32_t kpv =0.0102;
 float32_t kiv = 3.6684e-05;
@@ -91,9 +94,9 @@ float32_t alg_time    = 0.0;
 // Synch DMA 
 bool dma_done = 0;
 
-// Clear TZ
-bool clear_tz     = 0; 
-bool clear_tz_bis = 0; 
+// Fault inception
+float32_t fault_sw_val  = 0; // off 
+bool      turn_off_conv = 0;
 
 void main(void)
 {
@@ -233,13 +236,10 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
             err_calc();
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
-        set_duty_cycle(d);
+        if(turn_off_conv == 0) set_duty_cycle(d);
+        else set_duty_cycle(0);
     }
-
-    clear_tz_bis = clear_tz;
-    if (clear_tz_bis) GPIO_writePin(tz_clear_pin, 1);
-    else GPIO_writePin(tz_clear_pin, 0);
-
+    
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
@@ -282,20 +282,26 @@ void INT_transient_det_pin_XINT_ISR(void){
 // The flags are not cleared yet since the trip condition persists (GPIO in low state). 
 // The interruption is only acknowledged. 
 
-void INT_ControlPWM_TZ_ISR(void){
-    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
-}
+//void INT_ControlPWM_TZ_ISR(void){
+//    Interrupt_clearACKGroup(INT_ControlPWM_TZ_INTERRUPT_ACK_GROUP);
+//}
 
 //// --- ISR for the trip-zone GPIO ---
 //// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
 
-void INT_tz_clear_pin_XINT_ISR (void){
-    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
-    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
-}
+//void INT_tz_clear_pin_XINT_ISR (void){
+//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+//    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
+//}
 
 void INT_myDMA1_ISR(void){
     dma_done = 1;
     Interrupt_clearACKGroup(INT_myDMA1_INTERRUPT_ACK_GROUP);
 }
 
+void INT_fault_sw_ISR(void){
+    EPWM_setCounterCompareValue(fault_sw_BASE, EPWM_COUNTER_COMPARE_A,fault_sw_val*FAULT_PWM_TICKS_PERIOD);
+    turn_off_conv = fault_sw_val; 
+    EPWM_clearEventTriggerInterruptFlag(fault_sw_BASE);
+    Interrupt_clearACKGroup(INT_fault_sw_INTERRUPT_ACK_GROUP);
+}

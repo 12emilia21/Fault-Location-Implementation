@@ -108,14 +108,21 @@ void PinMux_init()
 	GPIO_setPadConfig(ControlPWM_2fsw_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(ControlPWM_2fsw_EPWMB_GPIO, GPIO_QUAL_SYNC);
 
+	//
+	// EPWM6 -> fault_sw Pinmux
+	//
+	GPIO_setPinConfig(fault_sw_EPWMA_PIN_CONFIG);
+	GPIO_setPadConfig(fault_sw_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(fault_sw_EPWMA_GPIO, GPIO_QUAL_SYNC);
+
+	GPIO_setPinConfig(fault_sw_EPWMB_PIN_CONFIG);
+	GPIO_setPadConfig(fault_sw_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(fault_sw_EPWMB_GPIO, GPIO_QUAL_SYNC);
+
 	// GPIO33 -> debug_pin Pinmux
 	GPIO_setPinConfig(GPIO_33_GPIO33);
 	// GPIO12 -> transient_det_pin Pinmux
 	GPIO_setPinConfig(GPIO_12_GPIO12);
-	// GPIO16 -> tz_pin Pinmux
-	GPIO_setPinConfig(GPIO_16_GPIO16);
-	// GPIO27 -> tz_clear_pin Pinmux
-	GPIO_setPinConfig(GPIO_27_GPIO27);
 
 }
 
@@ -483,10 +490,6 @@ void EPWM_init(){
     HRPWM_setRisingEdgeDelayCount(ControlPWM_BASE, 20);	
     HRPWM_setDeadBandDelayMode(ControlPWM_BASE, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(ControlPWM_BASE, 20);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(ControlPWM_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(ControlPWM_BASE, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(ControlPWM_BASE, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(ControlPWM_BASE);	
     HRPWM_setEmulationMode(ControlPWM_fixed_fsw_BASE, EPWM_EMULATION_FREE_RUN);	
     HRPWM_setClockPrescaler(ControlPWM_fixed_fsw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
@@ -577,6 +580,48 @@ void EPWM_init(){
     HRPWM_setADCTriggerSource(ControlPWM_2fsw_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_D_CMPA);	
     HRPWM_setADCTriggerEventPrescale(ControlPWM_2fsw_BASE, EPWM_SOC_B, 1);	
     HRPWM_enableAutoConversion(ControlPWM_2fsw_BASE);	
+    EPWM_setEmulationMode(fault_sw_BASE, EPWM_EMULATION_FREE_RUN);	
+    EPWM_setClockPrescaler(fault_sw_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
+    EPWM_setPeriodLoadMode(fault_sw_BASE, EPWM_PERIOD_DIRECT_LOAD);	
+    EPWM_setTimeBasePeriod(fault_sw_BASE, 1000);	
+    EPWM_enableGlobalLoadRegisters(fault_sw_BASE, EPWM_GL_REGISTER_TBPRD_TBPRDHR);	
+    EPWM_setTimeBaseCounter(fault_sw_BASE, 0);	
+    EPWM_setTimeBaseCounterMode(fault_sw_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
+    EPWM_setCountModeAfterSync(fault_sw_BASE, EPWM_COUNT_MODE_UP_AFTER_SYNC);	
+    EPWM_disablePhaseShiftLoad(fault_sw_BASE);	
+    EPWM_setPhaseShift(fault_sw_BASE, 0);	
+    EPWM_setSyncOutPulseMode(fault_sw_BASE, EPWM_SYNC_OUT_PULSE_ON_COUNTER_ZERO);	
+    EPWM_setSyncPulseSource(fault_sw_BASE, HRPWM_PWMSYNC_SOURCE_ZERO);	
+    EPWM_setCounterCompareValue(fault_sw_BASE, EPWM_COUNTER_COMPARE_A, 500);	
+    EPWM_disableCounterCompareShadowLoadMode(fault_sw_BASE, EPWM_COUNTER_COMPARE_A);	
+    EPWM_setCounterCompareShadowLoadMode(fault_sw_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setCounterCompareValue(fault_sw_BASE, EPWM_COUNTER_COMPARE_B, 999);	
+    EPWM_disableCounterCompareShadowLoadMode(fault_sw_BASE, EPWM_COUNTER_COMPARE_B);	
+    EPWM_setCounterCompareShadowLoadMode(fault_sw_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_enableGlobalLoadRegisters(fault_sw_BASE, EPWM_GL_REGISTER_AQCSFRC);	
+    EPWM_setActionQualifierContSWForceShadowMode(fault_sw_BASE, EPWM_AQ_SW_IMMEDIATE_LOAD);	
+    EPWM_setActionQualifierT1TriggerSource(fault_sw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
+    EPWM_setActionQualifierT2TriggerSource(fault_sw_BASE, EPWM_AQ_TRIGGER_EVENT_TRIG_EPWM_SYNCIN);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(fault_sw_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setDeadBandDelayPolarity(fault_sw_BASE, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
+    EPWM_setDeadBandDelayMode(fault_sw_BASE, EPWM_DB_RED, true);	
+    EPWM_setRisingEdgeDelayCount(fault_sw_BASE, 20);	
+    EPWM_setDeadBandDelayMode(fault_sw_BASE, EPWM_DB_FED, true);	
+    EPWM_setFallingEdgeDelayCount(fault_sw_BASE, 20);	
+    EPWM_enableInterrupt(fault_sw_BASE);	
+    EPWM_setInterruptSource(fault_sw_BASE, EPWM_INT_TBCTR_U_CMPB);	
+    EPWM_setInterruptEventCount(fault_sw_BASE, 1);	
 }
 // ControlPWM Configuration Template
 void ePWMConfigurationTemplate(uint32_t base){
@@ -619,10 +664,6 @@ void ePWMConfigurationTemplate(uint32_t base){
     HRPWM_setRisingEdgeDelayCount(base, 20);	
     HRPWM_setDeadBandDelayMode(base, EPWM_DB_FED, true);	
     HRPWM_setFallingEdgeDelayCount(base, 20);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
-    HRPWM_setTripZoneAction(base, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_enableTripZoneSignals(base, EPWM_TZ_SIGNAL_OSHT1);	
-    HRPWM_enableTripZoneInterrupt(base, EPWM_TZ_INTERRUPT_OST);	
     HRPWM_enableAutoConversion(base);	
 }
 
@@ -634,8 +675,6 @@ void ePWMConfigurationTemplate(uint32_t base){
 void GPIO_init(){
 	debug_pin_init();
 	transient_det_pin_init();
-	tz_pin_init();
-	tz_clear_pin_init();
 }
 
 void debug_pin_init(){
@@ -652,20 +691,6 @@ void transient_det_pin_init(){
 	GPIO_setDirectionMode(transient_det_pin, GPIO_DIR_MODE_OUT);
 	GPIO_setControllerCore(transient_det_pin, GPIO_CORE_CPU1);
 }
-void tz_pin_init(){
-	GPIO_writePin(tz_pin, 1);
-	GPIO_setPadConfig(tz_pin, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(tz_pin, GPIO_QUAL_SYNC);
-	GPIO_setDirectionMode(tz_pin, GPIO_DIR_MODE_IN);
-	GPIO_setControllerCore(tz_pin, GPIO_CORE_CPU1);
-}
-void tz_clear_pin_init(){
-	GPIO_writePin(tz_clear_pin, 0);
-	GPIO_setPadConfig(tz_clear_pin, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(tz_clear_pin, GPIO_QUAL_SYNC);
-	GPIO_setDirectionMode(tz_clear_pin, GPIO_DIR_MODE_OUT);
-	GPIO_setControllerCore(tz_clear_pin, GPIO_CORE_CPU1);
-}
 
 //*****************************************************************************
 //
@@ -674,20 +699,10 @@ void tz_clear_pin_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
-	myINPUTXBARINPUT1_init();
-	myINPUTXBARINPUT2_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
-}
-void myINPUTXBARINPUT1_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT1_INPUT);
-}
-void myINPUTXBARINPUT2_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
-	XBAR_lockInput(myINPUTXBARINPUT2_INPUT);
 }
 
 //*****************************************************************************
@@ -705,21 +720,17 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_myDMA1, &INT_myDMA1_ISR);
 	Interrupt_enable(INT_myDMA1);
 	
-	// Interrupt Setings for INT_ControlPWM_TZ
-	Interrupt_register(INT_ControlPWM_TZ, &INT_ControlPWM_TZ_ISR);
-	Interrupt_enable(INT_ControlPWM_TZ);
-	
 	// Interrupt Setings for INT_ControlPWM_fixed_fsw
 	Interrupt_register(INT_ControlPWM_fixed_fsw, &INT_ControlPWM_fixed_fsw_ISR);
 	Interrupt_enable(INT_ControlPWM_fixed_fsw);
 	
+	// Interrupt Setings for INT_fault_sw
+	Interrupt_register(INT_fault_sw, &INT_fault_sw_ISR);
+	Interrupt_enable(INT_fault_sw);
+	
 	// Interrupt Setings for INT_transient_det_pin_XINT
 	Interrupt_register(INT_transient_det_pin_XINT, &INT_transient_det_pin_XINT_ISR);
 	Interrupt_enable(INT_transient_det_pin_XINT);
-	
-	// Interrupt Setings for INT_tz_clear_pin_XINT
-	Interrupt_register(INT_tz_clear_pin_XINT, &INT_tz_clear_pin_XINT_ISR);
-	Interrupt_enable(INT_tz_clear_pin_XINT);
 }
 //*****************************************************************************
 //
@@ -806,17 +817,11 @@ void SYNC_init(){
 //*****************************************************************************
 void XINT_init(){
 	transient_det_pin_XINT_init();
-	tz_clear_pin_XINT_init();
 }
 
 void transient_det_pin_XINT_init(){
 	GPIO_setInterruptType(transient_det_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
 	GPIO_setInterruptPin(transient_det_pin, transient_det_pin_XINT);
 	GPIO_enableInterrupt(transient_det_pin_XINT);
-}
-void tz_clear_pin_XINT_init(){
-	GPIO_setInterruptType(tz_clear_pin_XINT, GPIO_INT_TYPE_RISING_EDGE);
-	GPIO_setInterruptPin(tz_clear_pin, tz_clear_pin_XINT);
-	GPIO_enableInterrupt(tz_clear_pin_XINT);
 }
 
