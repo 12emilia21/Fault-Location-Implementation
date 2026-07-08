@@ -6,7 +6,7 @@
 #include "c2000ware_libraries.h"
 
 // Defines
-#define N_AVG        ((uint16_t)16)              
+#define N_AVG        ((uint16_t)8)              
 #define RATED_VO     ((float32_t)12)//48)
 #define RATED_IO     ((float32_t)2.25)//20.83)  
 #define VO_VAR_VAL   ((float32_t)(0.05*RATED_VO)) //240mV

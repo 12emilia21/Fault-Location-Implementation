@@ -49,6 +49,9 @@
 //
 #include "main.h"
 
+// Fault switch
+#define FAULT_PWM_TICKS_PERIOD     ((uint16_t) 1000)  
+
 // Controller
 float32_t kpv =0.0102;
 float32_t kiv = 3.6684e-05;
@@ -91,8 +94,12 @@ float32_t alg_time    = 0.0;
 // Synch DMA 
 bool dma_done = 0;
 
-// Clear TZ
-uint32_t clear_tz = 0; 
+// Fault inception
+float32_t fault_sw_val  = 0; // off 
+bool      turn_off_conv = 0;
+
+// Filter avg
+float32_t adc_io = 0;
 
 void main(void)
 {
@@ -124,8 +131,9 @@ void main(void)
     init_PI(&Vo_controller,kpv,kiv);
     init_PI(&Il_controller,kpi,kii);
 
-    // Initialize transient detector 
+    // Initialize transient detector and filter 
     init_detector();
+    init_filter();
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
@@ -146,6 +154,13 @@ void average_samples(void){
     Il_avg  = 0.5f *((ADCC_results[0]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE    - IL_OFST  ));
     Vo_avg  = 0.5f *((ADCC_results[1]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[4]*VOUT_SCALE  - VOUT_OFST)); 
     return;
+}
+
+void filter_io_samples(void){
+    filter(ADCC_results[4]);
+    filter(ADCC_results[5]);
+    filter(ADCC_results[1]);
+    adc_io = filter(ADCC_results[2]);
 }
 
 void samples_to_cla(void){
@@ -223,6 +238,7 @@ void err_calc(void){
 void INT_ControlPWM_fixed_fsw_ISR(void){
     if (dma_done){
         dma_done = 0; 
+        filter_io_samples();
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -232,8 +248,8 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
             err_calc();
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
-        set_duty_cycle(d);
-        GPIO_togglePin(tz_clear_pin);
+        if(turn_off_conv == 0) set_duty_cycle(d);
+        else set_duty_cycle(1);
     }
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
@@ -299,5 +315,12 @@ void INT_transient_det_pin_XINT_ISR(void){
 void INT_myDMA1_ISR(void){
     dma_done = 1;
     Interrupt_clearACKGroup(INT_myDMA1_INTERRUPT_ACK_GROUP);
+}
+
+void INT_fault_sw_ISR(void){
+    EPWM_setCounterCompareValue(fault_sw_BASE, EPWM_COUNTER_COMPARE_A,fault_sw_val*FAULT_PWM_TICKS_PERIOD);
+    turn_off_conv = fault_sw_val; 
+    EPWM_clearEventTriggerInterruptFlag(fault_sw_BASE);
+    Interrupt_clearACKGroup(INT_fault_sw_INTERRUPT_ACK_GROUP);
 }
 

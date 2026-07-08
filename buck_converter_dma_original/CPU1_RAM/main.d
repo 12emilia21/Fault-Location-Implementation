@@ -108,6 +108,7 @@ main.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include
 main.obj: ../control_functions.h
 main.obj: ../transient_det.h
 main.obj: ../defines.h
+main.obj: ../moving_avg.h
 
 ../main.c:
 
@@ -324,4 +325,6 @@ C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28
 ../transient_det.h:
 
 ../defines.h:
+
+../moving_avg.h:
 
