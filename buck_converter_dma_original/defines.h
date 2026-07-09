@@ -9,24 +9,24 @@
 #define R_FAULT             ((float32_t)0.01)
 #define L_LINE              ((float32_t)5.4857e-5f)
 #define R_LINE              ((float32_t)0.2304)
-#define FAULT_LOC           ((float32_t)100)                // Value between 0 and 100
+#define FAULT_LOC           ((float32_t)25)                // Value between 0 and 100
 
 // -- No fault values --
 #define REAL_R_LOAD         ((float32_t)6.56)//Simulation: 5.8667)             // No fault 
-#define REAL_L_LOAD         ((float32_t)115.7e-6)//Simulation: 0.00012698)         // No fault 
+#define REAL_L_LOAD         ((float32_t)115.8e-6)//Simulation: 0.00012698)         // No fault 
 
 // -- Fault values at 100% length --
 #define REAL_R_FAULT_100    ((float32_t)0.499)//Simulation: 0.5433)             
 #define REAL_L_FAULT_100    ((float32_t)90.88e-6)//Simulation: 0.00012698) 
 // -- Fault values at 75% length --
-#define REAL_R_FAULT_75     ((float32_t)0.41)            
-#define REAL_L_FAULT_75     ((float32_t)9.5238e-5) 
+#define REAL_R_FAULT_75     ((float32_t)0.367)            
+#define REAL_L_FAULT_75     ((float32_t)68.6-6) 
 // -- Fault values at 50% length --
-#define REAL_R_FAULT_50     ((float32_t)0.27)        
-#define REAL_L_FAULT_50     ((float32_t)6.3492e-5) 
+#define REAL_R_FAULT_50     ((float32_t)0.263)        
+#define REAL_L_FAULT_50     ((float32_t)46.2e-6) 
 // -- Fault values at 25% length --
-#define REAL_R_FAULT_25     ((float32_t)0.1433)
-#define REAL_L_FAULT_25     ((float32_t)3.1746e-5)
+#define REAL_R_FAULT_25     ((float32_t)0.159)
+#define REAL_L_FAULT_25     ((float32_t)24.2e-6)
 
 // LS algorithm 
 #define SW_PERIOD       ((float32_t)20e-6)                // Real platform 50khz
@@ -65,6 +65,10 @@
 #define VOUT_MAX ((float32_t)57.798)
 #define VOUT_SCALE VOUT_MAX/ADC_CODES
 #define VOUT_OFST 14.47
+
+// DAC definitions
+#define DAC_CODES           ((uint16_t)(4096))
+#define L_MAX_VALUE         ((float32_t)130e-6)
 
 // Saturation of sensors
 // -0.1 to account for discrepancies in the measurements

@@ -55,6 +55,7 @@ void Board_init()
 	MEMCFG_init();
 	ADC_init();
 	CPUTIMER_init();
+	DAC_init();
 	DMA_init();
 	EPWM_init();
 	GPIO_init();
@@ -408,6 +409,43 @@ void myCPUTIMER0_init(){
 	CPUTimer_stopTimer(myCPUTIMER0_BASE);
 
 	CPUTimer_reloadTimerCounter(myCPUTIMER0_BASE);
+}
+
+//*****************************************************************************
+//
+// DAC Configurations
+//
+//*****************************************************************************
+void DAC_init(){
+	L_out_val_init();
+}
+
+void L_out_val_init(){
+	//
+	// Set DAC reference voltage.
+	//
+	DAC_setReferenceVoltage(L_out_val_BASE, DAC_REF_ADC_VREFHI);
+	//
+	// Set DAC gain mode.
+	//
+	DAC_setGainMode(L_out_val_BASE, DAC_GAIN_TWO);
+	//
+	// Set DAC load mode.
+	//
+	DAC_setLoadMode(L_out_val_BASE, DAC_LOAD_SYSCLK);
+	//
+	// Enable the DAC output
+	//
+	DAC_enableOutput(L_out_val_BASE);
+	//
+	// Set the DAC shadow output
+	//
+	DAC_setShadowValue(L_out_val_BASE, 0U);
+
+	//
+	// Delay for buffered DAC to power up.
+	//
+	DEVICE_DELAY_US(5000);
 }
 
 //*****************************************************************************

@@ -101,6 +101,11 @@ bool      turn_off_conv = 0;
 // Filter avg
 float32_t adc_io = 0;
 
+// DAC test
+float32_t dac_test = 0;
+
+uint16_t DAC_val = 0; 
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -142,7 +147,6 @@ void main(void)
     ERTM;
     while(1)
     {
-
     }
 }
 
@@ -227,6 +231,16 @@ void err_calc(void){
     return;
 }
 
+// DAC output 
+// Ouput calculated inductor value 
+// Max val = 130uH (115uH for no fault conditions) -> 3.3V
+void calculate_DAC_val(float32_t output_val){
+    DAC_val = output_val*DAC_CODES/L_MAX_VALUE; 
+    DAC_setShadowValue(L_out_val_BASE, DAC_val);
+    
+    return; 
+}
+
 // ----------------- ISRs -----------------
 
 // --- ISR for controller + estimation ---
@@ -267,6 +281,7 @@ __interrupt void cla1Isr1(void)
         timer_count = CPUTimer_getTimerCount(myCPUTIMER0_BASE);
         alg_time = TIMER_PERIOD - timer_count*TIMER_PRESCALER/SYSCLK;
         GPIO_writePin(debug_pin,0);
+        calculate_DAC_val(L_out);
     }
     
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);

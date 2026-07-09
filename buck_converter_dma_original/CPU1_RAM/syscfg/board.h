@@ -211,6 +211,14 @@ void myCPUTIMER0_init();
 
 //*****************************************************************************
 //
+// DAC Configurations
+//
+//*****************************************************************************
+#define L_out_val_BASE DACB_BASE
+void L_out_val_init();
+
+//*****************************************************************************
+//
 // DMA Configurations
 //
 //*****************************************************************************
@@ -368,6 +376,7 @@ void	ADC_init();
 void	ASYSCTL_init();
 void	CLA_init();
 void	CPUTIMER_init();
+void	DAC_init();
 void	DMA_init();
 void	EPWM_init();
 void	GPIO_init();

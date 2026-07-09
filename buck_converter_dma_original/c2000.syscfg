@@ -16,6 +16,8 @@ const cla              = scripting.addModule("/driverlib/cla.js", {}, false);
 const cla1             = cla.addInstance();
 const cputimer         = scripting.addModule("/driverlib/cputimer.js", {}, false);
 const cputimer1        = cputimer.addInstance();
+const dac              = scripting.addModule("/driverlib/dac.js", {}, false);
+const dac1             = dac.addInstance();
 const dma              = scripting.addModule("/driverlib/dma.js", {}, false);
 const dma1             = dma.addInstance();
 const dma2             = dma.addInstance();
@@ -148,6 +150,12 @@ cputimer1.$name          = "myCPUTIMER0";
 cputimer1.emulationMode  = "CPUTIMER_EMULATIONMODE_RUNFREE";
 cputimer1.timerPrescaler = 99;
 cputimer1.timerPeriod    = 9999;
+
+dac1.$name            = "L_out_val";
+dac1.dacBase          = "DACB_BASE";
+dac1.enableOutput     = true;
+dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac1.gainMode         = "DAC_GAIN_TWO";
 
 dma1.$name                = "myDMA0";
 dma1.enableTriggers       = true;
