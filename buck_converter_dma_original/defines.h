@@ -20,7 +20,7 @@
 #define REAL_L_FAULT_100    ((float32_t)90.88e-6)//Simulation: 0.00012698) 
 // -- Fault values at 75% length --
 #define REAL_R_FAULT_75     ((float32_t)0.367)            
-#define REAL_L_FAULT_75     ((float32_t)68.6-6) 
+#define REAL_L_FAULT_75     ((float32_t)68.6e-6) 
 // -- Fault values at 50% length --
 #define REAL_R_FAULT_50     ((float32_t)0.263)        
 #define REAL_L_FAULT_50     ((float32_t)46.2e-6) 
