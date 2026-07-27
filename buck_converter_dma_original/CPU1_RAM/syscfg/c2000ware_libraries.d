@@ -3,7 +3,7 @@
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.c
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.h
 syscfg/c2000ware_libraries.obj: syscfg/board.h
-syscfg/c2000ware_libraries.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
+syscfg/c2000ware_libraries.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_CODE_micro/microcontroller_code/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/driverlib.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 syscfg/c2000ware_libraries.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -97,7 +97,7 @@ syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f2800
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-syscfg/c2000ware_libraries.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
+syscfg/c2000ware_libraries.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_CODE_micro/microcontroller_code/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/device.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h
 syscfg/c2000ware_libraries.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fastrts.h
 syscfg/c2000ware_libraries.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/math.h
@@ -111,7 +111,7 @@ syscfg/c2000ware_libraries.h:
 
 syscfg/board.h:
 
-C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_CODE_micro/microcontroller_code/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -299,7 +299,7 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_CODE_micro/microcontroller_code/Fault-Location-Implementation_10khz/buck_converter_dma_original/device/device.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h:
 

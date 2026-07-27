@@ -1,0 +1,19 @@
+1. Verify defines.h file. Default values are:
+    a. switching frequency: 50khz 
+    b. sampling frequency: 200khz (4 samples per switching cycle)
+    c. cap value: 9.4uF
+    d. inductor value: 82uH
+    e. converter resonance frequency: 5.7khz (using cap and inductor values)
+    f. samples two resonance cycles: 18 (2/(N_SMPLS*TSMPL*RES_FREQ_CONV))
+
+2. Change PWM ticks in control_functions.h
+    a. 50khz: 1000
+    b. 10khz: 5000
+
+3. Trip-zone and fault generation 
+    a. Version by 24/07/2026: 
+        The tripzone is not implemented since the sensor alarm is not connected. 
+        If the connections are done, uncomment the code on main.c, remove the fault inception variables, add a clear pin (use GPIO pin). 
+        The algorithm uses "fault_sw_val" to trigger the fault and the turning off of the converter. 
+
+

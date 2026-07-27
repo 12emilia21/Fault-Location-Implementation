@@ -19,7 +19,6 @@ C_SRCS += \
 ./syscfg/c2000ware_libraries.c \
 ../control_functions.c \
 ../main.c \
-../moving_avg.c \
 ../transient_det.c 
 
 GEN_FILES += \
@@ -39,7 +38,6 @@ C_DEPS += \
 ./syscfg/c2000ware_libraries.d \
 ./control_functions.d \
 ./main.d \
-./moving_avg.d \
 ./transient_det.d 
 
 GEN_OPTS += \
@@ -52,7 +50,6 @@ OBJS += \
 ./cla_tasks.obj \
 ./control_functions.obj \
 ./main.obj \
-./moving_avg.obj \
 ./transient_det.obj 
 
 GEN_MISC_FILES += \
@@ -74,7 +71,6 @@ OBJS__QUOTED += \
 "cla_tasks.obj" \
 "control_functions.obj" \
 "main.obj" \
-"moving_avg.obj" \
 "transient_det.obj" 
 
 GEN_MISC_FILES__QUOTED += \
@@ -92,7 +88,6 @@ C_DEPS__QUOTED += \
 "syscfg\c2000ware_libraries.d" \
 "control_functions.d" \
 "main.d" \
-"moving_avg.d" \
 "transient_det.d" 
 
 GEN_FILES__QUOTED += \
@@ -112,7 +107,6 @@ C_SRCS__QUOTED += \
 "./syscfg/c2000ware_libraries.c" \
 "../control_functions.c" \
 "../main.c" \
-"../moving_avg.c" \
 "../transient_det.c" 
 
 

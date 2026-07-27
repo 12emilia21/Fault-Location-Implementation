@@ -15,34 +15,7 @@
 #include "control_functions.h"
 #include "transient_det.h"
 #include "defines.h"
-#include "moving_avg.h"
-
-// Sample controller data
-uint16_t ADCA_results[8]; // Vin (2), Iin (2), Iout (4)
-uint16_t ADCC_results[6]; // Il (2), Vout(4)
-
-#pragma DATA_SECTION(ADCA_results,    "ramgs0");
-#pragma DATA_SECTION(ADCC_results,    "ramgs0");\
-
-const void * ADCA0_results_add = (const void *) ADCA_results;
-const void * ADCA0_Result_base = (const void *) myADC0_RESULT_BASE;
-const void * ADCC0_results_add = (const void *) ADCC_results;
-const void * ADCC0_Result_base = (const void *) myADC1_RESULT_BASE;
-
-float32_t d                = 0;
-float32_t fixed_d          = 0.2;
-bool      fixed_duty_cycle = 1;
-float32_t Iin_avg          = 0;
-float32_t Io_avg           = 0;
-float32_t Il_avg           = 0;
-float32_t Vo_avg           = 0;
-float32_t Vin_avg          = 0;
-float32_t Vo_error         = 0;
-float32_t Il_error         = 0;
-float32_t Vo_ref           = 10;
-
-PI_Controller Vo_controller;
-PI_Controller Il_controller;
+//#include "moving_avg.h"
 
 #endif /* MAIN_H_ */
 

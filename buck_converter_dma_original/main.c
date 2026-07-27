@@ -1,70 +1,56 @@
-//#############################################################################
-//
-// FILE:   empty_driverlib_main.c
-//
-//! \addtogroup driver_example_list
-//! <h1>Empty Project Example</h1> 
-//!
-//! This example is an empty project setup for Driverlib development.
-//!
-//
-//#############################################################################
-//
-//
-// $Copyright:
-// Copyright (C) 2023 Texas Instruments Incorporated - http://www.ti.com/
-//
-// Redistribution and use in source and binary forms, with or without 
-// modification, are permitted provided that the following conditions 
-// are met:
-// 
-//   Redistributions of source code must retain the above copyright 
-//   notice, this list of conditions and the following disclaimer.
-// 
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the 
-//   documentation and/or other materials provided with the   
-//   distribution.
-// 
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
-//#############################################################################
+/*
+    main.c 
+
+    PI/fixed duty cycle controller + fault location estimation algorithm 
+    By 27/07/26: Tripzone not implemented. 
+
+*/
 
 //
 // Included Files
 //
-#include "main.h"
-
-// Fault switch
-#define FAULT_PWM_TICKS_PERIOD     ((uint16_t) 1000)  
+#include "main.h" 
 
 // Controller
-float32_t kpv =0.0102;
+float32_t kpv = 0.0102;
 float32_t kiv = 3.6684e-05;
-float32_t kpi =0.2486;
+float32_t kpi = 0.2486;
 float32_t kii = 0.0207;
+
+float32_t d                = 0;
+float32_t fixed_d          = 0.2; //80% duty cycle by default
+bool      fixed_duty_cycle = 1;
+float32_t Iin_avg          = 0;
+float32_t Io_avg           = 0;
+float32_t Il_avg           = 0;
+float32_t Vo_avg           = 0;
+float32_t Vin_avg          = 0;
+float32_t Vo_error         = 0;
+float32_t Il_error         = 0;
+float32_t Vo_ref           = 10;
+
+PI_Controller Vo_controller;
+PI_Controller Il_controller;
+
+// ADC samples 
+uint16_t ADCA_results[8]; // Vin (2), Iin (2), Iout (4)
+uint16_t ADCC_results[6]; // Il (2), Vout(4)
+
+#pragma DATA_SECTION(ADCA_results,    "ramgs0");
+#pragma DATA_SECTION(ADCC_results,    "ramgs0");
+
+const void * ADCA0_results_add = (const void *) ADCA_results;
+const void * ADCA0_Result_base = (const void *) myADC0_RESULT_BASE;
+const void * ADCC0_results_add = (const void *) ADCC_results;
+const void * ADCC0_Result_base = (const void *) myADC1_RESULT_BASE;
 
 // Transient detection result
 bool     transient_det_res; 
 uint16_t k;
 
 // CLA to CPU
-volatile float32_t R_out=0.0f; 
-volatile float32_t L_out=0.0f; 
+volatile float32_t R_out = 0.0f; 
+volatile float32_t L_out = 0.0f; 
 
 #pragma DATA_SECTION(R_out,    "Cla1ToCpuMsgRAM");
 #pragma DATA_SECTION(L_out,    "Cla1ToCpuMsgRAM");
@@ -85,7 +71,7 @@ volatile float32_t L_err  = 0.0f;
 #pragma DATA_SECTION(R_err,    "ramgs0");
 #pragma DATA_SECTION(L_err,    "ramgs0");
 
-// Aux
+// Timer 
 uint32_t  get_clk     = 0; 
 uint32_t  get_ls_clk  = 0; 
 uint32_t  timer_count = 0; 
@@ -95,16 +81,12 @@ float32_t alg_time    = 0.0;
 bool dma_done = 0;
 
 // Fault inception
-float32_t fault_sw_val  = 0; // off 
+float32_t fault_sw_val  = 0; 
 bool      turn_off_conv = 0;
-
-// Filter avg
-float32_t adc_io = 0;
 
 // DAC test
 float32_t dac_test = 0;
-
-uint16_t DAC_val = 0; 
+uint16_t  DAC_val  = 0; 
 
 void main(void)
 {
@@ -138,7 +120,6 @@ void main(void)
 
     // Initialize transient detector and filter 
     init_detector();
-    init_filter();
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
@@ -158,13 +139,6 @@ void average_samples(void){
     Il_avg  = 0.5f *((ADCC_results[0]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE    - IL_OFST  ));
     Vo_avg  = 0.5f *((ADCC_results[1]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[4]*VOUT_SCALE  - VOUT_OFST)); 
     return;
-}
-
-void filter_io_samples(void){
-    filter(ADCC_results[4]);
-    filter(ADCC_results[5]);
-    filter(ADCC_results[1]);
-    adc_io = filter(ADCC_results[2]);
 }
 
 void samples_to_cla(void){
@@ -252,7 +226,6 @@ void calculate_DAC_val(float32_t output_val){
 void INT_ControlPWM_fixed_fsw_ISR(void){
     if (dma_done){
         dma_done = 0; 
-        filter_io_samples();
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -263,7 +236,7 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
         if(turn_off_conv == 0) set_duty_cycle(d);
-        else set_duty_cycle(1);
+        else set_duty_cycle(1); //turn-off if fault 
     }
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
@@ -325,7 +298,6 @@ void INT_transient_det_pin_XINT_ISR(void){
 //    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
 //    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
 //}
-
  
 void INT_myDMA1_ISR(void){
     dma_done = 1;
