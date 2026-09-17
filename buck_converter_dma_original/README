@@ -1,0 +1,11 @@
+Fault generation 
+- How does the Fault inception work. Interrupts, no trip-zone from the sensor. 
+- Parameters, offsets, etc. 
+- Algorithms and functions 
+
+Write which PWM corrisponds to what and which outputs to check. 
+
+Things to change if I want to change the switching frequency, some parameters, etc. 
+
+Areas of improvements 
+

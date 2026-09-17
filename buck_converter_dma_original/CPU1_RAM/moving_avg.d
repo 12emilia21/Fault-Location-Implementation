@@ -12,7 +12,7 @@ moving_avg.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include
 moving_avg.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/machine/_limits.h
 moving_avg.obj: syscfg/c2000ware_libraries.h
 moving_avg.obj: syscfg/board.h
-moving_avg.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h
+moving_avg.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_IMPLEMENTATION/code_microcontroller/Fault-Location-Implementation-debug/buck_converter_dma_original/device/driverlib.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/adc.h
 moving_avg.obj: C:/ti/ccs2040/ccs/tools/compiler/ti-cgt-c2000_22.6.3.LTS/include/stdbool.h
@@ -101,7 +101,7 @@ moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/spi
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-moving_avg.obj: C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h
+moving_avg.obj: C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_IMPLEMENTATION/code_microcontroller/Fault-Location-Implementation-debug/buck_converter_dma_original/device/device.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fastrts.h
 moving_avg.obj: C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/fpu32/C28x_FPU_FastRTS.h
@@ -130,7 +130,7 @@ syscfg/c2000ware_libraries.h:
 
 syscfg/board.h:
 
-C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/driverlib.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_IMPLEMENTATION/code_microcontroller/Fault-Location-Implementation-debug/buck_converter_dma_original/device/driverlib.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -308,7 +308,7 @@ C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/mem21/OneDrive/repo_4_smpls/Fault-Location-Implementation/buck_converter_dma_original/device/device.h:
+C:/Users/mem21/OneDrive\ -\ Simon\ Fraser\ University\ (1sfu)/4_IMPLEMENTATION/code_microcontroller/Fault-Location-Implementation-debug/buck_converter_dma_original/device/device.h:
 
 C:/ti/c2000/C2000Ware_4_03_00_00/libraries/math/FPUfastRTS/c28/include/C28x_FPU_FastRTS.h:
 

@@ -3,6 +3,7 @@
 "./cla_tasks.obj"
 "./control_functions.obj"
 "./main.obj"
+"./moving_avg.obj"
 "./transient_det.obj"
 "./device/device.obj"
 "./device/f28004x_codestartbranch.obj"

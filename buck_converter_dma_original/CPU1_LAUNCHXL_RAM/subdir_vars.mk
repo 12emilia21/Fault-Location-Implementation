@@ -16,13 +16,14 @@ CLA_SRCS += \
 ../cla_tasks.cla 
 
 LIB_SRCS += \
-C:/ti/c2000/C2000Ware_4_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
+../driverlib.lib 
 
 C_SRCS += \
 ./syscfg/board.c \
 ./syscfg/c2000ware_libraries.c \
 ../control_functions.c \
 ../main.c \
+../moving_avg.c \
 ../transient_det.c 
 
 GEN_FILES += \
@@ -42,6 +43,7 @@ C_DEPS += \
 ./syscfg/c2000ware_libraries.d \
 ./control_functions.d \
 ./main.d \
+./moving_avg.d \
 ./transient_det.d 
 
 GEN_OPTS += \
@@ -54,6 +56,7 @@ OBJS += \
 ./cla_tasks.obj \
 ./control_functions.obj \
 ./main.obj \
+./moving_avg.obj \
 ./transient_det.obj 
 
 GEN_MISC_FILES += \
@@ -75,6 +78,7 @@ OBJS__QUOTED += \
 "cla_tasks.obj" \
 "control_functions.obj" \
 "main.obj" \
+"moving_avg.obj" \
 "transient_det.obj" 
 
 GEN_MISC_FILES__QUOTED += \
@@ -92,6 +96,7 @@ C_DEPS__QUOTED += \
 "syscfg\c2000ware_libraries.d" \
 "control_functions.d" \
 "main.d" \
+"moving_avg.d" \
 "transient_det.d" 
 
 GEN_FILES__QUOTED += \
@@ -111,6 +116,7 @@ C_SRCS__QUOTED += \
 "./syscfg/c2000ware_libraries.c" \
 "../control_functions.c" \
 "../main.c" \
+"../moving_avg.c" \
 "../transient_det.c" 
 
 
