@@ -224,8 +224,7 @@ void hh2 (void) {
     beta2 = CLAdiv_inline(2.0f,v2v2);
 
     for(i=0;i<(BUFF_SAMPLES-1);i++)
-        vo_smpl_cla[i+1] -= beta2*v2[i]*dot2;
-
+        vo_smpl_cla[i+1] -= beta2*v2[i]*dot2;   // tiene sentido hacer esto? no se podria hacersolo para [1?]
     return;
 }
 
@@ -246,7 +245,66 @@ void back_subs (void){
     return;
 }
 
+__attribute__((interrupt)) void Cla1Task1(void)
+{ 
+    if (s_count == 0){
+        nsat_smpl      = 0;     
+        nsat_smpl_prev = 0; 
+        ef_index       = 0; 
+        sat_smpl       = 0;      
+    }
 
+    if (s_count<N_COMPUTE){
+        for(i=0;i<N_SAMPLES;i++){
+            if (s_count < OFFSET_PWM){
+                vo_smpl_cla[N_SAMPLES*s_count+i] = 0; 
+                io_smpl_cla[N_SAMPLES*s_count+i] = 0;
+                nsat_smpl++; 
+                ef_index++;
+            }
+            else if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
+                //vo_smpl_cla[ef_index] = vo_sample_test[i]; 
+                //io_smpl_cla[ef_index] = io_sample_test[i];
+                vo_smpl_cla[N_SAMPLES*s_count+i] = vo_sample_test[i]; 
+                io_smpl_cla[N_SAMPLES*s_count+i] = io_sample_test[i];
+                nsat_smpl++; 
+                ef_index++;  
+                // Debugging
+                valid_smpl_val_v[N_SAMPLES*s_count+i] = vo_sample_test[i];
+                valid_smpl_val_i[N_SAMPLES*s_count+i] = io_sample_test[i];
+            } 
+            else{
+                nsat_smpl = 0;
+                sat_smpl++; 
+                // Begin clearing from the end 
+                //vo_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 450; 
+                //io_smpl_cla[BUFF_SAMPLES-sat_smpl]  = 450;
+                //dio_smpl_cla[BUFF_SAMPLES-sat_smpl] = 450;   
+                vo_smpl_cla[N_SAMPLES*s_count+i]  = 0; 
+                io_smpl_cla[N_SAMPLES*s_count+i]  = 0;
+                dio_smpl_cla[N_SAMPLES*s_count+i] = 0;     
+                // Debugging
+                valid_smpl_val_v[N_SAMPLES*s_count+i] = 85;  
+                valid_smpl_val_i[N_SAMPLES*s_count+i] = 75;          
+            }
+            
+            single_smpl    = derivatives(N_SAMPLES*s_count+i, N_SAMPLES*s_count+i);   // Resto por el incremento de linea 302 
+            ef_index       = ef_index-single_smpl;      // Index correction      
+            nsat_smpl_prev = nsat_smpl;
+        }
+    }
+
+    if (s_count==(N_COMPUTE-1)){
+        partial_norms();
+        pivot();
+        hh1();
+        hh2();
+        back_subs();
+    }
+}
+
+/*
+// ORIGINAL
 __attribute__((interrupt)) void Cla1Task1(void)
 { 
     if (s_count == 0){
@@ -298,4 +356,4 @@ __attribute__((interrupt)) void Cla1Task1(void)
         back_subs();
     }
 }
-
+*/

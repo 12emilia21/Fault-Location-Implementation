@@ -9,7 +9,7 @@
 #define R_FAULT             ((float32_t)0.01)
 #define L_LINE              ((float32_t)5.4857e-5f)
 #define R_LINE              ((float32_t)0.2304)
-#define FAULT_LOC           ((float32_t)25)                // Value between 0 and 100
+#define FAULT_LOC           ((float32_t)50)                // Value between 0 and 100
 
 // -- No fault values --
 #define REAL_R_LOAD         ((float32_t)6.56)//Simulation: 5.8667)             // No fault 
@@ -34,7 +34,11 @@
 #define N_SAMPLES       ((uint16_t)4)  
 #define BUFF_SAMPLES    ((uint16_t)TWO_RES*N_SAMPLES)
 #define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)  //fsw = 50e3, oversample = 4  
-#define N_COMPUTE       ((uint16_t)(BUFF_SAMPLES/N_SAMPLES))
+#define N_COMPUTE       ((uint16_t)(TWO_RES))
+#define BLOCKS          ((uint16_t)2)
+#define SEL_BLK         ((uint16_t)2)
+#define OFFSET_PWM      ((uint16_t)(SEL_BLK-1)*(TWO_RES/BLOCKS))
+#define OFFSET          ((uint16_t)OFFSET_PWM*N_SAMPLES)
 
 // Algorithm timer 
 #define TIMER_PRESCALER 100

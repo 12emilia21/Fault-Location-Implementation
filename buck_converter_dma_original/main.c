@@ -252,7 +252,7 @@ void calculate_DAC_val(float32_t output_val){
 void INT_ControlPWM_fixed_fsw_ISR(void){
     if (dma_done){
         dma_done = 0; 
-        filter_io_samples();
+        //filter_io_samples();
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -276,7 +276,7 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
 __interrupt void cla1Isr1(void)
 {
     s_count+=1;
-    if (s_count == BUFF_SAMPLES/N_SAMPLES) {
+    if (s_count == N_COMPUTE) {
         CPUTimer_stopTimer(myCPUTIMER0_BASE);
         timer_count = CPUTimer_getTimerCount(myCPUTIMER0_BASE);
         alg_time = TIMER_PERIOD - timer_count*TIMER_PRESCALER/SYSCLK;
@@ -296,7 +296,7 @@ void INT_transient_det_pin_XINT_ISR(void){
         CPUTimer_startTimer(myCPUTIMER0_BASE);
         GPIO_writePin(debug_pin,1);
     }
-    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
+    if((transient_det_res==1) && (s_count<(N_COMPUTE-1))){
         GPIO_writePin(transient_det_pin, 0);
     } 
     Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
