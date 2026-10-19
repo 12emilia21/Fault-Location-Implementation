@@ -1,0 +1,72 @@
+menuitem "Save simulation data";
+
+hotmenu save_data()
+{
+    GEL_EnableFileOutput("C:\\ccs_debug\\buffer.csv", 0, 0);
+
+    GEL_TextOut("VAR1\n");
+    GEL_MemorySaveData(
+        &dio_smpl_cla,
+        1,
+        72,
+        "C:\\ccs_debug\\buffer.csv",
+        16, 
+        1
+    );
+
+    GEL_TextOut("VAR2\n");
+    GEL_MemorySaveData(
+        &io_smpl_cla,
+        1,
+        72,
+        "C:\\ccs_debug\\buffer.csv",
+        16, 
+        1
+    );
+
+    GEL_TextOut("VAR2\n");
+    GEL_MemorySaveData(
+        &io_smpl_cla,
+        1,
+        72,
+        "C:\\ccs_debug\\buffer.csv",
+        16, 
+        1
+    );
+
+
+}
+
+
+//hotmenu GuardarVariables()
+//{
+//    /* var1 */
+//    GEL_MemorySaveData(
+//        &var1,
+//        1,
+//        256,
+//        "C:\\temp\\variables.dat",
+//        22,
+//        0
+//    );
+//
+//    /* var2 */
+//    GEL_MemorySaveData(
+//        &var2,
+//        1,
+//        256,
+//        "C:\\temp\\variables.dat",
+//        22,
+//        1
+//    );
+//
+//    /* var3 */
+//    GEL_MemorySaveData(
+//        &var3,
+//        1,
+//        256,
+//        "C:\\temp\\variables.dat",
+//        22,
+//        1
+//    );
+//}

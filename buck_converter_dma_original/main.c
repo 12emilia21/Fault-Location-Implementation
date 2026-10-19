@@ -98,6 +98,14 @@ bool dma_done = 0;
 float32_t fault_sw_val  = 0; // off 
 bool      turn_off_conv = 0;
 
+// Filter avg
+float32_t adc_io = 0;
+
+// DAC test
+float32_t dac_test = 0;
+
+uint16_t DAC_val = 0; 
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -128,8 +136,9 @@ void main(void)
     init_PI(&Vo_controller,kpv,kiv);
     init_PI(&Il_controller,kpi,kii);
 
-    // Initialize transient detector 
+    // Initialize transient detector and filter 
     init_detector();
+    //init_filter();
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
@@ -138,7 +147,6 @@ void main(void)
     ERTM;
     while(1)
     {
-        
     }
 }
 
@@ -150,6 +158,13 @@ void average_samples(void){
     Il_avg  = 0.5f *((ADCC_results[0]*IL_SCALE   - IL_OFST  ) + (ADCC_results[3]*IL_SCALE    - IL_OFST  ));
     Vo_avg  = 0.5f *((ADCC_results[1]*VOUT_SCALE - VOUT_OFST) + (ADCC_results[4]*VOUT_SCALE  - VOUT_OFST)); 
     return;
+}
+
+void filter_io_samples(void){
+    filter(ADCC_results[4]);
+    filter(ADCC_results[5]);
+    filter(ADCC_results[1]);
+    adc_io = filter(ADCC_results[2]);
 }
 
 void samples_to_cla(void){
@@ -201,6 +216,10 @@ void err_calc(void){
             r_result = REAL_R_FAULT_25;
             l_result = REAL_L_FAULT_25;
         break;
+        case 10:
+            r_result = REAL_R_FAULT_10;
+            l_result = REAL_L_FAULT_10;
+        break;
     }
     
 
@@ -216,6 +235,16 @@ void err_calc(void){
     return;
 }
 
+// DAC output 
+// Ouput calculated inductor value 
+// Max val = 130uH (115uH for no fault conditions) -> 3.3V
+//void calculate_DAC_val(float32_t output_val){
+//    DAC_val = output_val*DAC_CODES/L_MAX_VALUE; 
+//    DAC_setShadowValue(L_out_val_BASE, DAC_val);
+//    
+//    return; 
+//}
+
 // ----------------- ISRs -----------------
 
 // --- ISR for controller + estimation ---
@@ -227,6 +256,7 @@ void err_calc(void){
 void INT_ControlPWM_fixed_fsw_ISR(void){
     if (dma_done){
         dma_done = 0; 
+        //filter_io_samples();
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();
@@ -237,9 +267,8 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
         }
         GPIO_writePin(transient_det_pin, transient_det_res);
         if(turn_off_conv == 0) set_duty_cycle(d);
-        else set_duty_cycle(0);
+        else set_duty_cycle(1);
     }
-    
     EPWM_clearEventTriggerInterruptFlag(ControlPWM_fixed_fsw_BASE);
     Interrupt_clearACKGroup(INT_ControlPWM_fixed_fsw_INTERRUPT_ACK_GROUP);
 }
@@ -251,11 +280,12 @@ void INT_ControlPWM_fixed_fsw_ISR(void){
 __interrupt void cla1Isr1(void)
 {
     s_count+=1;
-    if (s_count == BUFF_SAMPLES/N_SAMPLES) {
+    if (s_count == N_COMPUTE) {
         CPUTimer_stopTimer(myCPUTIMER0_BASE);
         timer_count = CPUTimer_getTimerCount(myCPUTIMER0_BASE);
         alg_time = TIMER_PERIOD - timer_count*TIMER_PRESCALER/SYSCLK;
         GPIO_writePin(debug_pin,0);
+        //calculate_DAC_val(L_out);
     }
     
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
@@ -270,7 +300,7 @@ void INT_transient_det_pin_XINT_ISR(void){
         CPUTimer_startTimer(myCPUTIMER0_BASE);
         GPIO_writePin(debug_pin,1);
     }
-    if((transient_det_res==1) && (s_count<(BUFF_SAMPLES/N_SAMPLES-1))){
+    if((transient_det_res==1) && (s_count<(N_COMPUTE-1))){
         GPIO_writePin(transient_det_pin, 0);
     } 
     Interrupt_clearACKGroup(INT_transient_det_pin_XINT_INTERRUPT_ACK_GROUP);   
@@ -288,12 +318,19 @@ void INT_transient_det_pin_XINT_ISR(void){
 
 //// --- ISR for the trip-zone GPIO ---
 //// The flags are cleared after the trip condition is cleared (GPIO rising edge). 
+//
+//void INT_tz_pin_XINT_ISR(void){
+//    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
+//    Interrupt_clearACKGroup(INT_tz_pin_XINT_INTERRUPT_ACK_GROUP);
+//}
 
 //void INT_tz_clear_pin_XINT_ISR (void){
+//    //GPIO_writePin(tz_clear_pin, 0);
 //    EPWM_clearTripZoneFlag(ControlPWM_BASE, (EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST));
 //    Interrupt_clearACKGroup(INT_tz_clear_pin_XINT_INTERRUPT_ACK_GROUP);
 //}
 
+ 
 void INT_myDMA1_ISR(void){
     dma_done = 1;
     Interrupt_clearACKGroup(INT_myDMA1_INTERRUPT_ACK_GROUP);
@@ -305,3 +342,4 @@ void INT_fault_sw_ISR(void){
     EPWM_clearEventTriggerInterruptFlag(fault_sw_BASE);
     Interrupt_clearACKGroup(INT_fault_sw_INTERRUPT_ACK_GROUP);
 }
+

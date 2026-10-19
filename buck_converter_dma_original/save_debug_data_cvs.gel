@@ -1,0 +1,43 @@
+menuitem "Exportar CSV";
+
+hotmenu GuardarCSV()
+{
+    int i;
+
+    /* Create/overwrite CSV file */
+    GEL_EnableFileOutput(
+        "C:\\ccs_debug\\debug_data_19_10_26.csv",
+        0,
+        0
+    );
+
+    /* CSV header */
+    GEL_TextOut(
+        "Index,dio_smpl_cla,io_smpl_cla,vo_smpl_cla,raw_v_data, raw_i_data\n"
+    );
+
+    /* Export data */
+    for (i = 0; i < 72; i++)
+    {
+        GEL_TextOut(
+            "%d,%f,%f,%f,%f,%f\n",
+            "CSV",
+            0,
+            0,
+            0,
+            i,
+            dio_smpl_cla[i],
+            io_smpl_cla[i],
+            vo_smpl_cla[i],
+            valid_smpl_val_v[i],
+            valid_smpl_val_i[i] 
+        );
+    }
+
+    /* Close/disable file output */
+    GEL_DisableFileOutput();
+
+    GEL_TextOut(
+        "CSV generado correctamente.\n"
+    );
+}

@@ -29,7 +29,7 @@ const void * ADCC0_results_add = (const void *) ADCC_results;
 const void * ADCC0_Result_base = (const void *) myADC1_RESULT_BASE;
 
 float32_t d                = 0;
-float32_t fixed_d          = 0.5;
+float32_t fixed_d          = 0.2;
 bool      fixed_duty_cycle = 1;
 float32_t Iin_avg          = 0;
 float32_t Io_avg           = 0;

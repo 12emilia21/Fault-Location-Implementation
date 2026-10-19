@@ -29,3 +29,4 @@ void init_PI( PI_Controller* controller, float32_t kp,float32_t ki);
 void reset_PI(PI_Controller* controller);
 void update_PI(float32_t error, PI_Controller* controller);
 float32_t duty_cycle_saturation(float32_t duty);
+
