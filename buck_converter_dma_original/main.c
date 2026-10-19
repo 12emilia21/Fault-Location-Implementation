@@ -220,6 +220,10 @@ void err_calc(void){
             r_result = REAL_R_FAULT_10;
             l_result = REAL_L_FAULT_10;
         break;
+        case 5:
+            r_result = REAL_R_FAULT_5;
+            l_result = REAL_L_FAULT_5;
+        break;
     }
     
 

@@ -152,6 +152,15 @@ void pivot (void){
     return;
 }
 
+void clear_offset (void){
+    for(i=0;(uint32_t)i<(uint32_t)OFFSET;i++) {
+        dio_smpl_cla[i] = 0; 
+        io_smpl_cla[i]  = 0; 
+        vo_smpl_cla[i]  = 0; 
+    }
+    return; 
+}
+
 // Utilizo temporalmente el acceso directo considerndo que n2_partial siempre es mayor que n1_partial
 void hh1 (void){
 
@@ -256,13 +265,14 @@ __attribute__((interrupt)) void Cla1Task1(void)
 
     if (s_count<N_COMPUTE){
         for(i=0;i<N_SAMPLES;i++){
-            if (s_count < OFFSET_PWM){// || s_count > (BLOCK_END-1)){
-                vo_smpl_cla[N_SAMPLES*s_count+i] = 0; 
-                io_smpl_cla[N_SAMPLES*s_count+i] = 0;
-                nsat_smpl++; 
-                ef_index++;
-            }
-            else if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
+            //if (s_count < OFFSET_PWM){// || s_count > (BLOCK_END-1)){
+            //    vo_smpl_cla[N_SAMPLES*s_count+i] = 0; 
+            //    io_smpl_cla[N_SAMPLES*s_count+i] = 0;
+            //    nsat_smpl++; 
+            //    ef_index++;
+            //}
+            //else 
+            if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
             //if ((io_sample_test[i] > I_SAT_L) && (io_sample_test[i] < I_SAT_H) && (vo_sample_test[i] > V_SAT_L) && (vo_sample_test[i] < V_SAT_H)){
                 //vo_smpl_cla[ef_index] = vo_sample_test[i]; 
                 //io_smpl_cla[ef_index] = io_sample_test[i];
@@ -298,6 +308,7 @@ __attribute__((interrupt)) void Cla1Task1(void)
     if (s_count==(N_COMPUTE-1)){
         partial_norms();
         pivot();
+        if (OFFSET > 0) clear_offset(); 
         hh1();
         hh2();
         back_subs();

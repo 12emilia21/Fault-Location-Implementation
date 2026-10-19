@@ -9,7 +9,7 @@
 #define R_FAULT             ((float32_t)0.01)
 #define L_LINE              ((float32_t)5.4857e-5f)
 #define R_LINE              ((float32_t)0.2304)
-#define FAULT_LOC           ((float32_t)50)                // Value between 0 and 100
+#define FAULT_LOC           ((float32_t)75)                // Value between 0 and 100
 
 // Simulation 
 
@@ -32,6 +32,9 @@
 // -- Fault values at 10% length --
 #define REAL_R_FAULT_10     ((float32_t)0.0633)
 #define REAL_L_FAULT_10     ((float32_t)6.3492e-5)
+// -- Fault values at 5% length --
+#define REAL_R_FAULT_5      ((float32_t)0.0366)
+#define REAL_L_FAULT_5      ((float32_t)3.1746e-5)
 
 // LS algorithm 
 #define SW_PERIOD       ((float32_t)100e-6)             // RTbox implementation 10kHz
@@ -41,7 +44,7 @@
 #define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)  //fsw = 10e3, oversample = 4  
 #define N_COMPUTE       ((uint16_t)(TWO_RES))
 #define BLOCKS          ((uint16_t)10)
-#define SEL_BLK         ((uint16_t)1)
+#define SEL_BLK         ((uint16_t)4)
 #define OFFSET_PWM      ((uint16_t)(SEL_BLK-1)*(TWO_RES/BLOCKS))
 #define OFFSET          ((uint16_t)OFFSET_PWM*N_SAMPLES)
 #define BLOCK_END       ((uint16_t)OFFSET_PWM+TWO_RES/BLOCKS)
