@@ -14,6 +14,7 @@
 #include "c2000ware_libraries.h"
 #include "control_functions.h"
 #include "transient_det.h"
+#include "moving_avg.h"
 #include "defines.h"
 
 // Sample controller data

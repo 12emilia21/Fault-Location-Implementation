@@ -1,5 +1,36 @@
 #include "moving_avg.h"
 
+void init_filter(filt_data* data, float32_t* cla_array) 
+{
+    int16_t i; 
+    for(i=0;i<AVG_SAMPLES;i++)
+    {
+        data->samples[i]     = 0;
+        data->hist_smpl[i]   = 0;
+        cla_array[i]         = 0; 
+    }
+
+    return;
+}
+
+void filter(filt_data* data, float32_t* cla_array)
+{
+    int16_t i; 
+    float32_t buffer_sum  = 0;
+
+    for (i=0; i<AVG_SAMPLES; i++) buffer_sum += data->hist_smpl[i];
+    
+    for (i=0; i<AVG_SAMPLES; i++){
+        buffer_sum           = buffer_sum - data->hist_smpl[i] + data->samples[i]; 
+        data->hist_smpl[i]   = data->samples[i];
+        cla_array[i]         = buffer_sum/AVG_SAMPLES; 
+    }
+    
+    return; 
+}
+
+
+/*
 #define AVG_SAMPLES 100
 
 // Variable declaration
@@ -46,3 +77,4 @@ float32_t filter(uint16_t io_sim)
 	 
 	return io_avg; 
 }
+*/

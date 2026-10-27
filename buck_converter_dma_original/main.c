@@ -62,6 +62,10 @@ float32_t kii = 0.0207;
 bool     transient_det_res; 
 uint16_t k;
 
+// Filtering stage
+filt_data vo_data; 
+filt_data io_data; 
+
 // CLA to CPU
 volatile float32_t R_out=0.0f; 
 volatile float32_t L_out=0.0f; 
@@ -138,7 +142,8 @@ void main(void)
 
     // Initialize transient detector and filter 
     init_detector();
-    //init_filter();
+    init_filter(&vo_data, vo_sample_test);
+    init_filter(&io_data, io_sample_test);
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
@@ -160,25 +165,35 @@ void average_samples(void){
     return;
 }
 
-void filter_io_samples(void){
-    filter(ADCC_results[4]);
-    filter(ADCC_results[5]);
-    filter(ADCC_results[1]);
-    adc_io = filter(ADCC_results[2]);
-}
 
+// if filtering is used, the first four samples have to be discarded 
+
+/*
 void samples_to_cla(void){
     vo_sample_test[0] = ADCC_results[4]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[1] = ADCC_results[5]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[2] = ADCC_results[1]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[3] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
-    io_sample_test[0] = ADCA_results[6]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[1] = ADCA_results[7]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[2] = ADCA_results[2]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[3] = ADCA_results[3]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[0] = filter(ADCA_results[6]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[1] = filter(ADCA_results[7]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[2] = filter(ADCA_results[2]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[3] = filter(ADCA_results[3]*IOUT_SCALE - IOUT_OFST);
     return;
 }
-
+*/
+void samples_to_cla(void){
+    vo_data.samples[0] = (ADCC_results[4]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[1] = (ADCC_results[5]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[2] = (ADCC_results[1]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[3] = (ADCC_results[2]*VOUT_SCALE - VOUT_OFST);
+    io_data.samples[0] = (ADCA_results[6]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[1] = (ADCA_results[7]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[2] = (ADCA_results[2]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[3] = (ADCA_results[3]*IOUT_SCALE - IOUT_OFST);
+    filter(&vo_data, vo_sample_test); 
+    filter(&io_data, io_sample_test); 
+    return;
+}
 void duty_cycle_calculation(void){
     if(fixed_duty_cycle){
         d = fixed_d;
@@ -232,22 +247,12 @@ void err_calc(void){
         L_err = fabsf((L_out-REAL_L_LOAD)/REAL_L_LOAD)*100.0f;
     }
     else {
-
         R_err = fabsf((R_out-r_result)/r_result)*100.0f;
         L_err = fabsf((L_out-l_result)/l_result)*100.0f;
     }
     return;
 }
 
-// DAC output 
-// Ouput calculated inductor value 
-// Max val = 130uH (115uH for no fault conditions) -> 3.3V
-//void calculate_DAC_val(float32_t output_val){
-//    DAC_val = output_val*DAC_CODES/L_MAX_VALUE; 
-//    DAC_setShadowValue(L_out_val_BASE, DAC_val);
-//    
-//    return; 
-//}
 
 // ----------------- ISRs -----------------
 
