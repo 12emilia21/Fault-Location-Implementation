@@ -1,49 +1,3 @@
-//#############################################################################
-//
-// FILE:   empty_driverlib_main.c
-//
-//! \addtogroup driver_example_list
-//! <h1>Empty Project Example</h1> 
-//!
-//! This example is an empty project setup for Driverlib development.
-//!
-//
-//#############################################################################
-//
-//
-// $Copyright:
-// Copyright (C) 2023 Texas Instruments Incorporated - http://www.ti.com/
-//
-// Redistribution and use in source and binary forms, with or without 
-// modification, are permitted provided that the following conditions 
-// are met:
-// 
-//   Redistributions of source code must retain the above copyright 
-//   notice, this list of conditions and the following disclaimer.
-// 
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the 
-//   documentation and/or other materials provided with the   
-//   distribution.
-// 
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
-//#############################################################################
-
 //
 // Included Files
 //
@@ -61,6 +15,10 @@ float32_t kii = 0.0207;
 // Transient detection result
 bool     transient_det_res; 
 uint16_t k;
+
+// Filtering stage
+filt_data vo_data; 
+filt_data io_data; 
 
 // CLA to CPU
 volatile float32_t R_out=0.0f; 
@@ -97,9 +55,6 @@ bool dma_done = 0;
 // Fault inception
 float32_t fault_sw_val  = 0; // off 
 bool      turn_off_conv = 0;
-
-// Filter avg
-float32_t adc_io = 0;
 
 // DAC test
 float32_t dac_test = 0;
@@ -138,7 +93,8 @@ void main(void)
 
     // Initialize transient detector and filter 
     init_detector();
-    init_filter();
+    init_filter(&vo_data, vo_sample_test);
+    init_filter(&io_data, io_sample_test);
 
     // Check clocks 
     get_clk    = SysCtl_getClock(DEVICE_OSCSRC_FREQ);
@@ -160,22 +116,32 @@ void average_samples(void){
     return;
 }
 
-void filter_io_samples(void){
-    filter(ADCC_results[4]);
-    filter(ADCC_results[5]);
-    filter(ADCC_results[1]);
-    adc_io = filter(ADCC_results[2]);
-}
+// if filtering is used, the first four samples have to be discarded 
 
+/*
 void samples_to_cla(void){
     vo_sample_test[0] = ADCC_results[4]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[1] = ADCC_results[5]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[2] = ADCC_results[1]*VOUT_SCALE - VOUT_OFST;
     vo_sample_test[3] = ADCC_results[2]*VOUT_SCALE - VOUT_OFST;
-    io_sample_test[0] = ADCA_results[6]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[1] = ADCA_results[7]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[2] = ADCA_results[2]*IOUT_SCALE - IOUT_OFST;
-    io_sample_test[3] = ADCA_results[3]*IOUT_SCALE - IOUT_OFST;
+    io_sample_test[0] = filter(ADCA_results[6]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[1] = filter(ADCA_results[7]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[2] = filter(ADCA_results[2]*IOUT_SCALE - IOUT_OFST);
+    io_sample_test[3] = filter(ADCA_results[3]*IOUT_SCALE - IOUT_OFST);
+    return;
+}
+*/
+void samples_to_cla(void){
+    vo_data.samples[0] = (ADCC_results[4]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[1] = (ADCC_results[5]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[2] = (ADCC_results[1]*VOUT_SCALE - VOUT_OFST);
+    vo_data.samples[3] = (ADCC_results[2]*VOUT_SCALE - VOUT_OFST);
+    io_data.samples[0] = (ADCA_results[6]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[1] = (ADCA_results[7]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[2] = (ADCA_results[2]*IOUT_SCALE - IOUT_OFST);
+    io_data.samples[3] = (ADCA_results[3]*IOUT_SCALE - IOUT_OFST);
+    filter(&vo_data, vo_sample_test); 
+    filter(&io_data, io_sample_test); 
     return;
 }
 
@@ -252,7 +218,6 @@ void calculate_DAC_val(float32_t output_val){
 void INT_ControlPWM_fixed_fsw_ISR(void){
     if (dma_done){
         dma_done = 0; 
-        //filter_io_samples();
         average_samples();
         samples_to_cla();
         duty_cycle_calculation();

@@ -7,6 +7,14 @@
 
 #endif 
 
+// Samples to average
+#define AVG_SAMPLES 4
+
+typedef struct {
+    float32_t samples[AVG_SAMPLES];
+    float32_t hist_smpl[AVG_SAMPLES]; 
+} filt_data;
+
 // Function prototypes
-void init_filter(void); 
-float32_t filter(uint16_t io_sim); 
+void init_filter(filt_data* data, float32_t* cla_array); 
+void filter(filt_data* data, float32_t* cla_array); 

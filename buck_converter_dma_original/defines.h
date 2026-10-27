@@ -2,6 +2,8 @@
     File: defines.h 
 
     Defines used in CPU and CLA
+
+    Update values for "big resistor load"
 */
 
 // Circuit characteristics 
@@ -9,23 +11,23 @@
 #define R_FAULT             ((float32_t)0.01)
 #define L_LINE              ((float32_t)5.4857e-5f)
 #define R_LINE              ((float32_t)0.2304)
-#define FAULT_LOC           ((float32_t)50)                // Value between 0 and 100
+#define FAULT_LOC           ((float32_t)100)                // Value between 0 and 100
 
-// -- No fault values --
-#define REAL_R_LOAD         ((float32_t)6.56)//Simulation: 5.8667)             // No fault 
-#define REAL_L_LOAD         ((float32_t)115.8e-6)//Simulation: 0.00012698)         // No fault 
+// -- No fault values -- (Using big resistor)
+#define REAL_R_LOAD         ((float32_t)7.28)//6.56)
+#define REAL_L_LOAD         ((float32_t)234.3e-6)//115.8e-6)
 
 // -- Fault values at 100% length --
-#define REAL_R_FAULT_100    ((float32_t)0.499)//Simulation: 0.5433)             
-#define REAL_L_FAULT_100    ((float32_t)90.88e-6)//Simulation: 0.00012698) 
+#define REAL_R_FAULT_100    ((float32_t)0.455)           
+#define REAL_L_FAULT_100    ((float32_t)82.8e-6)
 // -- Fault values at 75% length --
-#define REAL_R_FAULT_75     ((float32_t)0.367)            
+#define REAL_R_FAULT_75     ((float32_t)0.359)            
 #define REAL_L_FAULT_75     ((float32_t)68.6e-6) 
 // -- Fault values at 50% length --
-#define REAL_R_FAULT_50     ((float32_t)0.263)        
-#define REAL_L_FAULT_50     ((float32_t)46.2e-6) 
+#define REAL_R_FAULT_50     ((float32_t)0.275)        
+#define REAL_L_FAULT_50     ((float32_t)45.2e-6) 
 // -- Fault values at 25% length --
-#define REAL_R_FAULT_25     ((float32_t)0.159)
+#define REAL_R_FAULT_25     ((float32_t)0.163)
 #define REAL_L_FAULT_25     ((float32_t)24.2e-6)
 
 // LS algorithm 
@@ -35,8 +37,8 @@
 #define BUFF_SAMPLES    ((uint16_t)TWO_RES*N_SAMPLES)
 #define TSMPL           ((float32_t)SW_PERIOD/N_SAMPLES)  //fsw = 50e3, oversample = 4  
 #define N_COMPUTE       ((uint16_t)(TWO_RES))
-#define BLOCKS          ((uint16_t)2)
-#define SEL_BLK         ((uint16_t)2)
+#define BLOCKS          ((uint16_t)9)
+#define SEL_BLK         ((uint16_t)4)
 #define OFFSET_PWM      ((uint16_t)(SEL_BLK-1)*(TWO_RES/BLOCKS))
 #define OFFSET          ((uint16_t)OFFSET_PWM*N_SAMPLES)
 
